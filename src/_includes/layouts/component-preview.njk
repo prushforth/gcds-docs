@@ -16,6 +16,9 @@
     <!-- GC Design System  Components-->
     <link rel="stylesheet" href="{{ '/components/dist/gcds/gcds.css' | url }}">
     <script type="module" src="/components/dist/gcds/gcds.esm.js"></script>
+    {% if loadGcdsMap %}
+    <script type="module" src="/components/gcds-map/dist/gcds-map/gcds-map.esm.js"></script>
+    {% endif %}
 
     <script src="{{ '/scripts/component-preview-iframe.js' | url }}"></script>
   </head>

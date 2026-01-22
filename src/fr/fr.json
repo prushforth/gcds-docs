@@ -29,6 +29,7 @@
     "breadcrumbs": "/fr/composants/chemin-de-navigation",
     "button": "/fr/composants/bouton",
     "card": "/fr/composants/carte",
+    "carte": "/fr/composants/map",
     "checkbox": "/fr/composants/case-a-cocher",
     "checkboxes": "/fr/composants/cases-a-cocher",
     "container": "/fr/composants/conteneur",

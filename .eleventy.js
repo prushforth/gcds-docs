@@ -43,6 +43,9 @@ module.exports = function (eleventyConfig) {
     './node_modules/@cdssnc/gcds-components/': 'components',
   });
   eleventyConfig.addPassthroughCopy({
+    './node_modules/gcds-map/': 'components/gcds-map',
+  });
+  eleventyConfig.addPassthroughCopy({
     './node_modules/@gcds-core/css-shortcuts/dist/gcds-css-shortcuts.min.css':
       'gcds-css-shortcuts.min.css',
   });
