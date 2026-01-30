@@ -9,4 +9,4 @@ date: 'git Last Modified'
 
 Cela peut prendre jusqu'à 48 heures.
 
-Pour vous réabonner à la liste de diffusion, utilisez la page <gcds-link href="/en/contact">« Contactez-nous »</gcds-link>.
+Pour vous réabonner à la liste de diffusion, utilisez la page <gcds-link href="{{ '/fr/contactez' | url }}">« Contactez-nous »</gcds-link>.

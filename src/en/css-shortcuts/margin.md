@@ -29,7 +29,8 @@ shortcuts:
   - class: 'my-&lt;value&gt;'
     style: 'margin-block: var(--gcds-spacing-&lt;value&gt;);'
     legacy: 'margin-top + margin-bottom'
-shortcutsDescription: 'The <code>value</code> can be either one of our <a href="/en/styles/spacing/">predefined spacing tokens</a> (<code>0</code> - <code>1250</code>) or <code>auto</code>.'
+shortcutsDescription: |
+  The <code>value</code> can be either one of our <a href="{{ '/en/styles/spacing/' | url }}">predefined spacing tokens</a> (<code>0</code> - <code>1250</code>) or <code>auto</code>.
 shortcutsHasLegacy: true
 shortcutsPartialClass: 'm-300'
 translationKey: 'shortcutsMargin'
