@@ -1,9 +1,9 @@
-import * as pagefind from '/gcds-map/pagefind/pagefind.js';
+import * as pagefind from '/gcds-docs/pagefind/pagefind.js';
 
 const url = new URLSearchParams(window.location.search);
 
 pagefind.options({
-  baseUrl: '/gcds-map/',
+  baseUrl: '/gcds-docs/',
 });
 
 const searchTerm = url.get('q');
