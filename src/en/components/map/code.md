@@ -15,7 +15,7 @@ tags: ['mapEN', 'code']
 
 <iframe
   title="Overview of gcds-map properties and events."
-  src="https://nrcan.github.io/gcds-map/storybook/iframe.html?id=components-map--events-properties&viewMode=docs&demo=true&singleStory=true&lang=en"
+  src="https://nrcan.github.io/gcds-map/iframe.html?id=components-map--events-properties&viewMode=docs&demo=true&singleStory=true&lang=en"
   width="1200"
   height="2075"
   style="display: block; margin: 0 auto;"

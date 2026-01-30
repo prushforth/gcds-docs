@@ -15,7 +15,7 @@ tags: ['mapFR', 'code']
 
 <iframe
   title="iframeTitle"
-  src="https://cds-snc.github.io/gcds-components/iframe.html?viewMode=docs&demo=true&singleStory=true&id=components-map--events-properties"
+  src="https://nrcan.github.io/gcds-map/iframe.html?id=components-map--events-properties&viewMode=docs&demo=true&singleStory=true&lang=fr"
   width="1200"
   height="1650"
   style="display: block; margin: 0 auto;"
