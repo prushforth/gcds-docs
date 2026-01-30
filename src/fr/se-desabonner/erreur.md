@@ -9,4 +9,4 @@ date: 'git Last Modified'
 
 Nous n'avons pas reçu votre demande de désabonnement de la liste de diffusion. Veuillez réessayer dans 30 minutes.
 
-Si cela ne fonctionne toujours pas, <gcds-link href="/fr/contactez">contactez-nous</gcds-button>.
+Si cela ne fonctionne toujours pas, <gcds-link href="{{ '/fr/contactez' | url }}">contactez-nous</gcds-link>.

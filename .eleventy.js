@@ -28,7 +28,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('./src/styles/prism.css');
   eleventyConfig.addPassthroughCopy('./src/images');
   eleventyConfig.addPassthroughCopy('./src/scripts/code-showcase.js');
-  eleventyConfig.addPassthroughCopy('./src/scripts/search.js');
+  // search.js is now a template (search.js.njk) and will be processed by Eleventy
   eleventyConfig.addPassthroughCopy('./src/scripts/code-copy.js');
   eleventyConfig.addPassthroughCopy('./src/scripts/general.js');
   eleventyConfig.addPassthroughCopy('./src/scripts/component-preview.js');
@@ -470,6 +470,8 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPairedShortcode(
     'baseComponentPreview',
     (children, title, url, queryString = '') => {
+      const pathPrefix = process.env.PATH_PREFIX || '';
+      const previewUrl = pathPrefix + url.replace('/base', '/preview/');
       return `
       <div class="my-600 b-sm b-default component-preview">
         <h2 class="container-full font-text font-semibold m-0 px-225 py-150 bb-sm b-default bg-light">
@@ -478,7 +480,7 @@ module.exports = function (eleventyConfig) {
         <div>
           <iframe
             title="${title}"
-            src="${url.replace('/base', '/preview/')}${queryString}"
+            src="${previewUrl}${queryString}"
             style="display: block; margin: 0 auto;"
             frameBorder="0"
             width="100%"
@@ -613,6 +615,37 @@ module.exports = function (eleventyConfig) {
     return str && str.includes(substr);
   });
 
+  /*
+   * Add path prefix to URLs for images and assets
+   */
+  eleventyConfig.addFilter('prefixUrl', function (url) {
+    const pathPrefix = process.env.PATH_PREFIX || '/';
+    if (pathPrefix === '/' || url.startsWith('http')) {
+      return url;
+    }
+    // Remove leading slash if present
+    const cleanUrl = url.startsWith('/') ? url.substring(1) : url;
+    return `${pathPrefix}/${cleanUrl}`;
+  });
+
+  /*
+   * Fix internal hrefs in HTML strings (for data file content)
+   */
+  eleventyConfig.addFilter('prefixHrefs', function (html) {
+    const pathPrefix = process.env.PATH_PREFIX || '/';
+    if (pathPrefix === '/') {
+      return html;
+    }
+    // Replace href="/path" with href="/prefix/path" for internal links only
+    return html.replace(/href="(\/[^"]*?)"/g, (match, path) => {
+      if (path.startsWith('//') || path.startsWith('/http')) {
+        return match;
+      }
+      const cleanPath = path.substring(1);
+      return `href="${pathPrefix}/${cleanPath}"`;
+    });
+  });
+
   // Misc
 
   eleventyConfig.setLibrary('md', markdownLibrary);
@@ -641,6 +674,12 @@ module.exports = function (eleventyConfig) {
       `npx pagefind --site _site --exclude-selectors "gcds-side-nav, gcds-top-nav, gcds-breadcrumbs, .github-link, .figma-link, h1 > code, .component-preview" --glob \"**/*.html\"`,
       { encoding: 'utf-8' },
     );
+    
+    // Fix image paths if PATH_PREFIX is set
+    if (process.env.PATH_PREFIX) {
+      console.log('Running post-build image path fixes...');
+      execSync('node scripts/fix-image-paths.js', { encoding: 'utf-8' });
+    }
   });
 
   return {

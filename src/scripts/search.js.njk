@@ -1,9 +1,12 @@
-import * as pagefind from '/pagefind/pagefind.js';
+---
+permalink: /scripts/search.js
+---
+import * as pagefind from '{{ '/pagefind/pagefind.js' | url }}';
 
 const url = new URLSearchParams(window.location.search);
 
 pagefind.options({
-  baseUrl: '/',
+  baseUrl: '{{ '/' | url }}',
 });
 
 const searchTerm = url.get('q');

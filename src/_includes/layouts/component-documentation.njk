@@ -12,7 +12,7 @@
         {% for key, tab in documentation[locale] %}
           {% if tabs[key].url %}
             <li class="tab">
-              <a href={{ tabs[key].url }} {{ 'aria-current=page' if tabs[key].url == page.url}}>
+              <a href="{{ tabs[key].url | url }}" {{ 'aria-current=page' if tabs[key].url == page.url}}>
                 {{ tab }}
               </a>
             </li>
