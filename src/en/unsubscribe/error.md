@@ -9,4 +9,4 @@ date: 'git Last Modified'
 
 We weren’t able to receive your request to unsubscribe from the mailing list. Please try again in 30 minutes.
 
-If it still doesn’t work, <gcds-link href="/en/contact">contact us</gcds-button>.
+If it still doesn't work, <gcds-link href="{{ '/en/contact' | url }}">contact us</gcds-link>.

@@ -31,10 +31,13 @@
 
     <!-- GC Design System  Components-->
     <link rel="stylesheet" href="{{ '/components/dist/gcds/gcds.css' | url }}">
-    <script type="module" src="/components/dist/gcds/gcds.esm.js"></script>
+    <script type="module" src="{{ '/components/dist/gcds/gcds.esm.js' | url }}"></script>
+    {% if loadGcdsMap %}
+    <script type="module" src="{{ '/components/gcds-map/dist/gcds-map/gcds-map.esm.js' | url }}"></script>
+    {% endif %}
 
     <!-- Pagefind -->
-    <script src="/pagefind/pagefind.js" type="module"></script>
+    <script src="{{ '/pagefind/pagefind.js' | url }}" type="module"></script>
     <script src="{{ '/scripts/search.js' | url }}" type="module"></script>
   </head>
   <body>
