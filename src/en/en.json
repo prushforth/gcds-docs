@@ -49,6 +49,7 @@
     "input": "/en/components/input",
     "langToggle": "/en/components/language-toggle/",
     "link": "/en/components/link",
+    "map": "/en/components/map",
     "notice": "/en/components/notice",
     "pagination": "/en/components/pagination",
     "radios": "/en/components/radios",
