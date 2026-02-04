@@ -1,18 +1,24 @@
 {% set components = ["components", locale | upper] | join %}
+{% set mapComponents = ["mapComponents", locale | upper] | join %}
 {% set pageTemplates = ["pageTemplates", locale | upper] | join %}
 {% set shortcuts = ["shortcuts", locale | upper] | join %}
 
 {% set navPages = collections.all | eleventyNavigation %}
 {% set componentPages = collections.all | eleventyNavigation(components) | sortAlpha %}
+{% set mapComponentPages = collections.all | eleventyNavigation(mapComponents) | sortCollection %}
 {% set templatePages = collections.all | eleventyNavigation(pageTemplates) | sortAlpha %}
 {% set shortcutsPages = collections.all | eleventyNavigation(shortcuts) %}
 
 {% macro isCurrent(url) -%}
-  {% if page.url | contains(url)%}current{% endif %}
+  {% if page.url == url %}current{% endif %}
 {%- endmacro %}
 
 {% macro isNavGroupOpen(url) -%}
-  {% if page.url | contains(url) %}open{% endif %}
+  {% if url == links.mapComponents and page.url | contains('/map') %}
+    open
+  {% elif page.url | contains(url) and not (url == links.components and page.url | contains('/map')) %}
+    open
+  {% endif %}
 {%- endmacro %}
 
 {% macro isCSSShortcutGroupOpen(children, url) -%}
@@ -32,14 +38,25 @@
 
 {% macro renderComponentListItem(entry) -%}
 {% if entry.state === 'published' %}
-  {% if entry.url %}
-    <gcds-nav-link
-      href="{{ entry.url | url }}"
-      {{ isCurrent(entry.url) }}
-    >
-      {{ entry.title }}
-    </gcds-nav-link>
-  {% endif %}
+  {# Simple link to component page - tabs are on the page itself #}
+  <gcds-nav-link
+    href="{{ entry.url | url }}"
+    {{ isCurrent(entry.url) }}
+  >
+    {{ entry.title }}
+  </gcds-nav-link>
+{% endif %}
+{%- endmacro %}
+
+{% macro renderMapComponentListItem(entry) -%}
+{% if entry.state === 'published' %}
+  {# Simple link for map components #}
+  <gcds-nav-link
+    href="{{ entry.url | url }}"
+    {{ isCurrent(entry.url) }}
+  >
+    {{ entry.title }}
+  </gcds-nav-link>
 {% endif %}
 {%- endmacro %}
 
@@ -118,6 +135,25 @@
 
     {%- for entry in componentPages %}
       {%- if entry.locale == locale %}{{ renderComponentListItem(entry) }}{% endif -%}
+    {%- endfor -%}
+  </gcds-nav-group>
+
+  {# Map Components #}
+  
+  <gcds-nav-group
+    menu-label="{{ nav[locale].mapcomponents }}"
+    open-trigger="{{ nav[locale].mapcomponents }}"
+    {{ isNavGroupOpen(links.mapComponents) }}
+  >
+    <gcds-nav-link
+      href="{{ links.mapComponents }}"
+      {% if [links.mapComponents, '/'] | join == page.url %}current{% endif %}
+    >
+      {{ nav[locale].mapcomponentsoverview }}
+    </gcds-nav-link>
+
+    {%- for entry in mapComponentPages %}
+      {%- if entry.locale == locale %}{{ renderMapComponentListItem(entry) }}{% endif -%}
     {%- endfor -%}
   </gcds-nav-group>
 

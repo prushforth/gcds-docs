@@ -6,9 +6,10 @@ eleventyNavigation:
   key: mapFR
   title: Carte
   locale: fr
-  parent: componentsFR
+  parent: mapComponentsFR
+  order: 1
   otherNames:
-  description: Une carte est un outil interactif pour afficher et interroger des informations de localisation à différentes échelles
+  description: Une carte est un outil interactif permettant d'afficher et d'interroger des informations de localisation en couches à différentes échelles
   thumbnail: /images/common/components/preview-map.svg
   alt: This is an image of the component
   state: published
