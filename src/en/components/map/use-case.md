@@ -6,9 +6,10 @@ eleventyNavigation:
   key: mapEN
   title: Map
   locale: en
-  parent: componentsEN
+  parent: mapComponentsEN
+  order: 1
   otherNames:
-  description: A map is an interactive tool to display and query location information at varying scales
+  description: A map is an interactive tool to display and query layered location information at varying scales
   thumbnail: /images/common/components/preview-map.svg
   alt: This is an image of the component
   state: published

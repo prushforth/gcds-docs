@@ -25,6 +25,7 @@
     "typographyFontWeight": "/fr/styles/typographie#epaisseurs-de-police",
 
     "components": "/fr/composants",
+    "mapComponents": "/fr/composants/composants-de-carte",
     "alert": "/fr/developpement-en-cours",
     "breadcrumbs": "/fr/composants/chemin-de-navigation",
     "button": "/fr/composants/bouton",
@@ -50,6 +51,10 @@
     "langToggle": "/fr/composants/bascule-de-langue/",
     "link": "/fr/composants/lien",
     "map": "/fr/composants/map",
+    "mapLayer": "/fr/composants/map/couche",
+    "mapExtent": "/fr/composants/map/etendue",
+    "mapFeature": "/fr/composants/map/entite",
+    "mapLink": "/fr/composants/map/lien",
     "notice": "/fr/composants/avis",
     "pagination": "/fr/composants/pagination",
     "radios": "/fr/composants/boutons-radio",
