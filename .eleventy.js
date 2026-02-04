@@ -43,6 +43,9 @@ module.exports = function (eleventyConfig) {
     './node_modules/@cdssnc/gcds-components/': 'components',
   });
   eleventyConfig.addPassthroughCopy({
+    './node_modules/gcds-map/dist/gcds-map/': 'components/gcds-map/dist/gcds-map',
+  });
+  eleventyConfig.addPassthroughCopy({
     './node_modules/@gcds-core/css-shortcuts/dist/gcds-css-shortcuts.min.css':
       'gcds-css-shortcuts.min.css',
   });
@@ -68,9 +71,11 @@ module.exports = function (eleventyConfig) {
   // Filters
 
   eleventyConfig.addFilter('sortCollection', arr => {
-    // get unsorted items
+    // Sort by order property on navigation entries
     return arr.sort(function (a, b) {
-      return a.data.eleventyNavigation.order - b.data.eleventyNavigation.order;
+      const orderA = a.order !== undefined ? a.order : 999;
+      const orderB = b.order !== undefined ? b.order : 999;
+      return orderA - orderB;
     });
   });
 

@@ -21,7 +21,7 @@ date: 'git Last Modified'
 
 </ol>
 
-<img class="b-sm b-default p-300" src="/images/en/components/anatomy/gcds-link-anatomy.svg" alt="A label with an underline to signal that it's an interactive link that can be followed. An icon wth a downward pointing arrow sits to the right of the link." />
+<img src="/images/en/components/anatomy/gcds-link-anatomy.svg" alt="A label with an underline to signal that it's an interactive link that can be followed. An icon wth a downward pointing arrow sits to the right of the link." />
 
 ## Accessibility and design for links
 

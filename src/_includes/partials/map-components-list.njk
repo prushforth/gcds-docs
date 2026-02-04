@@ -1,0 +1,14 @@
+{% set mapComponents = ["mapComponents", locale | upper] | join %}
+{% set mapComponentPages = collections.all | eleventyNavigation(mapComponents) | sortCollection %}
+
+<gcds-grid class="map-components-overview-list" tag="ul" columns-desktop="1fr 1fr 1fr" columns-tablet="1fr 1fr" columns="1fr">
+{%- for entry in mapComponentPages %}
+  {%- if entry.locale == locale and entry.state === 'published' %}
+<li>
+  <gcds-link href="{{ entry.url | url }}">
+    {{ entry.title }}
+  </gcds-link>
+</li>
+  {% endif -%}
+{%- endfor -%}
+</gcds-grid>
