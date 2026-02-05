@@ -23,3 +23,11 @@ tags: ['mapFR', 'design']
 </ol>
 
 ## Accessibilité et design de map
+
+Le composant de carte prend en charge l'utilisation du clavier. Les contrôles de la carte suivent un ordre visuel et de tabulation prédéfini. Vous pouvez ajouter ou retirer la plupart des contrôles, à l'exception du contrôle d'attribution (licence) qui est obligatoire.
+
+Lors du choix des couches cartographiques (en particulier les couches WMS/WMTS basées sur des images), utilisez un style à contraste élevé et évitez de vous fier uniquement à la couleur pour communiquer le sens. Fournissez des styles sélectionnables alternatifs, si possible.
+
+Pour l'accès non visuel, fournissez une courte description textuelle de l'objectif de la carte. Pour les cartes avec un objectif précis, ajoutez un élément `<map-caption>…</map-caption>` comme premier enfant du composant de carte.
+
+Lorsque la carte comprend des entités, elles sont regroupées en un seul point de tabulation. Utilisez les touches fléchées pour vous déplacer entre les entités. Les entités sont ordonnées par distance croissante par rapport au centre de la carte.
