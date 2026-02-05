@@ -12,6 +12,14 @@ eleventyNavigation:
   thumbnail: /images/common/components/preview-map-layer.svg
   alt: This is an image of the layer component
   state: published
+eleventyComputed:
+  links:
+    githubCompsIssues: https://github.com/nrcan/gcds-map/issues
+  helpus:
+    en:
+      feedbackHref: mailto:geo@nrcan-rncan.gc.ca
+    fr:
+      feedbackHref: mailto:geo@rncan-nrcan.gc.ca
 translationKey: "maplayer"
 tags: ['maplayerEN', 'usage']
 permalink: /en/components/map/layer/

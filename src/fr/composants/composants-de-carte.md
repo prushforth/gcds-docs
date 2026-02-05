@@ -10,6 +10,14 @@ translationKey: 'mapcomponents'
 date: 'git Last Modified'
 nocrawl: true
 github: https://github.com/nrcan/gcds-map
+eleventyComputed:
+  links:
+    githubCompsIssues: https://github.com/nrcan/gcds-map/issues
+  helpus:
+    en:
+      feedbackHref: mailto:geo@nrcan-rncan.gc.ca
+    fr:
+      feedbackHref: mailto:geo@rncan-nrcan.gc.ca
 cardlist:
   type: mapComponents
   state: published
