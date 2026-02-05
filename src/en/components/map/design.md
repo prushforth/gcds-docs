@@ -24,3 +24,12 @@ tags: ['mapEN', 'design']
 
 
 ## Design and accessibility for map
+
+The map component supports keyboard use. Map controls follow a predefined visual and tab order. You can add or remove most controls, except the required attribution (licensing) control.
+
+When choosing map layers (especially image-based WMS/WMTS layers), select high-contrast styling and avoid relying on colour alone to communicate meaning. Provide alternate selectable styles, if possible.
+
+For non-visual access, provide a short text description of the map’s purpose. For topical maps, add a `<map-caption>…</map-caption>` as the first child of the map component.
+
+When the map includes features, they are grouped as a single tab stop. Use the arrow keys to move between features. Features are ordered by ascending distance from the map centre.
+
