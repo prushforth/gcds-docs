@@ -9,7 +9,7 @@ tags: ['mapEN', 'design']
 
 ## Map anatomy
 
-<img class="b-sm b-default p-300" src="/images/en/components/anatomy/gcds-map-anatomy.svg" alt="An image of the anatomy." />
+<img src="/images/en/components/anatomy/gcds-map-anatomy.svg" alt="An image of the anatomy." />
 
 <ol class="anatomy-list">
   <li>The <strong>Layer control</strong> is an expandable list of layers. Each entry provides detailed controls for manipulating layer characteristics. 
