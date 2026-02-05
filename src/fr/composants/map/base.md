@@ -1,15 +1,14 @@
 ---
 layout: 'layouts/base.njk'
-github: https://github.com/nrcan/gcds-map
+github: https://github.com/NRCan/gcds-map/tree/main/src/components/gcds-map
 loadGcdsMap: true
-figma: insert figma url
 permalink: false
 tags: ['mapFR', 'header']
 ---
 
 # Carte <br>`<gcds-map>`
 
-{% docLinks locale stage figma github %}
+{% docLinks locale, stage, figma, github %}
 {% enddocLinks %}
 
 Une carte est un outil interactif permettant d'afficher et d'interroger des informations de localisation en couches à différentes échelles

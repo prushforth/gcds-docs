@@ -2,7 +2,6 @@
 layout: 'layouts/base.njk'
 github: https://github.com/NRCan/gcds-map/tree/main/src/components/gcds-map
 loadGcdsMap: true
-figma: insert figma url
 permalink: false
 tags: ['mapEN', 'header']
 ---
@@ -14,7 +13,7 @@ gcds-map {
 </style>
 # Map <br>`<gcds-map>`
 
-{% docLinks locale stage figma github %}
+{% docLinks locale, stage, figma, github %}
 {% enddocLinks %}
 
 A map is an interactive tool to display and query layered location information at varying scales

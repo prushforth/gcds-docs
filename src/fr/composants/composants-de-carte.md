@@ -20,5 +20,6 @@ templateEngineOverride: njk,md
 
 Les composants de carte fournissent des fonctionnalités cartographiques pour afficher et interagir avec des données géographiques. Chaque composant comprend du code réutilisable, des conseils sur les meilleures pratiques et des conseils d'accessibilité.
 
-{% docLinks locale, stage, github %}
+{# docLinks is a custom Eleventy paired shortcode that generates a list of documentation resource links (GitHub and Figma) with an optional stage/phase badge. Its parameters must be in order: locale, stage, figma, github comma-separated parameters advisable #}
+{% docLinks locale, stage, figma, github %}
 {% enddocLinks %}

@@ -2,7 +2,6 @@
 layout: 'layouts/base.njk'
 github: https://github.com/NRCan/gcds-map/tree/main/src/components/map-layer
 loadGcdsMap: true
-figma: insert figma url
 permalink: false
 tags: ['maplayerEN', 'header']
 ---
@@ -15,7 +14,7 @@ gcds-map {
 </style>
 # Layer <br>`<map-layer>`
 
-{% docLinks locale stage figma github %}
+{% docLinks locale, stage, figma, github %}
 {% enddocLinks %}
 
 Web map data or content is inherently layered. Add it to the `<gcds-map>` component using one or more child `<map-layer>` elements.  Each layer is rendered on top of the previous one.  Often a map is composed of a single opaque "base map" layer and one or more thematic layers on top.
