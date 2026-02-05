@@ -22,4 +22,4 @@ tags: ['mapFR', 'design']
   <li>La <strong>fenêtre d'affichage de la carte</strong> est l'endroit où le contenu de la couche cartographique est rendu.
 </ol>
 
-## Accessibilité et design des map
+## Accessibilité et design de map

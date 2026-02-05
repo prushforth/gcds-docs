@@ -51,6 +51,7 @@
     "langToggle": "/en/components/language-toggle/",
     "link": "/en/components/link",
     "map": "/en/components/map",
+    "mapA11y": "/en/components/map/design#design-and-accessibility-for-map",
     "mapLayer": "/en/components/map/layer",
     "notice": "/en/components/notice",
     "pagination": "/en/components/pagination",
