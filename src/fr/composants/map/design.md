@@ -9,7 +9,7 @@ tags: ['mapFR', 'design']
 
 ## Structure de la carte
 
-<img class="b-sm b-default p-300" src="/images/fr/components/anatomy/gcds-map-anatomy.svg" alt="An image of the anatomy." />
+<img src="/images/fr/components/anatomy/gcds-map-anatomy.svg" alt="An image of the anatomy." />
 
 <ol class="anatomy-list">
   <li>Le <strong>contrôle des couches</strong> est une liste extensible de couches. Chaque entrée fournit des contrôles détaillés pour manipuler les caractéristiques des couches. 
