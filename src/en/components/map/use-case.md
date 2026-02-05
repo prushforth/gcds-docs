@@ -33,5 +33,5 @@ Maps have a wide variety of uses, including:
 
 ## Related components
 
-<a href="" class="link-light">map-caption</a>
-<a href="" class="link-light">map-layer</a>
+- <a href="{{ links.mapLayer }}">Layer</a> is exclusively used to add map content.
+- `<map-caption>` is used to provide an accessible caption for screenreader users.
