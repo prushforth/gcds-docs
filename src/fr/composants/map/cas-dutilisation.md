@@ -34,5 +34,5 @@ Les cartes ont une grande variété d'utilisations, notamment :
 ## Composants connexes
 
 - <a href="{{ links.mapLayer }}">Couche</a> est utilisé exclusivement pour ajouter du contenu cartographique.
-- `<map-caption>` est utilisé pour fournir une légende accessible aux utilisateurs de lecteurs d'écran.
+- <a href="{{ links.mapA11y }}">`<map-caption>`</a> est utilisé pour fournir une légende accessible aux utilisateurs de lecteurs d'écran.
 

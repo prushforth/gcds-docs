@@ -51,6 +51,7 @@
     "langToggle": "/fr/composants/bascule-de-langue/",
     "link": "/fr/composants/lien",
     "map": "/fr/composants/map",
+    "mapA11y": "/fr/composants/map/design#accessibilite-et-design-de-map",
     "mapLayer": "/fr/composants/map/couche",
     "notice": "/fr/composants/avis",
     "pagination": "/fr/composants/pagination",
