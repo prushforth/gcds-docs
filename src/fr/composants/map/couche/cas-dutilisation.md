@@ -12,14 +12,6 @@ eleventyNavigation:
   thumbnail: /images/common/components/preview-map-layer.svg
   alt: Ceci est une image du composant de couche
   state: published
-eleventyComputed:
-  links:
-    githubCompsIssues: https://github.com/nrcan/gcds-map/issues
-  helpus:
-    en:
-      feedbackHref: mailto:geo@nrcan-rncan.gc.ca
-    fr:
-      feedbackHref: mailto:geo@rncan-nrcan.gc.ca
 translationKey: "maplayer"
 tags: ['maplayerFR', 'usage']
 permalink: /fr/composants/map/couche/
