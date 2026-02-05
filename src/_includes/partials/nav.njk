@@ -14,9 +14,9 @@
 {%- endmacro %}
 
 {% macro isNavGroupOpen(url) -%}
-  {% if url == links.mapComponents and page.url | contains('/map') %}
+  {% if url == links.mapComponents and (page.url | contains('/map') or page.url | contains('/composants-de-carte')) %}
     open
-  {% elif page.url | contains(url) and not (url == links.components and page.url | contains('/map')) %}
+  {% elif page.url | contains(url) and not (url == links.components and (page.url | contains('/map') or page.url | contains('/composants-de-carte'))) %}
     open
   {% endif %}
 {%- endmacro %}
