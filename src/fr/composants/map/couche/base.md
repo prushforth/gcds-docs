@@ -2,7 +2,6 @@
 layout: 'layouts/base.njk'
 github: https://github.com/cds-snc/gcds-components/tree/main/packages/web/src/components/map-layer
 loadGcdsMap: true
-figma: insert figma url
 permalink: false
 tags: ['maplayerFR', 'header']
 ---
@@ -14,7 +13,7 @@ gcds-map {
 }
 </style>
 # Couche <br>`<map-layer>`
-{% docLinks locale stage figma github %}
+{% docLinks locale, stage, figma, github %}
 {% enddocLinks %}
 
 Les données ou le contenu d'une carte Web sont organisés en couches et sont ajoutés au composant `<gcds-map>` sous forme d'un ou plusieurs éléments enfants `<map-layer>`. Chaque couche est rendue par-dessus la couche précédente. Souvent, une carte est composée d'une couche de « carte de base » et d'une ou plusieurs couches thématiques.
