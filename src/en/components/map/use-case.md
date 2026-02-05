@@ -13,14 +13,6 @@ eleventyNavigation:
   thumbnail: /images/common/components/preview-map.svg
   alt: This is an image of the component
   state: published
-eleventyComputed:
-  links:
-    githubCompsIssues: https://github.com/nrcan/gcds-map/issues
-  helpus:
-    en:
-      feedbackHref: mailto:geo@nrcan-rncan.gc.ca
-    fr:
-      feedbackHref: mailto:geo@rncan-nrcan.gc.ca
 translationKey: "map"
 tags: ['mapEN', 'usage']
 permalink: /en/components/map/
