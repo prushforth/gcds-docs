@@ -9,8 +9,6 @@ tags: ['mapFR', 'design']
 
 ## Structure de la carte
 
-<img src="/images/fr/components/anatomy/gcds-map-anatomy.svg" alt="An image of the anatomy." />
-
 <ol class="anatomy-list">
   <li>Le <strong>contrôle des couches</strong> est une liste extensible de couches. Chaque entrée fournit des contrôles détaillés pour manipuler les caractéristiques des couches. 
   <li><strong>Le contrôle du zoom</strong> est une paire de boutons accessibles au clavier permettant aux utilisateurs d'effectuer un zoom avant ou arrière.
@@ -21,6 +19,8 @@ tags: ['mapFR', 'design']
   <li>Le <strong>contrôle d'attribution</strong> est obligatoire et affiche le lien de licence pour le contenu de la couche cartographique.
   <li>La <strong>fenêtre d'affichage de la carte</strong> est l'endroit où le contenu de la couche cartographique est rendu.
 </ol>
+
+<img src="/images/fr/components/anatomy/gcds-map-anatomy.svg" alt="Une image de l'anatomie." />
 
 ## Accessibilité et design de map
 
