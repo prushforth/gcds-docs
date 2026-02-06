@@ -1,17 +1,14 @@
 {
   "loadGcdsMap": true,
-  "eleventyComputed": {
-    "links": {
-      "githubCompsIssues": "https://github.com/nrcan/gcds-map/issues"
+  "linkOverrides": {
+    "githubCompsIssues": "https://github.com/nrcan/gcds-map/issues"
+  },
+  "helpus": {
+    "en": {
+      "feedbackHref": "mailto:geo@nrcan-rncan.gc.ca"
     },
-    "helpus": {
-      "en": {
-        "feedbackHref": "mailto:geo@nrcan-rncan.gc.ca"
-      },
-      "fr": {
-        "feedbackHref": "mailto:geo@rncan-nrcan.gc.ca"
-      }
+    "fr": {
+      "feedbackHref": "mailto:geo@rncan-nrcan.gc.ca"
     }
   }
 }
-
