@@ -2,8 +2,15 @@ module.exports = {
   links: data => {
     const pathPrefix = process.env.PATH_PREFIX || '';
     
-    if (!data.links || pathPrefix === '') {
-      return data.links;
+    // Merge linkOverrides into links (linkOverrides are defined in local data files
+    // to override specific link values without breaking the PATH_PREFIX computation)
+    let links = data.links || {};
+    if (data.linkOverrides) {
+      links = { ...links, ...data.linkOverrides };
+    }
+    
+    if (!links || pathPrefix === '') {
+      return links;
     }
 
     // Recursively prefix all string values that start with "/"
@@ -27,6 +34,6 @@ module.exports = {
       return obj;
     };
 
-    return prefixUrls(data.links);
+    return prefixUrls(links);
   }
 };
