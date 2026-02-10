@@ -2,7 +2,7 @@
 node_modules/
 
 # Ignore source code editors
-.vscode
+.vscode/settings.json
 .DS_Store
 
 # Ignore output folder
