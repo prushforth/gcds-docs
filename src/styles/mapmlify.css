@@ -111,6 +111,15 @@
   overflow-wrap: break-word;
 }
 
+.mapmlify-app .service-abstract summary {
+  font-size: 1.125rem;
+  cursor: pointer;
+}
+
+.mapmlify-app .service-abstract:not([open]) {
+  margin-bottom: 1rem;
+}
+
 .mapmlify-app .layers-list {
   display: grid;
   gap: 1rem;
@@ -168,7 +177,7 @@
   }
 }
 
-.mapmlify-app .layer-viewer-container mapml-viewer {
+.mapmlify-app .layer-viewer-container gcds-map {
   width: 100%;
   height: 300px;
   border: 1px solid #ddd;
@@ -422,7 +431,7 @@
   color: #2c3e50;
 }
 
-.mapmlify-app mapml-viewer {
+.mapmlify-app gcds-map {
   display: block;
   width: 100%;
   height: 500px;

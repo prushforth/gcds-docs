@@ -9,6 +9,7 @@ import {
   buildWMTSTileUrl,
   buildGetMapUrl,
 } from './main.js';
+import { t } from './i18n.js';
 
 class MapmlifyLayer extends HTMLElement {
   #config = null;
@@ -31,6 +32,7 @@ class MapmlifyLayer extends HTMLElement {
   #sourceCodeTextarea = null;
   #sourceCodeVisible = false;
   #moveendHandler = null;
+  #lazyLoadObserver = null;
 
   set layerConfig(value) {
     this.#config = value;
@@ -47,11 +49,43 @@ class MapmlifyLayer extends HTMLElement {
     if (this.#config) {
       this.#initDefaults();
       this.#render();
+      this.#setupLazyLoading();
     }
   }
 
   disconnectedCallback() {
     this.#removeViewer();
+    if (this.#lazyLoadObserver) {
+      this.#lazyLoadObserver.disconnect();
+      this.#lazyLoadObserver = null;
+    }
+  }
+
+  #setupLazyLoading() {
+    // Lazy-load map previews: Auto-check the layer checkbox when it scrolls into viewport
+    // This prevents loading hundreds/thousands of maps simultaneously on large services
+    const options = {
+      root: null, // viewport
+      rootMargin: '100px', // Start loading slightly before entering viewport
+      threshold: 0.1, // Trigger when 10% visible
+    };
+
+    this.#lazyLoadObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && this.#layerCheckbox && !this.#layerCheckbox.checked) {
+          // Auto-check the checkbox to load the preview
+          this.#layerCheckbox.checked = true;
+          this.#layerCheckbox.dispatchEvent(new Event('change'));
+          
+          // Disconnect after first trigger - we only want to load once
+          this.#lazyLoadObserver.disconnect();
+          this.#lazyLoadObserver = null;
+        }
+      });
+    }, options);
+
+    // Start observing this element
+    this.#lazyLoadObserver.observe(this);
   }
 
   #initDefaults() {
@@ -147,7 +181,7 @@ class MapmlifyLayer extends HTMLElement {
     cb.className = 'layer-checkbox';
     if (c.disabledCheckbox) {
       cb.disabled = true;
-      cb.title = 'Tiled services can only display all layers together';
+      cb.title = t('tiledServicesTooltip');
     }
     this.#layerCheckbox = cb;
     const lbl = document.createElement('label');
@@ -160,11 +194,11 @@ class MapmlifyLayer extends HTMLElement {
     const nameLine = document.createElement('p');
     nameLine.className = 'layer-name';
     if (st === 'ESRI-MapServer') {
-      nameLine.textContent = `ID: ${layer.id} | Name: ${layer.name}`;
+      nameLine.textContent = `${t('id')}: ${layer.id} | ${t('name')}: ${layer.name}`;
     } else if (st === 'WMTS') {
-      nameLine.textContent = `Identifier: ${layer.name}`;
+      nameLine.textContent = `${t('identifier')}: ${layer.name}`;
     } else {
-      nameLine.textContent = `Name: ${layer.name}`;
+      nameLine.textContent = `${t('name')}: ${layer.name}`;
     }
     controls.appendChild(nameLine);
 
@@ -175,7 +209,7 @@ class MapmlifyLayer extends HTMLElement {
     ) {
       controls.appendChild(
         this.#buildSelect(
-          'Projection:',
+          t('projection'),
           'projection-select',
           layer.supportedProjections.map((p) => ({ value: p, label: p })),
           this.#selectedProjection,
@@ -188,7 +222,7 @@ class MapmlifyLayer extends HTMLElement {
     } else if (st === 'ESRI-MapServer' || st === 'ESRI-ImageServer') {
       const projDiv = document.createElement('div');
       projDiv.className = 'projection-selector';
-      projDiv.innerHTML = `<label>Projection:</label><span>${this.#esc(c.projection)} (WKID: ${c.wkid})</span>`;
+      projDiv.innerHTML = `<label>${t('projection')}</label><span>${this.#esc(c.projection)} (WKID: ${c.wkid})</span>`;
       controls.appendChild(projDiv);
     }
 
@@ -196,7 +230,7 @@ class MapmlifyLayer extends HTMLElement {
     if (st === 'ESRI-ImageServer' && layer.bandCount) {
       const rp = document.createElement('div');
       rp.className = 'raster-props';
-      rp.innerHTML = `<p><strong>Bands:</strong> ${layer.bandCount} | <strong>Pixel Type:</strong> ${this.#esc(layer.pixelType)}</p>`;
+      rp.innerHTML = `<p><strong>${t('bands')}</strong> ${layer.bandCount} | <strong>${t('pixelType')}</strong> ${this.#esc(layer.pixelType)}</p>`;
       controls.appendChild(rp);
     }
 
@@ -204,18 +238,18 @@ class MapmlifyLayer extends HTMLElement {
     if (layer.abstract || layer.description) {
       const details = document.createElement('details');
       details.className = 'layer-abstract';
-      details.innerHTML = `<summary>Abstract</summary><p>${this.#esc(layer.abstract || layer.description)}</p>`;
+      details.innerHTML = `<summary>${t('abstract')}</summary><p>${this.#esc(layer.abstract || layer.description)}</p>`;
       controls.appendChild(details);
     }
 
     // Bounds toggle
     controls.appendChild(
       this.#buildCheckbox(
-        'Include Bounds',
+        t('includeBounds'),
         'bounds-checkbox',
         'bounds-label',
         this.#boundsEnabled,
-        'Include layer bounds (disable if bounds are incorrect)',
+        t('boundsTooltip'),
         (val) => {
           this.#boundsEnabled = val;
           this.#onControlChange();
@@ -230,11 +264,11 @@ class MapmlifyLayer extends HTMLElement {
       queryDiv.className = 'query-format-selector';
 
       const qcb = this.#buildCheckbox(
-        'Query',
+        t('query'),
         'query-checkbox',
         'query-label',
         this.#queryEnabled,
-        'Enable queries',
+        t('enableQueries'),
         (val) => {
           this.#queryEnabled = val;
           this.#onQueryChange();
@@ -246,7 +280,7 @@ class MapmlifyLayer extends HTMLElement {
       // Info format dropdown (WMS / WMTS)
       if (st === 'WMS' && c.getFeatureInfoFormats?.length > 0) {
         const fmtLabel = document.createElement('label');
-        fmtLabel.textContent = 'Info Format:';
+        fmtLabel.textContent = t('infoFormat');
         queryDiv.appendChild(fmtLabel);
         const sel = this.#createSelectElement(
           'format-select',
@@ -260,7 +294,7 @@ class MapmlifyLayer extends HTMLElement {
         queryDiv.appendChild(sel);
       } else if (st === 'WMTS' && layer.infoFormats?.length > 0) {
         const fmtLabel = document.createElement('label');
-        fmtLabel.textContent = 'Info Format:';
+        fmtLabel.textContent = t('infoFormat');
         queryDiv.appendChild(fmtLabel);
         const sel = this.#createSelectElement(
           'format-select',
@@ -283,7 +317,7 @@ class MapmlifyLayer extends HTMLElement {
     ) {
       controls.appendChild(
         this.#buildSelect(
-          'Style:',
+          t('style'),
           'style-select',
           layer.styles.map((s) => ({ value: s.name, label: s.title })),
           this.#selectedStyle,
@@ -300,11 +334,11 @@ class MapmlifyLayer extends HTMLElement {
     if (st === 'ESRI-MapServer' && !c.isTiled) {
       controls.appendChild(
         this.#buildSelect(
-          'Export Mode:',
+          t('exportMode'),
           'export-mode-select',
           [
-            { value: 'individual', label: 'Individual Layer' },
-            { value: 'fused', label: 'All Layers (Fused)' },
+            { value: 'individual', label: t('individualLayer') },
+            { value: 'fused', label: t('allLayersFused') },
           ],
           this.#selectedExportMode,
           (val) => {
@@ -319,7 +353,7 @@ class MapmlifyLayer extends HTMLElement {
     if (st === 'WMS' && c.getMapFormats?.length > 0) {
       controls.appendChild(
         this.#buildSelect(
-          'Image Format:',
+          t('imageFormat'),
           'format-select',
           c.getMapFormats.map((f) => ({ value: f, label: f })),
           this.#selectedImageFormat,
@@ -332,7 +366,7 @@ class MapmlifyLayer extends HTMLElement {
     } else if (st === 'WMTS' && layer.formats?.length > 0) {
       controls.appendChild(
         this.#buildSelect(
-          'Image Format:',
+          t('imageFormat'),
           'format-select',
           layer.formats.map((f) => ({ value: f, label: f })),
           this.#selectedImageFormat,
@@ -349,7 +383,7 @@ class MapmlifyLayer extends HTMLElement {
     ) {
       controls.appendChild(
         this.#buildSelect(
-          'Image Format:',
+          t('imageFormat'),
           'format-select',
           c.supportedFormats.map((f) => ({ value: f, label: f })),
           this.#selectedImageFormat,
@@ -362,7 +396,7 @@ class MapmlifyLayer extends HTMLElement {
     } else if (st === 'ESRI-ImageServer' && c.supportedFormats?.length > 0) {
       controls.appendChild(
         this.#buildSelect(
-          'Image Format:',
+          t('imageFormat'),
           'format-select',
           c.supportedFormats.map((f) => ({ value: f, label: f })),
           this.#selectedImageFormat,
@@ -381,7 +415,7 @@ class MapmlifyLayer extends HTMLElement {
         // Fixed-value dimension (too many values)
         const info = document.createElement('div');
         info.className = 'dimension-info';
-        info.innerHTML = `<strong>${this.#esc(dim.name)}:</strong> ${this.#esc(dim.default)} <em>(fixed value - ${dim.valueCount} total values)</em>`;
+        info.innerHTML = `<strong>${this.#esc(dim.name)}:</strong> ${this.#esc(dim.default)} <em>(${t('fixedValue')} - ${dim.valueCount} ${t('totalValues')})</em>`;
         controls.appendChild(info);
       } else {
         const dimDiv = document.createElement('div');
@@ -422,12 +456,12 @@ class MapmlifyLayer extends HTMLElement {
 
     const toggleBtn = document.createElement('button');
     toggleBtn.className = 'source-toggle-btn';
-    toggleBtn.textContent = 'Show source code';
+    toggleBtn.textContent = t('showSourceCode');
     toggleBtn.addEventListener('click', () => {
       this.#sourceCodeVisible = !this.#sourceCodeVisible;
       toggleBtn.textContent = this.#sourceCodeVisible
-        ? 'Hide source code'
-        : 'Show source code';
+        ? t('hideSourceCode')
+        : t('showSourceCode');
       if (this.#sourceCodeTextarea) {
         this.#sourceCodeTextarea.style.display = this.#sourceCodeVisible
           ? 'block'
@@ -438,15 +472,15 @@ class MapmlifyLayer extends HTMLElement {
 
     const copyBtn = document.createElement('button');
     copyBtn.className = 'source-copy-btn';
-    copyBtn.textContent = 'Copy source code';
+    copyBtn.textContent = t('copySourceCode');
     copyBtn.addEventListener('click', () => {
       if (!this.#sourceCodeTextarea) return;
       const text = this.#sourceCodeTextarea.value;
       navigator.clipboard.writeText(text).then(
         () => {
-          copyBtn.textContent = 'Copied!';
+          copyBtn.textContent = t('copied');
           setTimeout(() => {
-            copyBtn.textContent = 'Copy source code';
+            copyBtn.textContent = t('copySourceCode');
           }, 1500);
         },
         () => {
@@ -610,8 +644,8 @@ class MapmlifyLayer extends HTMLElement {
 
     const projection = this.#selectedProjection;
 
-    // Create mapml-viewer
-    const viewer = document.createElement('mapml-viewer');
+    // Create gcds-map
+    const viewer = document.createElement('gcds-map');
     viewer.setAttribute('projection', projection);
     viewer.setAttribute('controls', '');
 
@@ -668,7 +702,7 @@ class MapmlifyLayer extends HTMLElement {
 
     if (this.#preview) this.#preview.style.display = 'block';
 
-    const viewer = container.querySelector('mapml-viewer');
+    const viewer = container.querySelector('gcds-map');
     if (viewer) {
       if (this.#moveendHandler) {
         viewer.removeEventListener('map-moveend', this.#moveendHandler);
@@ -1563,7 +1597,7 @@ class MapmlifyLayer extends HTMLElement {
     const st = this.#config.serviceType;
     const container = this.#viewerContainer;
     if (!container) return;
-    const viewer = container.querySelector('mapml-viewer');
+    const viewer = container.querySelector('gcds-map');
     if (!viewer) return;
 
     if (st === 'WMS') this.#updateWMSQuery(viewer);
@@ -1899,7 +1933,7 @@ class MapmlifyLayer extends HTMLElement {
 
   #updateSourceCode() {
     if (!this.#sourceCodeVisible) return;
-    const viewer = this.#viewerContainer?.querySelector('mapml-viewer');
+    const viewer = this.#viewerContainer?.querySelector('gcds-map');
     if (!viewer || !this.#sourceCodeTextarea) return;
     this.#sourceCodeTextarea.value = this.#serializeViewer(viewer);
     // Auto-size to fit content without scrollbars
@@ -1913,7 +1947,7 @@ class MapmlifyLayer extends HTMLElement {
     clone.setAttribute('zoom', viewer.getAttribute('zoom'));
     clone.setAttribute('lat', viewer.getAttribute('lat'));
     clone.setAttribute('lon', viewer.getAttribute('lon'));
-    // Remove dynamic style elements injected by mapml-viewer
+    // Remove dynamic style elements injected by gcds-map
     clone.querySelectorAll('style').forEach((s) => s.remove());
     return this.#prettyPrint(clone);
   }
@@ -1956,7 +1990,7 @@ class MapmlifyLayer extends HTMLElement {
   // ─── PUBLIC API ────────────────────────────────────────
 
   getMapMLMarkup() {
-    const viewer = this.#viewerContainer?.querySelector('mapml-viewer');
+    const viewer = this.#viewerContainer?.querySelector('gcds-map');
     if (!viewer) return null;
     return this.#serializeViewer(viewer);
   }
