@@ -57,6 +57,10 @@ module.exports = function (eleventyConfig) {
     './src/.well-known/security.txt': 
       '.well-known/security.txt' 
   });
+  // MapMLify application scripts and capabilities presets
+  eleventyConfig.addPassthroughCopy({ './src/scripts/mapmlify/': 'scripts/mapmlify/' });
+  eleventyConfig.addPassthroughCopy('./src/styles/mapmlify.css');
+
   // Add copy fo a11y testing
   eleventyConfig.addPassthroughCopy('./.pa11yci.json');
 
