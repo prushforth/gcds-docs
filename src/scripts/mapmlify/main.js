@@ -1,6 +1,7 @@
 // Main application logic (CORS proxy removed - now using file upload for blocked resources)
 
 import './mapmlify-layer.js';
+import { t } from './i18n.js';
 
 // Format dimension name as WMS parameter (time/elevation unchanged, others get DIM_ prefix)
 export function formatDimensionParam(dimensionName) {
@@ -182,13 +183,13 @@ loadBtn.addEventListener('click', async () => {
   const url = wmsUrlInput.value.trim();
 
   if (!url) {
-    alert('Please enter a capabilities URL');
+    alert(t('alertEnterUrl'));
     return;
   }
 
   try {
     loadBtn.disabled = true;
-    loadBtn.textContent = 'Loading...';
+    loadBtn.textContent = t('loading');
     // Hide file upload button in case it was shown from a previous attempt
     loadFileBtn.style.display = 'none';
 
@@ -201,16 +202,14 @@ loadBtn.addEventListener('click', async () => {
 
     // Check if it's a CORS error (typical fetch failures are TypeError)
     if (error.name === 'TypeError' && error.message.includes('fetch')) {
-      alert(
-        'Failed to load WMS capabilities due to CORS restrictions.\n\nPlease download the capabilities file in another tab and use "Load from File" button.'
-      );
+      alert(t('corsError'));
       loadFileBtn.style.display = 'inline-block';
     } else {
-      alert('Failed to load WMS capabilities. Check console for details.');
+      alert(t('loadError'));
     }
   } finally {
     loadBtn.disabled = false;
-    loadBtn.textContent = 'Load Service';
+    loadBtn.textContent = t('loadService');
   }
 });
 
@@ -224,7 +223,7 @@ fileInput.addEventListener('change', async (event) => {
 
   try {
     loadFileBtn.disabled = true;
-    loadFileBtn.textContent = 'Processing...';
+    loadFileBtn.textContent = t('processing');
 
     const text = await file.text();
 
@@ -241,10 +240,10 @@ fileInput.addEventListener('change', async (event) => {
     wmsUrlInput.value = '';
   } catch (error) {
     console.error('Error processing capabilities file:', error);
-    alert('Failed to process capabilities file. Check console for details.');
+    alert(t('processError'));
   } finally {
     loadFileBtn.disabled = false;
-    loadFileBtn.textContent = 'Load from File';
+    loadFileBtn.textContent = t('loadFromFile');
   }
 });
 
@@ -1003,7 +1002,7 @@ export function buildWMTSTileUrl(
 
 function displayWMTSInfo(info, source, url) {
   const sourceNote =
-    source === 'file' ? '<p><em>(Loaded from file)</em></p>' : '';
+    source === 'file' ? `<p><em>${t('loadedFromFile')}</em></p>` : '';
   const serviceTypeBadge =
     '<span class="service-type-badge" style="background: #4CAF50; color: white; padding: 2px 8px; border-radius: 3px; font-size: 0.9em; margin-left: 10px;">WMTS</span>';
 
@@ -1013,30 +1012,26 @@ function displayWMTSInfo(info, source, url) {
 
   const urlNote =
     source !== 'file'
-      ? '<p><strong>Loaded URL:</strong> <a href="' +
-        url +
-        '" target="_blank" rel="noopener noreferrer">' +
-        url +
-        '</a></p>'
+      ? `<p><strong>${t('loadedUrl')}</strong> <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a></p>`
       : '';
 
   serviceDetails.innerHTML =
     sourceNote +
-    '<p><strong>Title:</strong> ' +
+    `<p><strong>${t('title')}</strong> ` +
     info.title +
     ' ' +
     serviceTypeBadge +
-    '</p><p><strong>Version:</strong> ' +
+    `</p><p><strong>${t('version')}</strong> ` +
     info.version +
-    '</p><p><strong>TileMatrixSets:</strong> ' +
+    `</p><p><strong>${t('tileMatrixSets')}</strong> ` +
     Object.keys(info.tileMatrixSets).length +
     ' (' +
     supportedCount +
-    ' supported)</p><details class="service-abstract"><summary><strong>Abstract</strong></summary><p>' +
+    ` ${t('supported')})</p><details class="service-abstract"><summary><strong>${t('abstractLabel')}</strong></summary><p>` +
     info.abstract +
     '</p></details>' +
     urlNote +
-    '<h3>Available Layers (' +
+    `<h3>${t('availableLayers')} (` +
     info.layers.length +
     ')</h3><div class="layers-list"></div>';
 
@@ -1059,20 +1054,20 @@ function displayWMTSInfo(info, source, url) {
 
 function displayServiceInfo(info, source, loadedUrl) {
   const sourceNote =
-    source === 'file' ? '<p><em>(Loaded from file)</em></p>' : '';
+    source === 'file' ? `<p><em>${t('loadedFromFile')}</em></p>` : '';
   const serviceTypeBadge =
     '<span class="service-type-badge" style="background: #2196F3; color: white; padding: 2px 8px; border-radius: 3px; font-size: 0.9em; margin-left: 10px;">WMS</span>';
 
   serviceDetails.innerHTML = `
     ${sourceNote}
-    <p><strong>Title:</strong> ${info.title} ${serviceTypeBadge}</p>
-    <p><strong>Version:</strong> ${info.version}</p>
+    <p><strong>${t('title')}</strong> ${info.title} ${serviceTypeBadge}</p>
+    <p><strong>${t('version')}</strong> ${info.version}</p>
     <details class="service-abstract">
-      <summary><strong>Abstract</strong></summary>
+      <summary><strong>${t('abstractLabel')}</strong></summary>
       <p>${info.abstract}</p>
     </details>
-    ${source !== 'file' ? `<p><strong>Loaded URL:</strong> <a href="${loadedUrl}" target="_blank" rel="noopener noreferrer">${loadedUrl}</a></p>` : ''}
-    <h3>Available Layers</h3>
+    ${source !== 'file' ? `<p><strong>${t('loadedUrl')}</strong> <a href="${loadedUrl}" target="_blank" rel="noopener noreferrer">${loadedUrl}</a></p>` : ''}
+    <h3>${t('availableLayers')}</h3>
     <div class="layers-list"></div>
   `;
 
@@ -1325,33 +1320,33 @@ function displayESRIMapServerInfo(info, source, url) {
   }
 
   const sourceNote =
-    source === 'file' ? '<p><em>(Loaded from file)</em></p>' : '';
+    source === 'file' ? `<p><em>${t('loadedFromFile')}</em></p>` : '';
   const serviceTypeBadge = info.isTiled
     ? '<span class="service-type-badge" style="background: #FF9800; color: white; padding: 2px 8px; border-radius: 3px; font-size: 0.9em; margin-left: 10px;">ESRI MapServer (Tiled)</span>'
     : '<span class="service-type-badge" style="background: #FF9800; color: white; padding: 2px 8px; border-radius: 3px; font-size: 0.9em; margin-left: 10px;">ESRI MapServer</span>';
 
   const urlNote =
     source !== 'file'
-      ? `<p><strong>Loaded URL:</strong> <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a></p>`
+      ? `<p><strong>${t('loadedUrl')}</strong> <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a></p>`
       : '';
   const copyrightNote = info.copyrightText
-    ? `<p><strong>Copyright:</strong> ${info.copyrightText}</p>`
+    ? `<p><strong>${t('copyright')}</strong> ${info.copyrightText}</p>`
     : '';
   const tiledNote = info.isTiled
-    ? `<p><strong>Tile Cache:</strong> Zoom levels ${info.tileInfo.minZoom} - ${info.tileInfo.maxZoom}</p>`
+    ? `<p><strong>${t('tileCache')}</strong> ${t('zoomLevels')} ${info.tileInfo.minZoom} - ${info.tileInfo.maxZoom}</p>`
     : '';
 
   serviceDetails.innerHTML = `
     ${sourceNote}
-    <p><strong>Title:</strong> ${info.title} ${serviceTypeBadge}</p>
+    <p><strong>${t('title')}</strong> ${info.title} ${serviceTypeBadge}</p>
     ${tiledNote}
     <details class="service-abstract">
-      <summary><strong>Abstract</strong></summary>
+      <summary><strong>${t('abstractLabel')}</strong></summary>
       <p>${info.abstract}</p>
     </details>
     ${copyrightNote}
     ${urlNote}
-    <h3>Available Layers (${info.layers.length})</h3>
+    <h3>${t('availableLayers')} (${info.layers.length})</h3>
     <div class="layers-list"></div>
   `;
 
@@ -1388,23 +1383,23 @@ function displayESRIImageServerInfo(info, source, url) {
   }
 
   const sourceNote =
-    source === 'file' ? '<p><em>(Loaded from file)</em></p>' : '';
+    source === 'file' ? `<p><em>${t('loadedFromFile')}</em></p>` : '';
   const serviceTypeBadge =
     '<span class="service-type-badge" style="background: #9C27B0; color: white; padding: 2px 8px; border-radius: 3px; font-size: 0.9em; margin-left: 10px;">ESRI ImageServer</span>';
 
   const urlNote =
     source !== 'file'
-      ? `<p><strong>Loaded URL:</strong> <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a></p>`
+      ? `<p><strong>${t('loadedUrl')}</strong> <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a></p>`
       : '';
   const copyrightNote = info.copyrightText
-    ? `<p><strong>Copyright:</strong> ${info.copyrightText}</p>`
+    ? `<p><strong>${t('copyright')}</strong> ${info.copyrightText}</p>`
     : '';
 
   serviceDetails.innerHTML = `
     ${sourceNote}
-    <p><strong>Title:</strong> ${info.title} ${serviceTypeBadge}</p>
+    <p><strong>${t('title')}</strong> ${info.title} ${serviceTypeBadge}</p>
     <details class="service-abstract">
-      <summary><strong>Abstract</strong></summary>
+      <summary><strong>${t('abstractLabel')}</strong></summary>
       <p>${info.abstract}</p>
     </details>
     ${copyrightNote}

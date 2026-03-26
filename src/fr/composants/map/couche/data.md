@@ -16,7 +16,7 @@ date: "git Last Modified"
 
 ## Obtenir des données pour votre carte
 
-Utilisez MapMLify pour convertir les couches de services Web Map Service (WMS), Web Map Tile Service (WMTS) et ESRI en MapML fonctionnel. Saisissez, collez ou sélectionnez une URL de capacités dans la liste, puis cliquez sur **Load Service**.
+Utilisez MapMLify pour convertir les couches de services Web Map Service (WMS), Web Map Tile Service (WMTS) et ESRI en MapML fonctionnel. Saisissez, collez ou sélectionnez une URL de capacités dans la liste, puis cliquez sur **Charger le service**.
 
 <div class="mapmlify-app" data-capabilities-url="{{ '/scripts/mapmlify/capabilities.fr.txt' | url }}">
   <section class="input-section">
