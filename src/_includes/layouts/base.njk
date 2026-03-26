@@ -35,6 +35,10 @@
     {% if loadGcdsMap %}
     <script type="module" src="{{ '/components/gcds-map/dist/gcds-map/gcds-map.esm.js' | url }}"></script>
     {% endif %}
+    {% if loadMapMLify %}
+    <link rel="stylesheet" href="{{ '/styles/mapmlify.css' | url }}">
+    <script type="module" src="{{ '/scripts/mapmlify/main.js' | url }}"></script>
+    {% endif %}
 
     <!-- Pagefind -->
     <script src="{{ '/pagefind/pagefind.js' | url }}" type="module"></script>
