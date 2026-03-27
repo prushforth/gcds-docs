@@ -16,7 +16,7 @@ date: "git Last Modified"
 
 ## Obtenir des données pour votre carte
 
-Utilisez MapMLify pour convertir les couches de services Web Map Service (WMS), Web Map Tile Service (WMTS) et ESRI en MapML fonctionnel. Saisissez, collez ou sélectionnez une URL de capacités dans la liste, puis cliquez sur **Charger le service**.
+Utilisez l'outil ci-dessous pour obtenir des informations cartographiques faisant autorité à partir des services de l'Infrastructure canadienne de données géospatiales (ICDG), y compris : les services Web Map Service (WMS), Web Map Tile Service (WMTS) et les couches MapServer et TileServer de l'API REST ESRI. Saisissez, collez ou sélectionnez une URL de « capacités » dans la liste, puis cliquez sur **Charger le service**. Modifiez la vue cartographique de n'importe quelle couche à l'aide des contrôles fournis, puis copiez le code représentant l'état de la carte que vous voyez dans vos propres applications.
 
 <div class="mapmlify-app" data-capabilities-url="{{ '/scripts/mapmlify/capabilities.fr.txt' | url }}">
   <section class="input-section">

@@ -16,7 +16,7 @@ date: "git Last Modified"
 
 ## Get data for your map
 
-Use MapMLify to convert Web Map Service (WMS), Web Map Tile Service (WMTS), and ESRI service layers into functional MapML. Type, paste, or select a capabilities URL from the list, then click **Load Service**.
+Use the tool below to obtain authoritative map information from Canadian Geospatial Data Infrastructure (CGDI) services, including: Web Map Services (WMS), Web Map Tile Services (WMTS), and ESRI REST API MapServer and TileServer layers. Type, paste, or select a "capabilities" URL from the list, then click **Load Service**.  Modify the map view of any layer using the controls provided, then copy the code representing the map state you see into your own applications.
 
 <div class="mapmlify-app" data-capabilities-url="{{ '/scripts/mapmlify/capabilities.en.txt' | url }}">
   <section class="input-section">
