@@ -20,18 +20,22 @@ Use the tool below to obtain authoritative map information from Canadian Geospat
 
 <div class="mapmlify-app" data-capabilities-url="{{ '/scripts/mapmlify/capabilities.en.txt' | url }}">
   <section class="input-section">
-    <label for="wms-url">WMS/WMTS/ESRI Capabilities URL:</label>
-    <div class="input-group">
-      <input type="text" id="wms-url" list="wms-presets"
-        placeholder="Type, paste, or select from list..."
-        autocomplete="off" />
-      <datalist id="wms-presets">
-        <option value="">Loading...</option>
-      </datalist>
-      <button id="load-btn">Load Service</button>
-      <input type="file" id="file-input" accept=".xml,text/xml,application/xml" style="display: none;" />
-      <button id="load-file-btn" style="display: none;">Load from File</button>
+    <div class="input-row">
+      <gcds-input
+        id="wms-url"
+        input-id="wms-url-input"
+        name="wms-url"
+        label="WMS/WMTS/ESRI Capabilities URL:"
+        type="url"
+        hint="Type, paste, or select from list"
+      ></gcds-input>
+      <gcds-button id="load-btn" button-id="load-btn-id" button-type="button" button-role="primary">Load Service</gcds-button>
     </div>
+    <div class="button-group">
+      <input type="file" id="file-input" accept=".xml,text/xml,application/xml" style="display: none;" />
+      <gcds-button id="load-file-btn" button-id="load-file-btn-id" button-type="button" button-role="secondary" style="display: none;">Load from File</gcds-button>
+    </div>
+    <div id="notice-container"></div>
   </section>
 
   <section id="service-info" class="service-info hidden">

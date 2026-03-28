@@ -25,65 +25,34 @@
   margin-bottom: 0.5rem;
 }
 
+.mapmlify-app .input-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.mapmlify-app .input-row gcds-input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.mapmlify-app .input-row gcds-button {
+  flex: 0 0 auto;
+  align-self: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  .mapmlify-app .input-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
 .mapmlify-app .input-group {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
-}
-
-.mapmlify-app #wms-url {
-  flex: 1;
-  max-width: 70%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.mapmlify-app #load-btn,
-.mapmlify-app #load-file-btn {
-  flex: 0 0 auto;
-}
-
-@media (max-width: 700px) {
-  .mapmlify-app .input-group {
-    flex-direction: column;
-  }
-
-  .mapmlify-app #wms-url {
-    width: 100%;
-    max-width: none;
-  }
-
-  .mapmlify-app #load-btn,
-  .mapmlify-app #load-file-btn {
-    width: 100%;
-  }
-}
-
-.mapmlify-app #wms-url:focus {
-  outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-}
-
-.mapmlify-app button {
-  padding: 0.75rem 1.5rem;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.mapmlify-app button:hover {
-  background-color: #2980b9;
-}
-
-.mapmlify-app button:active {
-  background-color: #21618c;
 }
 
 .mapmlify-app .service-info h2 {
@@ -150,7 +119,8 @@
 .mapmlify-app .layer-viewer-container {
   flex: 1 1 300px;
   min-height: 300px;
-  min-width: 300px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 /*
@@ -440,6 +410,10 @@
 }
 
 /* Source code controls */
+.mapmlify-app .code-showcase {
+  margin-top: 1.5rem;
+}
+
 .mapmlify-app .source-code-controls {
   display: flex;
   gap: 0.5rem;
@@ -478,20 +452,18 @@
   background-color: #2980b9;
 }
 
-.mapmlify-app .source-code-textarea {
-  width: 100%;
+.mapmlify-app .source-code-display {
+  width: 0;
+  min-width: 100%;
   margin-top: 0.5rem;
-  padding: 0.75rem;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 0.8rem;
-  line-height: 1.4;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f8f9fa;
-  color: #2c3e50;
-  resize: none;
-  white-space: pre;
-  overflow-y: hidden;
+  padding: 1em;
+  border-radius: 0.3em;
   overflow-x: auto;
+  overflow-y: hidden;
+  box-sizing: border-box;
+}
+
+.mapmlify-app .source-code-display code {
+  white-space: pre;
   tab-size: 2;
 }
