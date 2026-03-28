@@ -20,18 +20,22 @@ Utilisez l'outil ci-dessous pour obtenir des informations cartographiques faisan
 
 <div class="mapmlify-app" data-capabilities-url="{{ '/scripts/mapmlify/capabilities.fr.txt' | url }}">
   <section class="input-section">
-    <label for="wms-url">URL de capacités WMS/WMTS/ESRI :</label>
-    <div class="input-group">
-      <input type="text" id="wms-url" list="wms-presets"
-        placeholder="Saisissez, collez ou sélectionnez dans la liste..."
-        autocomplete="off" />
-      <datalist id="wms-presets">
-        <option value="">Chargement...</option>
-      </datalist>
-      <button id="load-btn">Charger le service</button>
-      <input type="file" id="file-input" accept=".xml,text/xml,application/xml" style="display: none;" />
-      <button id="load-file-btn" style="display: none;">Charger à partir d'un fichier</button>
+    <div class="input-row">
+      <gcds-input
+        id="wms-url"
+        input-id="wms-url-input"
+        name="wms-url"
+        label="URL de capacités WMS/WMTS/ESRI :"
+        type="url"
+        hint="Saisissez, collez ou sélectionnez dans la liste"
+      ></gcds-input>
+      <gcds-button id="load-btn" button-id="load-btn-id" button-type="button" button-role="primary">Charger le service</gcds-button>
     </div>
+    <div class="button-group">
+      <input type="file" id="file-input" accept=".xml,text/xml,application/xml" style="display: none;" />
+      <gcds-button id="load-file-btn" button-id="load-file-btn-id" button-type="button" button-role="secondary" style="display: none;">Charger à partir d'un fichier</gcds-button>
+    </div>
+    <div id="notice-container"></div>
   </section>
 
   <section id="service-info" class="service-info hidden">

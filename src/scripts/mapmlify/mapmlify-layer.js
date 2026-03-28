@@ -9,9 +9,10 @@ import {
   buildWMTSTileUrl,
   buildGetMapUrl,
 } from './main.js';
-import { t } from './i18n.js';
+import { t, LOCALE } from './i18n.js';
 
 class MapmlifyLayer extends HTMLElement {
+  static #idCounter = 0;
   #config = null;
 
   // Internal UI state
@@ -29,10 +30,12 @@ class MapmlifyLayer extends HTMLElement {
   #layerCheckbox = null;
   #viewerContainer = null;
   #preview = null;
-  #sourceCodeTextarea = null;
+  #sourceCodeEl = null;
+  #sourceCodeRaw = '';
   #sourceCodeVisible = false;
   #moveendHandler = null;
   #lazyLoadObserver = null;
+  #layerToggleHandler = null;
 
   set layerConfig(value) {
     this.#config = value;
@@ -72,10 +75,16 @@ class MapmlifyLayer extends HTMLElement {
 
     this.#lazyLoadObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting && this.#layerCheckbox && !this.#layerCheckbox.checked) {
-          // Auto-check the checkbox to load the preview
-          this.#layerCheckbox.checked = true;
-          this.#layerCheckbox.dispatchEvent(new Event('change'));
+        if (entry.isIntersecting && this.#layerCheckbox) {
+          // Check if already active
+          const isActive = Array.isArray(this.#layerCheckbox.value)
+            ? this.#layerCheckbox.value.includes('active')
+            : false;
+          if (!isActive) {
+            // Auto-check the checkbox to load the preview
+            this.#layerCheckbox.value = ['active'];
+            if (this.#layerToggleHandler) this.#layerToggleHandler(true);
+          }
           
           // Disconnect after first trigger - we only want to load once
           this.#lazyLoadObserver.disconnect();
@@ -173,21 +182,39 @@ class MapmlifyLayer extends HTMLElement {
     const controls = document.createElement('div');
     controls.className = 'layer-controls';
 
-    // Header (checkbox + label)
+    // Header (checkbox + layer title)
     const header = document.createElement('div');
     header.className = 'layer-header';
-    const cb = document.createElement('input');
-    cb.type = 'checkbox';
-    cb.className = 'layer-checkbox';
+
+    const cbId = `layer-toggle-${MapmlifyLayer.#idCounter++}`;
+    const cb = document.createElement('gcds-checkboxes');
+    cb.name = 'layer-toggle';
+    cb.legend = layer.title;
+    cb.hideLegend = true;
+    cb.options = [{ id: cbId, label: layer.title, value: 'active' }];
     if (c.disabledCheckbox) {
       cb.disabled = true;
-      cb.title = t('tiledServicesTooltip');
+      cb.hint = t('tiledServicesTooltip');
     }
     this.#layerCheckbox = cb;
-    const lbl = document.createElement('label');
-    lbl.innerHTML = `<strong>${this.#esc(layer.title)}</strong>`;
-    lbl.addEventListener('click', () => cb.click());
-    header.append(cb, lbl);
+
+    const handleLayerToggle = (checked) => {
+      if (checked) {
+        this.#viewerActive = true;
+        this.#createViewer();
+      } else {
+        this.#viewerActive = false;
+        this.#removeViewer();
+      }
+    };
+    this.#layerToggleHandler = handleLayerToggle;
+
+    cb.addEventListener('gcdsChange', (e) => {
+      const isChecked = Array.isArray(e.detail) ? e.detail.includes('active') : false;
+      handleLayerToggle(isChecked);
+    });
+
+    header.appendChild(cb);
     controls.appendChild(header);
 
     // Layer name / identifier
@@ -236,18 +263,25 @@ class MapmlifyLayer extends HTMLElement {
 
     // Abstract
     if (layer.abstract || layer.description) {
-      const details = document.createElement('details');
+      const details = document.createElement('gcds-details');
       details.className = 'layer-abstract';
-      details.innerHTML = `<summary>${t('abstract')}</summary><p>${this.#esc(layer.abstract || layer.description)}</p>`;
+      details.setAttribute('details-title', t('abstract'));
+      const p = document.createElement('p');
+      p.textContent = layer.abstract || layer.description;
+      details.appendChild(p);
       controls.appendChild(details);
     }
 
+    // ── Collapsible layer options ──
+    const optionsDetails = document.createElement('gcds-details');
+    optionsDetails.setAttribute('details-title', t('layerOptions'));
+    optionsDetails.className = 'layer-options';
+
     // Bounds toggle
-    controls.appendChild(
+    optionsDetails.appendChild(
       this.#buildCheckbox(
         t('includeBounds'),
-        'bounds-checkbox',
-        'bounds-label',
+        'bounds',
         this.#boundsEnabled,
         t('boundsTooltip'),
         (val) => {
@@ -263,51 +297,48 @@ class MapmlifyLayer extends HTMLElement {
       const queryDiv = document.createElement('div');
       queryDiv.className = 'query-format-selector';
 
-      const qcb = this.#buildCheckbox(
-        t('query'),
-        'query-checkbox',
-        'query-label',
-        this.#queryEnabled,
-        t('enableQueries'),
-        (val) => {
-          this.#queryEnabled = val;
-          this.#onQueryChange();
-        }
+      queryDiv.appendChild(
+        this.#buildCheckbox(
+          t('query'),
+          'query',
+          this.#queryEnabled,
+          t('enableQueries'),
+          (val) => {
+            this.#queryEnabled = val;
+            this.#onQueryChange();
+          }
+        )
       );
-      // Flatten: append children of the returned wrapper
-      while (qcb.firstChild) queryDiv.appendChild(qcb.firstChild);
 
       // Info format dropdown (WMS / WMTS)
       if (st === 'WMS' && c.getFeatureInfoFormats?.length > 0) {
-        const fmtLabel = document.createElement('label');
-        fmtLabel.textContent = t('infoFormat');
-        queryDiv.appendChild(fmtLabel);
-        const sel = this.#createSelectElement(
-          'format-select',
-          c.getFeatureInfoFormats.map((f) => ({ value: f, label: f })),
-          this.#selectedQueryFormat,
-          (val) => {
-            this.#selectedQueryFormat = val;
-            this.#onQueryChange();
-          }
+        queryDiv.appendChild(
+          this.#buildSelect(
+            t('infoFormat'),
+            'query-format-select',
+            this.#sortQueryFormats(c.getFeatureInfoFormats).map((f) => ({ value: f, label: f })),
+            this.#selectedQueryFormat,
+            (val) => {
+              this.#selectedQueryFormat = val;
+              this.#onQueryChange();
+            }
+          )
         );
-        queryDiv.appendChild(sel);
       } else if (st === 'WMTS' && layer.infoFormats?.length > 0) {
-        const fmtLabel = document.createElement('label');
-        fmtLabel.textContent = t('infoFormat');
-        queryDiv.appendChild(fmtLabel);
-        const sel = this.#createSelectElement(
-          'format-select',
-          layer.infoFormats.map((f) => ({ value: f, label: f })),
-          this.#selectedQueryFormat,
-          (val) => {
-            this.#selectedQueryFormat = val;
-            this.#onQueryChange();
-          }
+        queryDiv.appendChild(
+          this.#buildSelect(
+            t('infoFormat'),
+            'query-format-select',
+            this.#sortQueryFormats(layer.infoFormats).map((f) => ({ value: f, label: f })),
+            this.#selectedQueryFormat,
+            (val) => {
+              this.#selectedQueryFormat = val;
+              this.#onQueryChange();
+            }
+          )
         );
-        queryDiv.appendChild(sel);
       }
-      controls.appendChild(queryDiv);
+      optionsDetails.appendChild(queryDiv);
     }
 
     // Style selector
@@ -315,7 +346,7 @@ class MapmlifyLayer extends HTMLElement {
       (st === 'WMS' || st === 'WMTS') &&
       layer.styles?.length > (st === 'WMTS' ? 1 : 0)
     ) {
-      controls.appendChild(
+      optionsDetails.appendChild(
         this.#buildSelect(
           t('style'),
           'style-select',
@@ -332,7 +363,7 @@ class MapmlifyLayer extends HTMLElement {
 
     // Export mode selector (ESRI MapServer dynamic only)
     if (st === 'ESRI-MapServer' && !c.isTiled) {
-      controls.appendChild(
+      optionsDetails.appendChild(
         this.#buildSelect(
           t('exportMode'),
           'export-mode-select',
@@ -351,7 +382,7 @@ class MapmlifyLayer extends HTMLElement {
 
     // Image format selector
     if (st === 'WMS' && c.getMapFormats?.length > 0) {
-      controls.appendChild(
+      optionsDetails.appendChild(
         this.#buildSelect(
           t('imageFormat'),
           'format-select',
@@ -364,7 +395,7 @@ class MapmlifyLayer extends HTMLElement {
         )
       );
     } else if (st === 'WMTS' && layer.formats?.length > 0) {
-      controls.appendChild(
+      optionsDetails.appendChild(
         this.#buildSelect(
           t('imageFormat'),
           'format-select',
@@ -381,7 +412,7 @@ class MapmlifyLayer extends HTMLElement {
       !c.isTiled &&
       c.supportedFormats?.length > 0
     ) {
-      controls.appendChild(
+      optionsDetails.appendChild(
         this.#buildSelect(
           t('imageFormat'),
           'format-select',
@@ -394,7 +425,7 @@ class MapmlifyLayer extends HTMLElement {
         )
       );
     } else if (st === 'ESRI-ImageServer' && c.supportedFormats?.length > 0) {
-      controls.appendChild(
+      optionsDetails.appendChild(
         this.#buildSelect(
           t('imageFormat'),
           'format-select',
@@ -416,26 +447,26 @@ class MapmlifyLayer extends HTMLElement {
         const info = document.createElement('div');
         info.className = 'dimension-info';
         info.innerHTML = `<strong>${this.#esc(dim.name)}:</strong> ${this.#esc(dim.default)} <em>(${t('fixedValue')} - ${dim.valueCount} ${t('totalValues')})</em>`;
-        controls.appendChild(info);
+        optionsDetails.appendChild(info);
       } else {
         const dimDiv = document.createElement('div');
         dimDiv.className = 'dimension-selector';
 
-        const dcb = document.createElement('input');
-        dcb.type = 'checkbox';
-        dcb.className = 'dimension-checkbox';
-        dcb.checked = this.#dimensionStates[dimIdx].enabled;
+        const dcb = this.#buildCheckbox(
+          dim.name,
+          `dimension-${dimIdx}`,
+          this.#dimensionStates[dimIdx].enabled,
+          null,
+          (val) => {
+            this.#dimensionStates[dimIdx].enabled = val;
+            this.#onControlChange();
+          }
+        );
         dcb.setAttribute('data-dimension-name', dim.name);
-        dcb.addEventListener('change', () => {
-          this.#dimensionStates[dimIdx].enabled = dcb.checked;
-          this.#onControlChange();
-        });
 
-        const dlbl = document.createElement('label');
-        dlbl.textContent = `${dim.name}:`;
-
-        const dsel = this.#createSelectElement(
-          'dimension-select',
+        const dsel = this.#buildSelect(
+          dim.name,
+          `dimension-select-${dimIdx}`,
           dim.values.map((v) => ({ value: v, label: v })),
           this.#dimensionStates[dimIdx].value,
           (val) => {
@@ -444,54 +475,92 @@ class MapmlifyLayer extends HTMLElement {
           }
         );
         dsel.setAttribute('data-dimension-name', dim.name);
+        // Hide the select label since dimension name is already shown on checkbox
+        dsel.hideLabel = true;
 
-        dimDiv.append(dcb, dlbl, dsel);
-        controls.appendChild(dimDiv);
+        dimDiv.append(dcb, dsel);
+        optionsDetails.appendChild(dimDiv);
       }
     });
 
-    // Source code buttons
-    const sourceCodeDiv = document.createElement('div');
-    sourceCodeDiv.className = 'source-code-controls';
+    controls.appendChild(optionsDetails);
 
-    const toggleBtn = document.createElement('button');
-    toggleBtn.className = 'source-toggle-btn';
-    toggleBtn.textContent = t('showSourceCode');
-    toggleBtn.addEventListener('click', () => {
-      this.#sourceCodeVisible = !this.#sourceCodeVisible;
-      toggleBtn.textContent = this.#sourceCodeVisible
-        ? t('hideSourceCode')
-        : t('showSourceCode');
-      if (this.#sourceCodeTextarea) {
-        this.#sourceCodeTextarea.style.display = this.#sourceCodeVisible
-          ? 'block'
-          : 'none';
+    // Source code buttons (left, under controls)
+    const codeShowcase = document.createElement('div');
+    codeShowcase.className = 'code-showcase';
+
+    const sourceTextareaId = `source-${MapmlifyLayer.#idCounter++}`;
+
+    // Source code display (right side, under map) — uses <pre><code> with Prism highlighting
+    const sourcePre = document.createElement('pre');
+    sourcePre.className = 'source-code-display language-html';
+    sourcePre.id = sourceTextareaId;
+    sourcePre.setAttribute('aria-hidden', 'true');
+    sourcePre.setAttribute('tabindex', '-1');
+    sourcePre.setAttribute('aria-label', `${t('codeDisplay')} - ${layer.title}`);
+    sourcePre.style.display = 'none';
+    const sourceCode = document.createElement('code');
+    sourceCode.className = 'language-html';
+    sourcePre.appendChild(sourceCode);
+    this.#sourceCodeEl = sourcePre;
+
+    const btnContainer = document.createElement('div');
+
+    const viewBtn = document.createElement('gcds-button');
+    viewBtn.className = 'showcase-view-button';
+    viewBtn.setAttribute('button-type', 'button');
+    viewBtn.setAttribute('button-role', 'secondary');
+    viewBtn.setAttribute('size', 'small');
+    viewBtn.setAttribute('aria-label', `${t('viewCode')} - ${layer.title}`);
+    viewBtn.setAttribute('aria-controls', sourceTextareaId);
+    viewBtn.setAttribute('aria-expanded', 'false');
+    viewBtn.textContent = t('viewCode');
+    viewBtn.addEventListener('click', () => {
+      const isHidden = sourcePre.getAttribute('aria-hidden') === 'true';
+      sourcePre.setAttribute('aria-hidden', String(!isHidden));
+      viewBtn.setAttribute('aria-expanded', String(isHidden));
+      if (isHidden) {
+        sourcePre.setAttribute('tabindex', '0');
+        this.#sourceCodeVisible = true;
+        this.#updateSourceCode();
+      } else {
+        sourcePre.setAttribute('tabindex', '-1');
+        sourcePre.style.display = 'none';
+        this.#sourceCodeVisible = false;
       }
-      if (this.#sourceCodeVisible) this.#updateSourceCode();
+      viewBtn.textContent = this.#sourceCodeVisible ? t('hideCode') : t('viewCode');
     });
 
-    const copyBtn = document.createElement('button');
-    copyBtn.className = 'source-copy-btn';
-    copyBtn.textContent = t('copySourceCode');
+    const copyBtn = document.createElement('gcds-button');
+    copyBtn.className = 'showcase-copy-button';
+    copyBtn.setAttribute('button-type', 'button');
+    copyBtn.setAttribute('button-role', 'secondary');
+    copyBtn.setAttribute('size', 'small');
+    copyBtn.setAttribute('lang', LOCALE);
+    copyBtn.textContent = t('copyCode');
     copyBtn.addEventListener('click', () => {
-      if (!this.#sourceCodeTextarea) return;
-      const text = this.#sourceCodeTextarea.value;
-      navigator.clipboard.writeText(text).then(
+      if (!this.#sourceCodeRaw) return;
+      navigator.clipboard.writeText(this.#sourceCodeRaw).then(
         () => {
-          copyBtn.textContent = t('copied');
+          copyBtn.textContent = t('codeCopied');
           setTimeout(() => {
-            copyBtn.textContent = t('copySourceCode');
+            copyBtn.textContent = t('copyCode');
           }, 1500);
         },
         () => {
-          // Fallback: select the text so user can Ctrl+C
-          this.#sourceCodeTextarea.select();
+          // Fallback: select the pre text so user can Ctrl+C
+          const range = document.createRange();
+          range.selectNodeContents(sourcePre);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
         }
       );
     });
 
-    sourceCodeDiv.append(toggleBtn, copyBtn);
-    controls.appendChild(sourceCodeDiv);
+    btnContainer.append(viewBtn, copyBtn);
+    codeShowcase.appendChild(btnContainer);
+    controls.appendChild(codeShowcase);
 
     this.appendChild(controls);
 
@@ -510,27 +579,11 @@ class MapmlifyLayer extends HTMLElement {
     this.#preview = preview;
     container.appendChild(preview);
 
-    // Source code textarea (hidden by default)
-    const sourceTextarea = document.createElement('textarea');
-    sourceTextarea.className = 'source-code-textarea';
-    sourceTextarea.readOnly = true;
-    sourceTextarea.style.display = 'none';
-    sourceTextarea.setAttribute('aria-label', 'Map source code');
-    this.#sourceCodeTextarea = sourceTextarea;
-    container.appendChild(sourceTextarea);
+    // Source code display (right, under the map)
+    container.appendChild(sourcePre);
 
     this.appendChild(container);
 
-    // ── Wire layer checkbox ──
-    cb.addEventListener('change', () => {
-      if (cb.checked) {
-        this.#viewerActive = true;
-        this.#createViewer();
-      } else {
-        this.#viewerActive = false;
-        this.#removeViewer();
-      }
-    });
   }
 
   // ─── CONTROL CHANGE HANDLERS ──────────────────────────
@@ -682,9 +735,9 @@ class MapmlifyLayer extends HTMLElement {
     // Add data layer
     this.#addDataLayerToViewer(viewer);
 
-    // Insert viewer before the textarea so it appears above it
-    if (this.#sourceCodeTextarea && this.#sourceCodeTextarea.parentNode === container) {
-      container.insertBefore(viewer, this.#sourceCodeTextarea);
+    // Insert viewer before the source code display so it appears above it
+    if (this.#sourceCodeEl && this.#sourceCodeEl.parentNode === container) {
+      container.insertBefore(viewer, this.#sourceCodeEl);
     } else {
       container.appendChild(viewer);
     }
@@ -712,8 +765,10 @@ class MapmlifyLayer extends HTMLElement {
     }
 
     // Clear source code
-    if (this.#sourceCodeTextarea) {
-      this.#sourceCodeTextarea.value = '';
+    if (this.#sourceCodeEl) {
+      const codeEl = this.#sourceCodeEl.querySelector('code');
+      if (codeEl) codeEl.textContent = '';
+      this.#sourceCodeRaw = '';
     }
   }
 
@@ -1784,7 +1839,7 @@ class MapmlifyLayer extends HTMLElement {
 
   // Select best query format based on priority:
   // 1. text/mapml
-  // 2. application/json or application/geo+json
+  // 2. application/json, application/geo+json, or geojson
   // 3. text/html
   // 4. text/plain
   // 5. first format in list (fallback)
@@ -1795,11 +1850,12 @@ class MapmlifyLayer extends HTMLElement {
     const mapml = formats.find((f) => f.toLowerCase() === 'text/mapml');
     if (mapml) return mapml;
 
-    // Check for application/json or application/geo+json
+    // Check for application/json, application/geo+json, or geojson
     const json = formats.find(
       (f) =>
         f.toLowerCase() === 'application/json' ||
-        f.toLowerCase() === 'application/geo+json'
+        f.toLowerCase() === 'application/geo+json' ||
+        f.toLowerCase() === 'geojson'
     );
     if (json) return json;
 
@@ -1813,6 +1869,24 @@ class MapmlifyLayer extends HTMLElement {
 
     // Fallback to first format
     return formats[0];
+  }
+
+  // Sort query formats so preferred formats appear first in the dropdown
+  #sortQueryFormats(formats) {
+    const priority = [
+      'text/mapml',
+      'application/json',
+      'application/geo+json',
+      'geojson',
+    ];
+    return [...formats].sort((a, b) => {
+      const ai = priority.indexOf(a.toLowerCase());
+      const bi = priority.indexOf(b.toLowerCase());
+      if (ai !== -1 && bi !== -1) return ai - bi;
+      if (ai !== -1) return -1;
+      if (bi !== -1) return 1;
+      return 0;
+    });
   }
 
   #layerIsQueryable() {
@@ -1876,21 +1950,11 @@ class MapmlifyLayer extends HTMLElement {
 
   // ── UI Builder Helpers ──
 
-  #buildSelect(labelText, selectClass, options, selectedValue, onChange) {
-    const div = document.createElement('div');
-    div.className = selectClass.replace('-select', '-selector');
-    const lbl = document.createElement('label');
-    lbl.textContent = labelText;
-    div.appendChild(lbl);
-    div.appendChild(
-      this.#createSelectElement(selectClass, options, selectedValue, onChange)
-    );
-    return div;
-  }
-
-  #createSelectElement(className, options, selectedValue, onChange) {
-    const sel = document.createElement('select');
-    sel.className = className;
+  #buildSelect(labelText, name, options, selectedValue, onChange) {
+    const sel = document.createElement('gcds-select');
+    sel.setAttribute('select-id', `${name}-${MapmlifyLayer.#idCounter++}`);
+    sel.setAttribute('label', labelText);
+    sel.setAttribute('name', name);
     options.forEach((opt) => {
       const o = document.createElement('option');
       o.value = opt.value;
@@ -1898,28 +1962,25 @@ class MapmlifyLayer extends HTMLElement {
       if (opt.value === selectedValue) o.selected = true;
       sel.appendChild(o);
     });
-    sel.addEventListener('change', () => onChange(sel.value));
+    sel.addEventListener('gcdsChange', (e) => {
+      onChange(e.detail ?? sel.value);
+    });
     return sel;
   }
 
-  #buildCheckbox(labelText, cbClass, lblClass, checked, title, onChange) {
-    const div = document.createElement('div');
-    div.className = cbClass.replace('-checkbox', '-selector');
-    const cb = document.createElement('input');
-    cb.type = 'checkbox';
-    cb.className = cbClass;
-    cb.checked = checked;
-    if (title) cb.title = title;
-    cb.addEventListener('change', () => onChange(cb.checked));
-    const lbl = document.createElement('label');
-    lbl.className = lblClass;
-    lbl.textContent = labelText;
-    lbl.addEventListener('click', (e) => {
-      e.preventDefault();
-      cb.click();
+  #buildCheckbox(labelText, name, checked, hint, onChange) {
+    const cbId = `${name}-${MapmlifyLayer.#idCounter++}`;
+    const cb = document.createElement('gcds-checkboxes');
+    cb.name = name;
+    cb.legend = labelText;
+    cb.hideLegend = true;
+    cb.options = [{ id: cbId, label: labelText, value: 'enabled', checked: !!checked, hint: hint || undefined }];
+    if (checked) cb.value = ['enabled'];
+    cb.addEventListener('gcdsChange', (e) => {
+      const isChecked = Array.isArray(e.detail) ? e.detail.includes('enabled') : false;
+      onChange(isChecked);
     });
-    div.append(cb, lbl);
-    return div;
+    return cb;
   }
 
   #esc(text) {
@@ -1934,11 +1995,16 @@ class MapmlifyLayer extends HTMLElement {
   #updateSourceCode() {
     if (!this.#sourceCodeVisible) return;
     const viewer = this.#viewerContainer?.querySelector('gcds-map');
-    if (!viewer || !this.#sourceCodeTextarea) return;
-    this.#sourceCodeTextarea.value = this.#serializeViewer(viewer);
-    // Auto-size to fit content without scrollbars
-    this.#sourceCodeTextarea.style.height = 'auto';
-    this.#sourceCodeTextarea.style.height = this.#sourceCodeTextarea.scrollHeight + 'px';
+    if (!viewer || !this.#sourceCodeEl) return;
+    const raw = this.#serializeViewer(viewer);
+    this.#sourceCodeRaw = raw;
+    const codeEl = this.#sourceCodeEl.querySelector('code');
+    codeEl.textContent = raw;
+    // Apply Prism syntax highlighting if available
+    if (typeof Prism !== 'undefined') {
+      Prism.highlightElement(codeEl);
+    }
+    this.#sourceCodeEl.style.display = 'block';
   }
 
   #serializeViewer(viewer) {
@@ -1949,6 +2015,21 @@ class MapmlifyLayer extends HTMLElement {
     clone.setAttribute('lon', viewer.getAttribute('lon'));
     // Remove dynamic style elements injected by gcds-map
     clone.querySelectorAll('style').forEach((s) => s.remove());
+    // Strip Stencil.js runtime artifacts (hydrated class, internal attributes)
+    clone.querySelectorAll('.hydrated').forEach((el) => {
+      el.classList.remove('hydrated');
+      if (el.className === '') el.removeAttribute('class');
+    });
+    if (clone.classList?.contains('hydrated')) {
+      clone.classList.remove('hydrated');
+      if (clone.className === '') clone.removeAttribute('class');
+    }
+    // Remove Stencil internal attributes (s-id, c-id, etc.)
+    const stencilAttrs = ['s-id', 'c-id'];
+    clone.querySelectorAll('*').forEach((el) => {
+      stencilAttrs.forEach((attr) => el.removeAttribute(attr));
+    });
+    stencilAttrs.forEach((attr) => clone.removeAttribute(attr));
     return this.#prettyPrint(clone);
   }
 
