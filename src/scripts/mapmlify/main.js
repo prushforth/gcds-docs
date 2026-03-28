@@ -136,8 +136,26 @@ const loadFileBtn = document.getElementById('load-file-btn');
 const fileInput = document.getElementById('file-input');
 const serviceInfo = document.getElementById('service-info');
 const serviceDetails = document.getElementById('service-details');
+const noticeContainer = document.getElementById('notice-container');
 
 let currentWmsBaseUrl = '';
+
+// Show a gcds-notice in the notice container, replacing any previous notice
+function showNotice(type, message) {
+  hideNotice();
+  const notice = document.createElement('gcds-notice');
+  notice.setAttribute('type', type);
+  notice.setAttribute('notice-title', type === 'danger' ? t('noticeError') : t('noticeWarning'));
+  notice.setAttribute('notice-title-tag', 'h3');
+  const text = document.createElement('gcds-text');
+  text.textContent = message;
+  notice.appendChild(text);
+  if (noticeContainer) noticeContainer.appendChild(notice);
+}
+
+function hideNotice() {
+  if (noticeContainer) noticeContainer.innerHTML = '';
+}
 
 // Load capabilities URLs from file on page load
 async function loadCapabilitiesPresets() {
@@ -148,29 +166,21 @@ async function loadCapabilitiesPresets() {
     const text = await response.text();
     const lines = text.split('\n').filter((line) => line.trim());
 
-    const datalist = document.getElementById('wms-presets');
-    if (!datalist) return;
-
-    // Clear existing options and populate with URLs from file
-    datalist.innerHTML = '';
-    lines.forEach((line) => {
-      const option = document.createElement('option');
-      // Check if line has label,url format
+    // Use gcds-input suggestions property instead of datalist
+    const suggestions = lines.map((line) => {
       if (line.includes(',')) {
         const commaIndex = line.indexOf(',');
         const label = line.substring(0, commaIndex).trim();
         const url = line.substring(commaIndex + 1).trim();
-        option.value = url;
-        option.textContent = label;
-      } else {
-        // Just URL, no label
-        option.value = line;
+        return { label, value: url };
       }
-      datalist.appendChild(option);
+      return { label: line, value: line };
     });
 
-    // Leave input blank by default
-    wmsUrlInput.value = '';
+    if (wmsUrlInput) {
+      wmsUrlInput.suggestions = suggestions;
+      wmsUrlInput.value = '';
+    }
   } catch (error) {
     console.error('Error loading capabilities presets:', error);
   }
@@ -183,9 +193,11 @@ loadBtn.addEventListener('click', async () => {
   const url = wmsUrlInput.value.trim();
 
   if (!url) {
-    alert(t('alertEnterUrl'));
+    showNotice('warning', t('alertEnterUrl'));
     return;
   }
+
+  hideNotice();
 
   try {
     loadBtn.disabled = true;
@@ -202,10 +214,10 @@ loadBtn.addEventListener('click', async () => {
 
     // Check if it's a CORS error (typical fetch failures are TypeError)
     if (error.name === 'TypeError' && error.message.includes('fetch')) {
-      alert(t('corsError'));
+      showNotice('warning', t('corsError'));
       loadFileBtn.style.display = 'inline-block';
     } else {
-      alert(t('loadError'));
+      showNotice('danger', t('loadError'));
     }
   } finally {
     loadBtn.disabled = false;
@@ -240,7 +252,7 @@ fileInput.addEventListener('change', async (event) => {
     wmsUrlInput.value = '';
   } catch (error) {
     console.error('Error processing capabilities file:', error);
-    alert(t('processError'));
+    showNotice('danger', t('processError'));
   } finally {
     loadFileBtn.disabled = false;
     loadFileBtn.textContent = t('loadFromFile');
@@ -1313,9 +1325,7 @@ function extractESRIImageServerInfo(jsonData, baseUrl) {
 // Display ESRI MapServer information
 function displayESRIMapServerInfo(info, source, url) {
   if (!info.projection) {
-    alert(
-      `Unsupported projection: WKID ${info.wkid}. MapMLify only supports EPSG:3857, 3978, 4326, and 5936.`
-    );
+    showNotice('danger', t('unsupportedProjection').replace('{wkid}', info.wkid));
     return;
   }
 
@@ -1376,9 +1386,7 @@ function displayESRIMapServerInfo(info, source, url) {
 // Display ESRI ImageServer information
 function displayESRIImageServerInfo(info, source, url) {
   if (!info.projection) {
-    alert(
-      `Unsupported projection: WKID ${info.wkid}. MapMLify only supports EPSG:3857, 3978, 4326, and 5936.`
-    );
+    showNotice('danger', t('unsupportedProjection').replace('{wkid}', info.wkid));
     return;
   }
 

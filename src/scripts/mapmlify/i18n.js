@@ -179,6 +179,46 @@ export const translations = {
   zoomLevels: {
     en: 'Zoom levels',
     fr: 'Niveaux de zoom'
+  },
+
+  // Notice/alert replacement strings
+  noticeError: {
+    en: 'Error',
+    fr: 'Erreur'
+  },
+  noticeWarning: {
+    en: 'Warning',
+    fr: 'Avertissement'
+  },
+  unsupportedProjection: {
+    en: 'Unsupported projection: WKID {wkid}. MapMLify only supports EPSG:3857, 3978, 4326, and 5936.',
+    fr: 'Projection non prise en charge\u00a0: WKID {wkid}. MapMLify ne prend en charge que EPSG:3857, 3978, 4326 et 5936.'
+  },
+
+  // Code showcase strings
+  viewCode: {
+    en: 'View code',
+    fr: 'Voir le code'
+  },
+  hideCode: {
+    en: 'Hide code',
+    fr: 'Masquer le code'
+  },
+  copyCode: {
+    en: 'Copy code',
+    fr: 'Copier le code'
+  },
+  codeCopied: {
+    en: 'Copied',
+    fr: 'Copié'
+  },
+  codeDisplay: {
+    en: 'Code display',
+    fr: 'Affichage du code'
+  },
+  layerOptions: {
+    en: 'Layer options',
+    fr: 'Options de la couche'
   }
 };
 
