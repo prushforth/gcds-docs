@@ -123,6 +123,14 @@
   overflow: hidden;
 }
 
+/* Full-width elements that span below the controls+map row */
+.mapmlify-app .layer-item > .code-showcase,
+.mapmlify-app .layer-item > .layer-abstract,
+.mapmlify-app .layer-item > .layer-options {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
 /*
   Responsive layout: switch to vertical when viewer would be < 50% width
   Breakpoint: 300px (controls) + 16px (gap) + 300px (min viewer) = 616px content
@@ -138,12 +146,26 @@
     flex: 1 1 auto;
     min-width: 100%;
     max-width: 100%;
+    order: 1;
+  }
+
+  .mapmlify-app .layer-item > .code-showcase {
+    order: 2;
   }
 
   .mapmlify-app .layer-viewer-container {
     flex: 1 1 auto;
     width: 100%;
     min-width: 100%;
+    order: 3;
+  }
+
+  .mapmlify-app .layer-item > .layer-abstract {
+    order: 4;
+  }
+
+  .mapmlify-app .layer-item > .layer-options {
+    order: 5;
   }
 }
 
@@ -375,12 +397,14 @@
 }
 
 .mapmlify-app .layer-name {
-  font-size: 0.85rem;
-  color: #666;
   margin-bottom: 0.75rem;
   word-wrap: break-word;
   overflow-wrap: break-word;
   max-width: 100%;
+}
+
+.mapmlify-app .layer-name-label {
+  font-weight: 700;
 }
 
 .mapmlify-app .layer-preview {

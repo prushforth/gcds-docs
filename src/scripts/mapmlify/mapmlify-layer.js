@@ -218,15 +218,22 @@ class MapmlifyLayer extends HTMLElement {
     controls.appendChild(header);
 
     // Layer name / identifier
-    const nameLine = document.createElement('p');
+    const nameLine = document.createElement('div');
     nameLine.className = 'layer-name';
+    const nameLabel = document.createElement('span');
+    nameLabel.className = 'layer-name-label';
+    const nameValue = document.createElement('span');
     if (st === 'ESRI-MapServer') {
-      nameLine.textContent = `${t('id')}: ${layer.id} | ${t('name')}: ${layer.name}`;
+      nameLabel.textContent = `${t('id')}: `;
+      nameValue.textContent = `${layer.id} | ${t('name')}: ${layer.name}`;
     } else if (st === 'WMTS') {
-      nameLine.textContent = `${t('identifier')}: ${layer.name}`;
+      nameLabel.textContent = `${t('identifier')}: `;
+      nameValue.textContent = layer.name;
     } else {
-      nameLine.textContent = `${t('name')}: ${layer.name}`;
+      nameLabel.textContent = `${t('name')}: `;
+      nameValue.textContent = layer.name;
     }
+    nameLine.append(nameLabel, nameValue);
     controls.appendChild(nameLine);
 
     // Projection selector (WMS/WMTS with multiple projections, or ESRI read-only)
@@ -261,15 +268,15 @@ class MapmlifyLayer extends HTMLElement {
       controls.appendChild(rp);
     }
 
-    // Abstract
+    // Abstract (appended full-width to this element later)
+    let abstractEl = null;
     if (layer.abstract || layer.description) {
-      const details = document.createElement('gcds-details');
-      details.className = 'layer-abstract';
-      details.setAttribute('details-title', t('abstract'));
+      abstractEl = document.createElement('gcds-details');
+      abstractEl.className = 'layer-abstract';
+      abstractEl.setAttribute('details-title', t('abstract'));
       const p = document.createElement('p');
       p.textContent = layer.abstract || layer.description;
-      details.appendChild(p);
-      controls.appendChild(details);
+      abstractEl.appendChild(p);
     }
 
     // ── Collapsible layer options ──
@@ -483,9 +490,9 @@ class MapmlifyLayer extends HTMLElement {
       }
     });
 
-    controls.appendChild(optionsDetails);
+    // optionsDetails appended full-width to this element later
 
-    // Source code buttons (left, under controls)
+    // Source code buttons
     const codeShowcase = document.createElement('div');
     codeShowcase.className = 'code-showcase';
 
@@ -560,8 +567,9 @@ class MapmlifyLayer extends HTMLElement {
 
     btnContainer.append(viewBtn, copyBtn);
     codeShowcase.appendChild(btnContainer);
-    controls.appendChild(codeShowcase);
+    codeShowcase.appendChild(sourcePre);
 
+    // codeShowcase appended full-width to this element later
     this.appendChild(controls);
 
     // ── Viewer / preview panel ──
@@ -579,10 +587,12 @@ class MapmlifyLayer extends HTMLElement {
     this.#preview = preview;
     container.appendChild(preview);
 
-    // Source code display (right, under the map)
-    container.appendChild(sourcePre);
-
     this.appendChild(container);
+
+    // ── Full-width elements below the controls + map row ──
+    if (abstractEl) this.appendChild(abstractEl);
+    this.appendChild(optionsDetails);
+    this.appendChild(codeShowcase);
 
   }
 
