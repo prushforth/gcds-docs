@@ -117,6 +117,63 @@ cp -r /path/to/gcds-docs/_site/* .
 git add -A && git commit --amend -m "Update docs" && git push --force
 ```
 
+## MapMLify Responsive Layout
+
+The `<mapmlify-layer>` custom element has a responsive layout managed by CSS Grid
+and a container query. The relevant styles are in `src/styles/mapmlify.css`.
+
+### DOM structure (rendered by `mapmlify-layer.js #render()`)
+
+Each `<mapmlify-layer>` (`.layer-item`) contains these direct children in DOM order:
+
+1. `.layer-controls` — checkbox, layer name, projection selector, code-showcase
+   buttons (Show Code / Copy Code), and raster props if applicable
+2. `.layer-viewer-container` — holds the `<gcds-map>` preview
+3. `.source-code-display` — `<pre><code>` block toggled by Show Code button
+4. `.layer-abstract` — `<gcds-details>` with the layer abstract
+5. `.layer-options` — `<gcds-details>` with bounds, query, style, format, dimension controls
+
+### Layout strategy
+
+- `.layers-list` has `container-type: inline-size` so child `.layer-item` elements
+  respond to the actual container width, not the viewport.
+- `.layer-item` uses `display: grid` (not flexbox) to prevent items from
+  overlapping — grid cells never visually overlay each other.
+
+**Narrow layout** (container < 650px): Single column (`grid-template-columns: 1fr`).
+CSS `order` values control the visual stacking:
+
+| order | element                | notes                              |
+|-------|------------------------|------------------------------------|
+| 1     | `.layer-controls`      | always first                       |
+| 2     | `.source-code-display` | immediately below Show Code button |
+| 3     | `.layer-viewer-container` | map preview                     |
+| 4     | `.layer-abstract`      | gcds-details                       |
+| 5     | `.layer-options`       | gcds-details                       |
+
+**Wide layout** (`@container (min-width: 650px)`): Two columns
+(`grid-template-columns: 300px 1fr`). Controls and viewer sit side-by-side in
+row 1. Source code, abstract, and options each span both columns
+(`grid-column: 1 / -1`) in subsequent rows. All `order` values are unset so
+natural DOM order applies.
+
+### Key constraints and gotchas
+
+- **`gcds-map` uses `contain: layout size`** in its shadow DOM `:host` styles.
+  This creates a stacking context. Earlier flexbox `flex-wrap` layouts caused the
+  map to visually overlay siblings when wrapping — grid avoids this entirely.
+- **`gcds-map` default host size is 300×150px** (via `:host { width: 300px; height: 150px }`).
+  The layer-viewer-container styles (`width: 100%; height: 300px`) on the nested
+  `gcds-map` override this.
+- **`.source-code-display`** must have `max-width: 100%; min-width: 0` to prevent
+  `<pre>` content from blowing out the container width. The old `width: 0;
+  min-width: 100%` flex trick breaks in grid/column layouts.
+- **No `max-height` on `.layers-list`** — a fixed max-height clips stacked content
+  when items are in single-column layout.
+- **Status**: The current responsive design is functional but not perfect. Known
+  areas for improvement include the visual order of the gcds-details widgets
+  relative to the code showcase on narrow screens.
+
 
 
 

@@ -90,78 +90,67 @@
 }
 
 .mapmlify-app .layers-list {
+  container-type: inline-size;
   display: grid;
   gap: 1rem;
   margin-top: 1rem;
-  max-height: 400px;
   overflow-y: auto;
   padding-right: 0.5rem;
 }
 
+/* Default: single-column (narrow) layout */
 .mapmlify-app .layer-item {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 1rem;
   background-color: #fafafa;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 1rem;
-  align-items: flex-start;
-  flex-wrap: wrap;
 }
 
 .mapmlify-app .layer-controls {
-  flex: 0 0 300px;
-  min-width: 300px;
-  max-width: 300px;
   overflow: hidden;
+  order: 1;
 }
 
 .mapmlify-app .layer-viewer-container {
-  flex: 1 1 300px;
   min-height: 300px;
-  min-width: 0;
   overflow: hidden;
+  order: 3;
 }
 
-/* Full-width elements that span below the controls+map row */
-.mapmlify-app .layer-item > .source-code-display,
-.mapmlify-app .layer-item > .layer-abstract,
-.mapmlify-app .layer-item > .layer-options {
-  flex: 1 1 100%;
+.mapmlify-app .layer-item > .source-code-display {
   min-width: 0;
+  order: 2;
 }
 
-/*
-  Responsive layout: switch to vertical when viewer would be < 50% width
-  Breakpoint: 300px (controls) + 16px (gap) + 300px (min viewer) = 616px content
-  Plus padding/margins: ~776px viewport width
-*/
-@media (max-width: 800px) {
+.mapmlify-app .layer-item > .layer-abstract {
+  min-width: 0;
+  order: 4;
+}
+
+.mapmlify-app .layer-item > .layer-options {
+  min-width: 0;
+  order: 5;
+}
+
+/* Wide: two-column layout when container has room for controls + viewer */
+@container (min-width: 650px) {
   .mapmlify-app .layer-item {
-    flex-direction: column;
-    align-items: stretch;
+    grid-template-columns: 300px 1fr;
   }
 
-  .mapmlify-app .layer-controls {
-    flex: 1 1 auto;
-    min-width: 100%;
-    max-width: 100%;
-    order: 1;
-  }
-
+  .mapmlify-app .layer-controls,
   .mapmlify-app .layer-viewer-container {
-    flex: 1 1 auto;
-    width: 100%;
-    min-width: 100%;
-    order: 2;
+    order: unset;
   }
 
-  .mapmlify-app .layer-item > .layer-abstract {
-    order: 3;
-  }
-
+  .mapmlify-app .layer-item > .source-code-display,
+  .mapmlify-app .layer-item > .layer-abstract,
   .mapmlify-app .layer-item > .layer-options {
-    order: 4;
+    grid-column: 1 / -1;
+    order: unset;
   }
 }
 
@@ -464,8 +453,9 @@
 }
 
 .mapmlify-app .source-code-display {
-  width: 0;
-  min-width: 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   margin-top: 0.5rem;
   padding: 1em;
   border-radius: 0.3em;
