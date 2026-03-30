@@ -29,7 +29,6 @@ class MapmlifyLayer extends HTMLElement {
   // DOM references (set during render, avoids querySelector overhead)
   #layerCheckbox = null;
   #viewerContainer = null;
-  #preview = null;
   #sourceCodeEl = null;
   #sourceCodeRaw = '';
   #sourceCodeVisible = false;
@@ -261,11 +260,12 @@ class MapmlifyLayer extends HTMLElement {
     }
 
     // Raster properties (ImageServer only)
+    let rasterPropsEl = null;
     if (st === 'ESRI-ImageServer' && layer.bandCount) {
-      const rp = document.createElement('div');
-      rp.className = 'raster-props';
-      rp.innerHTML = `<p><strong>${t('bands')}</strong> ${layer.bandCount} | <strong>${t('pixelType')}</strong> ${this.#esc(layer.pixelType)}</p>`;
-      controls.appendChild(rp);
+      rasterPropsEl = document.createElement('div');
+      rasterPropsEl.className = 'raster-props';
+      rasterPropsEl.innerHTML = `<p><strong>${t('bands')}</strong> ${layer.bandCount} | <strong>${t('pixelType')}</strong> ${this.#esc(layer.pixelType)}</p>`;
+      controls.appendChild(rasterPropsEl);
     }
 
     // Abstract (appended full-width to this element later)
@@ -361,7 +361,6 @@ class MapmlifyLayer extends HTMLElement {
           this.#selectedStyle,
           (val) => {
             this.#selectedStyle = val;
-            this.#updatePreview();
             this.#onControlChange();
           }
         )
@@ -567,32 +566,26 @@ class MapmlifyLayer extends HTMLElement {
 
     btnContainer.append(viewBtn, copyBtn);
     codeShowcase.appendChild(btnContainer);
-    codeShowcase.appendChild(sourcePre);
 
-    // codeShowcase appended full-width to this element later
+    // Insert buttons right after projection (before raster props if present)
+    if (rasterPropsEl) {
+      controls.insertBefore(codeShowcase, rasterPropsEl);
+    } else {
+      controls.appendChild(codeShowcase);
+    }
     this.appendChild(controls);
 
-    // ── Viewer / preview panel ──
+    // ── Viewer panel ──
     const container = document.createElement('div');
     container.className = 'layer-viewer-container';
     this.#viewerContainer = container;
 
-    const preview = document.createElement('img');
-    preview.className = 'layer-preview';
-    preview.alt = `Preview of ${layer.title}`;
-    preview.src = this.#buildPreviewUrl();
-    preview.addEventListener('error', () => {
-      preview.style.display = 'none';
-    });
-    this.#preview = preview;
-    container.appendChild(preview);
-
     this.appendChild(container);
 
     // ── Full-width elements below the controls + map row ──
+    this.appendChild(sourcePre);
     if (abstractEl) this.appendChild(abstractEl);
     this.appendChild(optionsDetails);
-    this.appendChild(codeShowcase);
 
   }
 
@@ -610,90 +603,6 @@ class MapmlifyLayer extends HTMLElement {
     this.#updateSourceCode();
   }
 
-  // ─── PREVIEW ──────────────────────────────────────────
-
-  #buildPreviewUrl() {
-    const c = this.#config;
-    const layer = c.layer;
-    const st = c.serviceType;
-
-    if (st === 'WMS') {
-      return buildGetMapUrl(c.baseUrl, layer, c.version, this.#selectedStyle);
-    }
-    if (st === 'WMTS') {
-      const defaultStyle = layer.styles?.find((s) => s.isDefault) ||
-        layer.styles?.[0] || { name: 'default' };
-      const firstTMS = layer.supportedTileMatrixSets[0];
-      const tileResources = layer.resourceURLs['tile'] || [];
-      const pngResource =
-        tileResources.find((r) => r.format?.includes('png')) ||
-        tileResources[0];
-      const tileTemplate = pngResource ? pngResource.template : '';
-      let url = buildWMTSTileUrl(
-        tileTemplate,
-        layer,
-        firstTMS ? firstTMS.identifier : '',
-        defaultStyle.name,
-        'image/png',
-        '2',
-        '1',
-        '1'
-      );
-      // Replace dimension parameters with defaults
-      (layer.dimensions || []).forEach((dim) => {
-        url = url.replace(
-          new RegExp('\\{' + dim.name + '\\}', 'g'),
-          dim.default
-        );
-      });
-      return url;
-    }
-    if (st === 'ESRI-MapServer') {
-      if (c.isTiled) {
-        const zoomLevel = c.tileInfo
-          ? Math.floor((c.tileInfo.minZoom + c.tileInfo.maxZoom) / 2)
-          : 2;
-        return `${c.baseUrl}/tile/${zoomLevel}/0/0`;
-      }
-      const bbox = layer.bbox;
-      const params = new URLSearchParams({
-        bbox: `${bbox.minx},${bbox.miny},${bbox.maxx},${bbox.maxy}`,
-        bboxSR: c.wkid.toString(),
-        size: '200,200',
-        imageSR: c.wkid.toString(),
-        format: 'png32',
-        transparent: 'true',
-        f: 'image',
-        layers: `show:${layer.id}`,
-      });
-      return `${c.baseUrl}/export?${params.toString()}`;
-    }
-    if (st === 'ESRI-ImageServer') {
-      const bbox = layer.bbox;
-      const params = new URLSearchParams({
-        bbox: `${bbox.minx},${bbox.miny},${bbox.maxx},${bbox.maxy}`,
-        bboxSR: c.wkid.toString(),
-        size: '200,200',
-        imageSR: c.wkid.toString(),
-        format: c.supportedFormats?.[0] || 'jpgpng',
-        f: 'image',
-      });
-      return `${c.baseUrl}/exportImage?${params.toString()}`;
-    }
-    return '';
-  }
-
-  #updatePreview() {
-    if (this.#preview && this.#config.serviceType === 'WMS') {
-      this.#preview.src = buildGetMapUrl(
-        this.#config.baseUrl,
-        this.#config.layer,
-        this.#config.version,
-        this.#selectedStyle
-      );
-    }
-  }
-
   // ─── VIEWER LIFECYCLE ──────────────────────────────────
 
   #createViewer() {
@@ -701,9 +610,6 @@ class MapmlifyLayer extends HTMLElement {
     const layer = c.layer;
     const container = this.#viewerContainer;
     if (!container) return;
-
-    // Hide preview
-    if (this.#preview) this.#preview.style.display = 'none';
 
     const projection = this.#selectedProjection;
 
@@ -762,8 +668,6 @@ class MapmlifyLayer extends HTMLElement {
   #removeViewer() {
     const container = this.#viewerContainer;
     if (!container) return;
-
-    if (this.#preview) this.#preview.style.display = 'block';
 
     const viewer = container.querySelector('gcds-map');
     if (viewer) {

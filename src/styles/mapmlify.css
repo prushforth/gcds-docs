@@ -124,7 +124,7 @@
 }
 
 /* Full-width elements that span below the controls+map row */
-.mapmlify-app .layer-item > .code-showcase,
+.mapmlify-app .layer-item > .source-code-display,
 .mapmlify-app .layer-item > .layer-abstract,
 .mapmlify-app .layer-item > .layer-options {
   flex: 1 1 100%;
@@ -149,23 +149,19 @@
     order: 1;
   }
 
-  .mapmlify-app .layer-item > .code-showcase {
-    order: 2;
-  }
-
   .mapmlify-app .layer-viewer-container {
     flex: 1 1 auto;
     width: 100%;
     min-width: 100%;
-    order: 3;
+    order: 2;
   }
 
   .mapmlify-app .layer-item > .layer-abstract {
-    order: 4;
+    order: 3;
   }
 
   .mapmlify-app .layer-item > .layer-options {
-    order: 5;
+    order: 4;
   }
 }
 
@@ -405,15 +401,6 @@
 
 .mapmlify-app .layer-name-label {
   font-weight: 700;
-}
-
-.mapmlify-app .layer-preview {
-  width: 100px;
-  height: 100px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  display: block;
-  object-fit: cover;
 }
 
 .mapmlify-app .hidden {
