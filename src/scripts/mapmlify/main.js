@@ -246,10 +246,11 @@ fileInput.addEventListener('change', async (event) => {
       await processCapabilitiesXML(text, 'file');
     }
 
-    // Clear file input and hide button after successful load
+    // Clear file input, hide button, and dismiss any prior notice after successful load
     fileInput.value = '';
     loadFileBtn.style.display = 'none';
     wmsUrlInput.value = '';
+    hideNotice();
   } catch (error) {
     console.error('Error processing capabilities file:', error);
     showNotice('danger', t('processError'));
