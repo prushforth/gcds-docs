@@ -28,6 +28,7 @@ class MapmlifyLayer extends HTMLElement {
 
   // DOM references (set during render, avoids querySelector overhead)
   #layerCheckbox = null;
+  #boundsCheckbox = null;
   #viewerContainer = null;
   #sourceCodeEl = null;
   #sourceCodeRaw = '';
@@ -154,7 +155,7 @@ class MapmlifyLayer extends HTMLElement {
       value: dim.default,
     }));
 
-    this.#boundsEnabled = true;
+    this.#boundsEnabled = this.#hasMatchingBounds(this.#selectedProjection);
     // Query enabled by default if layer is queryable
     this.#queryEnabled = this.#layerIsQueryable();
     this.#viewerActive = false;
@@ -248,6 +249,14 @@ class MapmlifyLayer extends HTMLElement {
           this.#selectedProjection,
           (val) => {
             this.#selectedProjection = val;
+            this.#boundsEnabled = this.#hasMatchingBounds(val);
+            if (this.#boundsCheckbox) {
+              const cbId = this.#boundsCheckbox.options?.[0]?.id;
+              if (cbId) {
+                this.#boundsCheckbox.options = [{ ...this.#boundsCheckbox.options[0], checked: this.#boundsEnabled }];
+              }
+              this.#boundsCheckbox.value = this.#boundsEnabled ? ['enabled'] : [];
+            }
             this.#onControlChange();
           }
         )
@@ -285,18 +294,17 @@ class MapmlifyLayer extends HTMLElement {
     optionsDetails.className = 'layer-options';
 
     // Bounds toggle
-    optionsDetails.appendChild(
-      this.#buildCheckbox(
-        t('includeBounds'),
-        'bounds',
-        this.#boundsEnabled,
-        t('boundsTooltip'),
-        (val) => {
-          this.#boundsEnabled = val;
-          this.#onControlChange();
-        }
-      )
+    this.#boundsCheckbox = this.#buildCheckbox(
+      t('includeBounds'),
+      'bounds',
+      this.#boundsEnabled,
+      t('boundsTooltip'),
+      (val) => {
+        this.#boundsEnabled = val;
+        this.#onControlChange();
+      }
     );
+    optionsDetails.appendChild(this.#boundsCheckbox);
 
     // Query toggle
     const hasQuery = this.#layerIsQueryable();
@@ -590,6 +598,46 @@ class MapmlifyLayer extends HTMLElement {
   }
 
   // ─── CONTROL CHANGE HANDLERS ──────────────────────────
+
+  // Check if the layer has a bounding box in a CRS that matches the given projection.
+  // Returns false when only a WGS 84 fallback would be used for heavily-projected
+  // coordinate systems (CBMTILE, APSTILE), because the geographic bounds can be
+  // misleading and restrict querying to the wrong area.
+  #hasMatchingBounds(projection) {
+    const c = this.#config;
+    const st = c.serviceType;
+    const layer = c.layer;
+
+    if (st === 'WMS') {
+      if (!layer.boundingBoxes) return false;
+      const crsMap = {
+        OSMTILE: ['EPSG:3857', 'MapML:OSMTILE'],
+        CBMTILE: ['EPSG:3978', 'MapML:CBMTILE'],
+        WGS84: ['EPSG:4326', 'CRS:84', 'MapML:WGS84'],
+        APSTILE: ['EPSG:5936', 'MapML:APSTILE'],
+      };
+      const keys = crsMap[projection] || [];
+      for (const key of keys) {
+        if (layer.boundingBoxes[key]) return true;
+      }
+      // WGS84 fallback is acceptable for OSMTILE (reliable transform) and WGS84
+      if (projection === 'OSMTILE' || projection === 'WGS84') {
+        return !!layer.bbox;
+      }
+      return false;
+    }
+
+    if (st === 'WMTS') {
+      // WMTS bbox is always WGS 84; only a reliable match for OSMTILE/WGS84
+      if (projection === 'OSMTILE' || projection === 'WGS84') {
+        return !!layer.bbox;
+      }
+      return false;
+    }
+
+    // ESRI services: bbox is in the native CRS, always matches
+    return !!layer.bbox;
+  }
 
   #onControlChange() {
     if (!this.#viewerActive) return;
