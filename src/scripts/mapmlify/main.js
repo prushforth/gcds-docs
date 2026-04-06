@@ -1079,7 +1079,7 @@ function displayServiceInfo(info, source, loadedUrl) {
       <p>${info.abstract}</p>
     </details>
     ${source !== 'file' ? `<p><strong>${t('loadedUrl')}</strong> <a href="${loadedUrl}" target="_blank" rel="noopener noreferrer">${loadedUrl}</a></p>` : ''}
-    <h3>${t('availableLayers')}</h3>
+    <h3>${t('availableLayers')} (${info.layers.length})</h3>
     <div class="layers-list"></div>
   `;
 
@@ -1412,6 +1412,7 @@ function displayESRIImageServerInfo(info, source, url) {
     </details>
     ${copyrightNote}
     ${urlNote}
+    <h3>${t('availableLayers')} (1)</h3>
     <div class="layers-list"></div>
   `;
 
