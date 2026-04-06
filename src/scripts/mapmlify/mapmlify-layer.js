@@ -1873,7 +1873,7 @@ class MapmlifyLayer extends HTMLElement {
       const o = document.createElement('option');
       o.value = opt.value;
       o.textContent = opt.label;
-      if (opt.value === selectedValue) o.selected = true;
+      if (opt.value === selectedValue) o.setAttribute('selected', '');
       sel.appendChild(o);
     });
     sel.addEventListener('gcdsChange', (e) => {
