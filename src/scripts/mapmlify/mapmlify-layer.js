@@ -1801,7 +1801,7 @@ class MapmlifyLayer extends HTMLElement {
 
   // Select best query format based on priority:
   // 1. text/mapml
-  // 2. application/json, application/geo+json, or geojson
+  // 2. application/json, application/geo+json, application/geojson, or geojson
   // 3. text/html
   // 4. text/plain
   // 5. first format in list (fallback)
@@ -1812,11 +1812,12 @@ class MapmlifyLayer extends HTMLElement {
     const mapml = formats.find((f) => f.toLowerCase() === 'text/mapml');
     if (mapml) return mapml;
 
-    // Check for application/json, application/geo+json, or geojson
+    // Check for application/json, application/geo+json, application/geojson, or geojson
     const json = formats.find(
       (f) =>
         f.toLowerCase() === 'application/json' ||
         f.toLowerCase() === 'application/geo+json' ||
+        f.toLowerCase() === 'application/geojson' ||
         f.toLowerCase() === 'geojson'
     );
     if (json) return json;
@@ -1839,6 +1840,7 @@ class MapmlifyLayer extends HTMLElement {
       'text/mapml',
       'application/json',
       'application/geo+json',
+      'application/geojson',
       'geojson',
     ];
     return [...formats].sort((a, b) => {
