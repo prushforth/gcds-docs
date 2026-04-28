@@ -10,7 +10,6 @@ Points chauds météo-incendie (2020), https://geo.weather.gc.ca/geomet/?lang=fr
 Points chauds de feux de forêt, https://geo.weather.gc.ca/geomet/?lang=fr&service=WMS&version=1.3.0&request=GetCapabilities&layers=WildfireHotspots
 Service web du Ministère de la Sécurité publique du Québec, https://geoegl.msp.gouv.qc.ca/apis/wss/inondation2020.fcgi?SERVICE=WMS&REQUEST=GetCapabilities
 Qualité de l'air - Moyenne mensuelle de NO2, https://geo.weather.gc.ca/geomet/?lang=fr&service=WMS&version=1.3.0&request=GetCapabilities&layers=RDAQA.CE_NO2-MAvg
-Stations de radio météo, https://geo.weather.gc.ca/geomet/?lang=fr&service=WMS&version=1.3.0&request=GetCapabilities&layers=WEATHERADIO
 Volume de glace de mer (1 km), https://geo.weather.gc.ca/geomet/?lang=fr&service=WMS&version=1.3.0&request=GetCapabilities&layers=WCPS_1km_SeaIceVol
 Hauteur de la surface de la mer (1 km), https://geo.weather.gc.ca/geomet/?lang=fr&service=WMS&version=1.3.0&request=GetCapabilities&layers=WCPS_1km_SeaSfcHeight
 Zones de prévisions publiques standard, https://geo.weather.gc.ca/geomet/?lang=fr&service=WMS&version=1.3.0&request=GetCapabilities&layers=Public-Standard-Forecast-Zones
