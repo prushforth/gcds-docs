@@ -1972,7 +1972,11 @@ class MapmlifyLayer extends HTMLElement {
   }
 
   #serializeViewer(viewer) {
-    const clone = viewer.cloneNode(true);
+    // Use outerHTML + DOMParser to bypass Stencil's patched cloneNode /
+    // querySelectorAll which drop slotted content (e.g. map-option children)
+    const html = viewer.outerHTML;
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const clone = doc.body.firstElementChild;
     // Sync live attributes (zoom, lat, lon) from the viewer
     clone.setAttribute('zoom', viewer.getAttribute('zoom'));
     clone.setAttribute('lat', viewer.getAttribute('lat'));
