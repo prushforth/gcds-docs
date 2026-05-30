@@ -33,6 +33,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('./src/scripts/general.js');
   eleventyConfig.addPassthroughCopy('./src/scripts/component-preview.js');
   eleventyConfig.addPassthroughCopy('./src/scripts/prism.min.js');
+  eleventyConfig.addPassthroughCopy('./src/scripts/geolocator-api-handler.js');
   eleventyConfig.addPassthroughCopy(
     './src/scripts/component-preview-iframe.js',
   );

@@ -32,9 +32,27 @@ M       src/fr/se-desabonner/erreur.md
 M       src/fr/se-desabonner/succes.md
 R097    src/scripts/search.js   src/scripts/search.js.njk
 
-By default, the command `npm run build` builds the _site folder for serving from the root folder. 
-To obtain a build that will not feature broken content when served from /foo, build the project 
-with `PATH_PREFIX=/foo npm run build`
+By default, `npm run build` creates `_site/` for serving from `/` (root).
+
+Important: do not serve `_site/en` (or `_site/fr`) as the web root. Generated asset links are
+root-absolute (for example `/styles/...`, `/scripts/...`, `/components/...`), so serving
+`_site/en` directly will cause missing CSS/JS.
+
+Local preview after build:
+
+```bash
+# serve _site as the root, then open /en/ or /fr/
+npx serve _site
+```
+
+If you use VS Code Go Live, configure its root to `_site` (for example
+`"liveServer.settings.root": "/_site"`) before opening `/en/` or `/fr/`.
+
+To obtain a build for a subdirectory such as `/foo`, build with:
+
+```bash
+PATH_PREFIX=/foo npm run build
+```
 
 ## Changes for gcds-map
 
@@ -84,8 +102,12 @@ more info.
 
 ### Building with a path prefix
 
-By default, `npm run build` produces a `_site/` folder for serving from `/`. To build for
-a subdirectory (e.g. GitHub Pages at `https://<org>.github.io/gcds-map/`):
+By default, `npm run build` produces a `_site/` folder for serving from `/`.
+
+For local testing, serve `_site/` and navigate to `/en/` or `/fr/` (do not serve `_site/en`
+as the root).
+
+To build for a subdirectory (e.g. GitHub Pages at `https://<org>.github.io/gcds-map/`):
 
 ```bash
 PATH_PREFIX=/gcds-map npm run build

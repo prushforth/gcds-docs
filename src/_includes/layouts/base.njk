@@ -39,6 +39,9 @@
     <link rel="stylesheet" href="{{ '/styles/mapmlify.css' | url }}">
     <script type="module" src="{{ '/scripts/mapmlify/main.js' | url }}"></script>
     {% endif %}
+    {% if loadGeolocatorApiHandler %}
+    <script src="{{ '/scripts/geolocator-api-handler.js' | url }}"></script>
+    {% endif %}
 
     <!-- Pagefind -->
     <script src="{{ '/pagefind/pagefind.js' | url }}" type="module"></script>
