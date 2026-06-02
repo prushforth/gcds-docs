@@ -11,7 +11,8 @@ tags: ['mapEN', 'design']
 
 <ol class="anatomy-list">
   <li>The <strong>Layer control</strong> is an expandable list of layers. Each entry provides detailed controls for manipulating layer characteristics. 
-  <li><strong>The Zoom control</strong> is a pair of keyboard-accessible buttons allowing users to zoom in or out.
+  <li>The <strong>Zoom control</strong> is a pair of keyboard-accessible buttons allowing users to zoom in or out.
+  <li>The <strong>Search control</strong> enables users to search for and navigate the map to places by name.
   <li>The <strong>Reload</strong> button allows users to reset the map to its original location. It does not change the layer states.
   <li>The <strong>Fullscreen</strong> button is allows the map to be viewed fullscreen. When in fullscreen mode, the button action returns the map to non-fullscreen state.
   <li>The <strong>Scale bar</strong> control provides an active readout of the rough idea of the scale of the map.  
