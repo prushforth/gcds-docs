@@ -18,7 +18,7 @@ Définissez les propriétés initiales de la couche à l'aide des attributs `che
 
 <iframe
   title="Aperçu des propriétés et événements de map-layer."
-  src="https://nrcan.github.io/gcds-map/storybook/iframe.html?id=components-map--events-properties&viewMode=docs&demo=true&singleStory=true&lang=en"
+  src="https://nrcan.github.io/gcds-map/storybook/iframe.html?id=components-map--events-properties&viewMode=docs&demo=true&singleStory=true&lang=fr"
   width="1200"
   height="2075"
   style="display: block; margin: 0 auto;"
