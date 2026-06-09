@@ -13,6 +13,7 @@ tags: ['mapEN', 'code']
 
 {% include "partials/getcode.njk" %}
 
+<!-- height="100" is a placeholder; the storybook-resize partial auto-sizes this iframe -->
 <iframe
   title="Overview of gcds-map properties and events."
   src="https://nrcan.github.io/gcds-map/storybook/iframe.html?id=components-map--events-properties&viewMode=docs&demo=true&singleStory=true&lang=en"
@@ -24,19 +25,4 @@ tags: ['mapEN', 'code']
   allow="clipboard-write"
 ></iframe>
 
-<script>
-  // ── Iframe auto-resize ──
-  window.addEventListener('message', (ev) => {
-    if (ev.data && ev.data.type === 'storybook-resize' && ev.data.src) {
-      const reportedId = new URL(ev.data.src).searchParams.get('id');
-      document.querySelectorAll('iframe').forEach((iframe) => {
-        try {
-          const iframeId = new URL(iframe.src).searchParams.get('id');
-          if (reportedId && reportedId === iframeId) {
-            iframe.style.height = ev.data.height + 'px';
-          }
-        } catch(e) {}
-      });
-    }
-  });
-</script>
+{% include "partials/storybook-resize.njk" %}

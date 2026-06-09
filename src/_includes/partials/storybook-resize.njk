@@ -1,0 +1,20 @@
+<script>
+  // ── Iframe auto-resize ──
+  // Storybook iframes use height="100" as a placeholder. The embedded Storybook
+  // page (via preview-head.html) posts 'storybook-resize' messages reporting its
+  // actual document height. This listener receives those messages and resizes the
+  // matching iframe to fit the content without scrollbars.
+  window.addEventListener('message', (ev) => {
+    if (ev.data && ev.data.type === 'storybook-resize' && ev.data.src) {
+      const reportedId = new URL(ev.data.src).searchParams.get('id');
+      document.querySelectorAll('iframe').forEach((iframe) => {
+        try {
+          const iframeId = new URL(iframe.src).searchParams.get('id');
+          if (reportedId && reportedId === iframeId) {
+            iframe.style.height = ev.data.height + 'px';
+          }
+        } catch(e) {}
+      });
+    }
+  });
+</script>
