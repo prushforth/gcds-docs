@@ -60,7 +60,7 @@ In general, leave the opacity or transparency of layers up to the user.
 ### Remote layer content
 
 A remote layer fetches its content from a MapML document URL, pointed to by the
-`<map-layer src="...">` `src` attribute. The MapML document is parsed as XHTML, using the 
+`<map-layer src="...">` `src` attribute. The MapML document is parsed as XHTML, using the browser's
 built-in XML parser. Remote MapML documents **must** be declared in the XHTML namespace, 
 [using the `xmlns` attribute](https://maps4html.org/web-map-doc/docs/elements/mapml/#xmlns),
 and they **must** be [well-formed XML](https://en.wikipedia.org/wiki/Well-formed_document).
@@ -74,16 +74,11 @@ found either, the layer name defaults to "Layer".
   <map-layer src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/cbmt' | url }}" checked></map-layer>
 </gcds-map>
 
-<details>
-<summary>Show code</summary>
-
 ```html
 <gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
   <map-layer src="https://example.com/path/to/layer.mapml" checked></map-layer>
 </gcds-map>
 ```
-
-</details>
 
 ### Inline layer content
 
@@ -126,11 +121,9 @@ This example shows an inline feature with a polygon geometry defined in geograph
   </map-layer>
 </gcds-map>
 
-<details>
-<summary>Show code</summary>
-
 ```html
 <gcds-map lat="45.5" lon="-74.5" zoom="3" projection="CBMTILE" controls>
+  <!-- the content of this layer is "inline" -->
   <map-layer label="Inline Feature Layer" checked>
     <map-meta name="projection" content="CBMTILE"></map-meta>
     <map-meta name="zoom" content="min=0,max=5"></map-meta>
@@ -149,50 +142,39 @@ This example shows an inline feature with a polygon geometry defined in geograph
 </gcds-map>
 ```
 
-</details>
-
 ### Hidden basemap
 
 Use the `hidden` attribute to keep a layer visible on the map but hidden from the
 layer control.  This is useful for basemap layers that should always be shown. 
-If there are no non-`hidden` layers in a map, the layer control is automatically hidden. 
+If there are no non-`hidden` layers in a map, the layer control is itself automatically hidden. 
 
 <gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
-  <map-layer src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/cbmt' | url }}" checked hidden></map-layer>
-  <map-layer src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/current_conditions' | url }}" checked></map-layer>
+  <map-layer checked hidden src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/cbmt' | url }}"></map-layer>
+  <map-layer checked src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/current_conditions' | url }}"></map-layer>
 </gcds-map>
-
-<details>
-<summary>Show code</summary>
 
 ```html
 <gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
-  <map-layer src="basemap.mapml" checked hidden></map-layer>
-  <map-layer src="current_conditions.mapml" checked></map-layer>
+  <map-layer checked hidden src="basemap.mapml"></map-layer>
+  <map-layer checked src="current_conditions.mapml"></map-layer>
 </gcds-map>
 ```
-
-</details>
 
 ### Opacity
 
 The `opacity` attribute (0–1) controls layer transparency. Users can also adjust
-opacity via the layer control slider.
+opacity via the layer control slider.  In general, leave the opacity or transparency 
+of layers up to the user's discretion.
 
 <gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
-  <map-layer src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/cbmt' | url }}" checked opacity="0.5"></map-layer>
+  <map-layer opacity="0.5" checked src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/cbmt' | url }}"></map-layer>
 </gcds-map>
-
-<details>
-<summary>Show code</summary>
 
 ```html
 <gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
-  <map-layer src="layer.mapml" checked opacity="0.5"></map-layer>
+  <map-layer opacity="0.5" checked src="layer.mapml"></map-layer>
 </gcds-map>
 ```
-
-</details>
 
 ### Inline image content
 
@@ -215,13 +197,11 @@ tiled or whole-viewport image requests, fetched dynamically as the user pans and
   </map-layer>
 </gcds-map>
 
-<details>
-<summary>Show code</summary>
-
 ```html
 <gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
   <map-layer label="CBMT (inline extent)" checked>
     <map-meta name="projection" content="OSMTILE"></map-meta>
+    <!-- the bounds of an image or tile request is described by the form-like map-extent element -->
     <map-extent units="OSMTILE" checked hidden>
       <map-input name="z" type="zoom" min="0" max="22"></map-input>
       <map-input name="xmin" type="location" units="pcrs" position="top-left" axis="easting"></map-input>
@@ -236,8 +216,6 @@ tiled or whole-viewport image requests, fetched dynamically as the user pans and
 </gcds-map>
 ```
 
-</details>
-
 ### Media query
 
 The `media` attribute accepts a 
@@ -247,21 +225,16 @@ a specified range), and disabled otherwise.  Try zooming in past zoom level 6 to
 (and consequently, the layer control) disappear.
 
 <gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
-  <map-layer src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/cbmt' | url }}" checked hidden></map-layer>
-  <map-layer src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/current_conditions' | url }}" checked media="(0 <= map-zoom <= 6)"></map-layer>
+  <map-layer checked hidden src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/cbmt' | url }}"></map-layer>
+  <map-layer checked media="(0 <= map-zoom <= 6)" src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/current_conditions' | url }}"></map-layer>
 </gcds-map>
-
-<details>
-<summary>Show code</summary>
 
 ```html
 <gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
   <map-layer src="basemap.mapml" checked hidden></map-layer>
-  <map-layer src="overlay.mapml" checked media="(0 <= map-zoom <= 6)"></map-layer>
+  <map-layer media="(0 <= map-zoom <= 6)" checked src="overlay.mapml"></map-layer>
 </gcds-map>
 ```
-
-</details>
 
 ### Combining remote and inline layers
 
@@ -274,7 +247,7 @@ remote thematic overlay are combined with an inline point feature layer.
   <map-layer label="Points of Interest" checked>
     <map-meta name="projection" content="OSMTILE"></map-meta>
     <map-meta name="zoom" content="min=0,max=10"></map-meta>
-    <map-feature zoom="4">
+    <map-feature zoom="8">
       <map-featurecaption>Ottawa</map-featurecaption>
       <map-properties>
         <h2>Ottawa</h2>
@@ -289,9 +262,6 @@ remote thematic overlay are combined with an inline point feature layer.
   </map-layer>
 </gcds-map>
 
-<details>
-<summary>Show code</summary>
-
 ```html
 <gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
   <map-layer src="basemap.mapml" checked hidden></map-layer>
@@ -299,7 +269,7 @@ remote thematic overlay are combined with an inline point feature layer.
   <map-layer label="Points of Interest" checked>
     <map-meta name="projection" content="OSMTILE"></map-meta>
     <map-meta name="zoom" content="min=0,max=10"></map-meta>
-    <map-feature zoom="4">
+    <map-feature zoom="8">
       <map-featurecaption>Ottawa</map-featurecaption>
       <map-properties>
         <h2>Ottawa</h2>
@@ -315,15 +285,13 @@ remote thematic overlay are combined with an inline point feature layer.
 </gcds-map>
 ```
 
-</details>
-
 ## Code builder
 
 {% include "partials/getcode.njk" %}
 
 <iframe
   title="map-layer code builder with properties and events."
-  src="http://localhost:6006/iframe.html?id=components-layer--events-properties&viewMode=docs&demo=true&singleStory=true&lang=en"
+  src="https://nrcan.github.io/gcds-map/storybook/iframe.html?id=components-layer--events-properties&viewMode=docs&demo=true&singleStory=true&lang=en"
   width="1200"
   height="100"
   style="display: block; margin: 0 auto; border: 0; overflow: hidden;"
@@ -332,6 +300,7 @@ remote thematic overlay are combined with an inline point feature layer.
   allow="clipboard-write"></iframe>
 
 <script>
+  // ── Iframe auto-resize ──
   window.addEventListener('message', (ev) => {
     if (ev.data && ev.data.type === 'storybook-resize' && ev.data.src) {
       const reportedId = new URL(ev.data.src).searchParams.get('id');
@@ -345,5 +314,142 @@ remote thematic overlay are combined with an inline point feature layer.
       });
     }
   });
+
+  // ── Live code showcase: serialize actual gcds-map DOM into code blocks ──
+  (function() {
+    var INDENT = '  ';
+    // Attributes added by Stencil runtime that should be stripped
+    var STRIP_ATTRS = ['s-id', 'c-id', 'class', 'role'];
+    // Elements injected by Stencil runtime
+    var STRIP_TAGS = ['STYLE'];
+
+    function shouldSkip(node) {
+      if (node.nodeType === Node.ELEMENT_NODE && STRIP_TAGS.indexOf(node.tagName) >= 0) return true;
+      // Skip comment nodes
+      if (node.nodeType === Node.COMMENT_NODE) return true;
+      return false;
+    }
+
+    function prettyPrint(node, depth) {
+      depth = depth || 0;
+      var pad = '';
+      for (var i = 0; i < depth; i++) pad += INDENT;
+
+      if (node.nodeType === Node.TEXT_NODE) {
+        var text = node.textContent.trim();
+        return text ? pad + text + '\n' : '';
+      }
+      if (node.nodeType !== Node.ELEMENT_NODE) return '';
+      if (shouldSkip(node)) return '';
+
+      var tag = node.tagName.toLowerCase();
+      var attrs = '';
+      for (var a = 0; a < node.attributes.length; a++) {
+        var attr = node.attributes[a];
+        if (STRIP_ATTRS.indexOf(attr.name) >= 0) continue;
+        // Skip the page-specific inline style on gcds-map
+        if (tag === 'gcds-map' && attr.name === 'style') continue;
+        if (attr.value === '') {
+          attrs += ' ' + attr.name;
+        } else {
+          attrs += ' ' + attr.name + '="' + attr.value + '"';
+        }
+      }
+
+      // Collect non-empty children
+      var childOutput = '';
+      for (var c = 0; c < node.childNodes.length; c++) {
+        childOutput += prettyPrint(node.childNodes[c], depth + 1);
+      }
+
+      if (!childOutput) return pad + '<' + tag + attrs + '></' + tag + '>\n';
+
+      // Single-line text content
+      if (node.childNodes.length === 1 && node.firstChild.nodeType === Node.TEXT_NODE) {
+        var t = node.firstChild.textContent.trim();
+        if (t) return pad + '<' + tag + attrs + '>' + t + '</' + tag + '>\n';
+      }
+
+      return pad + '<' + tag + attrs + '>\n' + childOutput + pad + '</' + tag + '>\n';
+    }
+
+    function serializeMap(mapEl) {
+      // Clone into a new document to avoid touching the live DOM
+      var html = mapEl.outerHTML;
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var clone = doc.body.firstElementChild;
+      // Sync live view state
+      clone.setAttribute('lat', mapEl.getAttribute('lat'));
+      clone.setAttribute('lon', mapEl.getAttribute('lon'));
+      clone.setAttribute('zoom', mapEl.getAttribute('zoom'));
+      return prettyPrint(clone).replace(/\n$/, '');
+    }
+
+    function findCodeContainer(mapEl) {
+      var next = mapEl.nextElementSibling;
+      if (!next) return null;
+      // The clipboard plugin wraps <pre> in <div style="position: relative">
+      if (next.tagName === 'DIV' && next.querySelector('pre')) {
+        return { wrapper: next, code: next.querySelector('code') };
+      }
+      if (next.tagName === 'PRE') {
+        return { wrapper: next, code: next.querySelector('code') };
+      }
+      return null;
+    }
+
+    function updateCode(mapEl, codeEl) {
+      var text = serializeMap(mapEl);
+      codeEl.textContent = text;
+      if (typeof Prism !== 'undefined') Prism.highlightElement(codeEl);
+    }
+
+    customElements.whenDefined('gcds-map').then(function() {
+      document.querySelectorAll('gcds-map').forEach(function(mapEl) {
+        var target = findCodeContainer(mapEl);
+        if (!target) return;
+
+        // Style for flush appearance
+        mapEl.classList.add('map-preview');
+        target.wrapper.classList.add('map-preview-code');
+
+        // Initial serialize: replace static example code with live DOM
+        updateCode(mapEl, target.code);
+
+        // Update code on map move
+        mapEl.addEventListener('map-moveend', function() {
+          updateCode(mapEl, target.code);
+        });
+      });
+    });
+  })();
 </script>
+
+<style>
+  /* Flush map + code block: no gap, shared border */
+  gcds-map[style] + div[id^="code-container"] {
+    margin-top: 0 !important;
+  }
+  gcds-map[style] + div[id^="code-container"] > pre {
+    margin: 0 !important;
+  }
+  gcds-map.map-preview {
+    display: block;
+    margin-bottom: 0 !important;
+    border: var(--gcds-border-width-md) solid currentColor;
+    border-bottom: none;
+    border-radius: var(--gcds-border-radius-md) var(--gcds-border-radius-md) 0 0;
+    overflow: hidden;
+  }
+  .map-preview-code {
+    margin-top: 0 !important;
+    border: var(--gcds-border-width-md) solid currentColor;
+    border-top: none;
+    border-radius: 0 0 var(--gcds-border-radius-md) var(--gcds-border-radius-md) !important;
+  }
+  .map-preview-code pre {
+    margin: 0 !important;
+    border-radius: 0 0 var(--gcds-border-radius-md) var(--gcds-border-radius-md) !important;
+  }
+</style>
 
