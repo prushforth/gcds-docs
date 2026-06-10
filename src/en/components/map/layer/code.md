@@ -293,9 +293,9 @@ remote thematic overlay are combined with an inline point feature layer.
 <iframe
   title="map-layer code builder with properties and events."
   src="https://nrcan.github.io/gcds-map/storybook/iframe.html?id=components-layer--events-properties&viewMode=docs&demo=true&singleStory=true&lang=en"
-  width="1200"
+  width="100%"
   height="100"
-  style="display: block; margin: 0 auto; border: 0; overflow: hidden;"
+  style="display: block; border: 0;"
   scrolling="no"
   frameBorder="0"
   allow="clipboard-write"></iframe>

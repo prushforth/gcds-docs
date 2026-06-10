@@ -17,12 +17,11 @@ tags: ['mapFR', 'code']
 <iframe
   title="iframeTitle"
   src="https://nrcan.github.io/gcds-map/storybook/iframe.html?id=components-map--events-properties&viewMode=docs&demo=true&singleStory=true&lang=fr"
-  width="1200"
+  width="100%"
   height="100"
-  style="display: block; margin: 0 auto; border: 0; overflow: hidden;"
+  style="display: block; border: 0;"
   scrolling="no"
   frameBorder="0"
   allow="clipboard-write"
 ></iframe>
-
 {% include "partials/storybook-resize.njk" %}
