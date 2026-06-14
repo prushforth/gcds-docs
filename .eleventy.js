@@ -57,6 +57,8 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({
     './src/.well-known/security.txt': '.well-known/security.txt',
   });
+  // MapML document files used in component documentation examples
+  eleventyConfig.addPassthroughCopy('./src/**/*.mapml');
   // MapMLify application scripts and capabilities presets
   eleventyConfig.addPassthroughCopy({ './src/scripts/mapmlify/': 'scripts/mapmlify/' });
   eleventyConfig.addPassthroughCopy('./src/styles/mapmlify.css');

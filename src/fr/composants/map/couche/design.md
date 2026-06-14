@@ -44,3 +44,32 @@ Le contenu de l'élément <code>&lt;map-layer&gt;</code> est rendu sur la carte 
 - styles alternatifs
 - projections alternatives
 - types de contenu : tuiles, entités, images en ce qui concerne l'accessibilité
+
+### Styles alternatifs de couche
+
+Les couches Web Map Service (WMS) peuvent être fournies dans une variété de styles nommés, chacun selon sa propre légende de symbologie différente.
+Les différents styles pour une couche WMS donnée sont généralement accessibles en fournissant le nom du style comme paramètre d'URL de la requête.
+Les <code>&lt;map-layer&gt;</code> peuvent rendre les styles nommés WMS accessibles aux utilisateurs,
+en créant des liens vers les différents styles pour les couches WMS intégrées. Ces liens sont présentés dans le contrôle des couches sous forme d'options de contrôle radio
+pour la couche, chaque option étant étiquetée avec le nom accessible (attribut <code>title</code>) du lien correspondant.
+Ces liens peuvent pointer vers différents styles pour une source de données donnée (par exemple une couche WMS), mais ils peuvent pointer vers n'importe quoi, y compris des sources de données différentes,
+par exemple « Vue satellite » (imagerie) vs « Vue carte » (symboles rendus et texte pour les entités identifiables). C'est au
+développeur de déterminer ce qui est pertinent et accessible pour ses utilisateurs.
+
+Les liens de style nommés ne fonctionnent actuellement qu'avec les couches MapML distantes, c'est-à-dire les couches dont le contenu est accessible par une URL dans l'attribut
+<code>&lt;map-layer <strong>src=" "</strong>&gt;</code>.
+
+Dans l'exemple suivant, le document MapML de la couche déclare deux liens <code>&lt;map-link rel="style"&gt;</code>,
+un avec <code>rel="self style"</code> indiquant le style actuellement actif, et un avec <code>rel="style"</code>
+pour l'alternative. Ouvrez le contrôle des couches (survolez ou focalisez au clavier le contrôle en haut à droite) et développez les
+paramètres de la couche pour voir et basculer entre les styles disponibles.
+
+<gcds-map projection="CBMTILE" zoom="0" lat="62" lon="-90" controls style="height: 400px;">
+  <map-layer src="../assets/sea-surface-default.mapml" checked></map-layer>
+</gcds-map>
+
+```html
+<gcds-map projection="CBMTILE" zoom="0" lat="62" lon="-90" controls>
+  <map-layer src="../assets/sea-surface-default.mapml" checked></map-layer>
+</gcds-map>
+```
