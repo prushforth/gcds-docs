@@ -59,6 +59,11 @@ module.exports = function (eleventyConfig) {
   });
   // MapML document files used in component documentation examples
   eleventyConfig.addPassthroughCopy('./src/**/*.mapml');
+  // JSON assets co-located with component documentation examples
+  eleventyConfig.addPassthroughCopy('./src/**/assets/*.json');
+  // HTML assets co-located with component documentation examples
+  // (e.g. accessible legend pages linked from <map-link rel="legend">)
+  eleventyConfig.addPassthroughCopy('./src/**/assets/*.html');
   // MapMLify application scripts and capabilities presets
   eleventyConfig.addPassthroughCopy({ './src/scripts/mapmlify/': 'scripts/mapmlify/' });
   eleventyConfig.addPassthroughCopy('./src/styles/mapmlify.css');

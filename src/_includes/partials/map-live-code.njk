@@ -73,14 +73,27 @@
     }
 
     function findCodeContainer(mapEl) {
-      var next = mapEl.nextElementSibling;
+      // If the map is wrapped in an overlay container (e.g. position:relative div
+      // hosting an overlay <gcds-button>), step out of the wrapper to look for the
+      // sibling code block.
+      var startNode = mapEl;
+      var parent = mapEl.parentElement;
+      if (
+        parent &&
+        parent.tagName === 'DIV' &&
+        parent !== document.body &&
+        !parent.querySelector('pre')
+      ) {
+        startNode = parent;
+      }
+      var next = startNode.nextElementSibling;
       if (!next) return null;
       // The clipboard plugin wraps <pre> in <div style="position: relative">
       if (next.tagName === 'DIV' && next.querySelector('pre')) {
-        return { wrapper: next, code: next.querySelector('code') };
+        return { wrapper: next, code: next.querySelector('code'), preceding: startNode };
       }
       if (next.tagName === 'PRE') {
-        return { wrapper: next, code: next.querySelector('code') };
+        return { wrapper: next, code: next.querySelector('code'), preceding: startNode };
       }
       return null;
     }
@@ -99,6 +112,15 @@
         // Style for flush appearance
         mapEl.classList.add('map-preview');
         target.wrapper.classList.add('map-preview-code');
+        // If the map sits inside an overlay wrapper, mark it so CSS can remove the gap.
+        if (target.preceding !== mapEl) {
+          target.preceding.classList.add('map-preview-wrapper');
+        }
+
+        // Opt-out: examples that build the map at runtime (e.g. by injecting a
+        // large generated <map-layer>) can keep the flush styling but suppress
+        // the live serializer by adding data-static-code on <gcds-map>.
+        if (mapEl.hasAttribute('data-static-code')) return;
 
         // Initial serialize: replace static example code with live DOM
         updateCode(mapEl, target.code);
@@ -107,6 +129,12 @@
         mapEl.addEventListener('map-moveend', function() {
           updateCode(mapEl, target.code);
         });
+
+        // Update code on attribute changes (e.g., projection toggled by overlay buttons)
+        var attrObserver = new MutationObserver(function() {
+          updateCode(mapEl, target.code);
+        });
+        attrObserver.observe(mapEl, { attributes: true });
       });
     });
   })();
@@ -127,6 +155,23 @@
     border-bottom: none;
     border-radius: var(--gcds-border-radius-md) var(--gcds-border-radius-md) 0 0;
     overflow: hidden;
+  }
+  /* When the map is wrapped in an overlay container, the wrapper takes over the
+     flush-with-code styling and the inner gcds-map drops its own border. */
+  .map-preview-wrapper {
+    margin-bottom: 0 !important;
+    border: var(--gcds-border-width-md) solid currentColor;
+    border-bottom: none;
+    border-radius: var(--gcds-border-radius-md) var(--gcds-border-radius-md) 0 0;
+    overflow: hidden;
+  }
+  .map-preview-wrapper > gcds-map.map-preview {
+    border: none;
+    border-radius: 0;
+  }
+  .map-preview-wrapper + div[id^="code-container"],
+  .map-preview-wrapper + pre {
+    margin-top: 0 !important;
   }
   .map-preview-code {
     margin-top: 0 !important;
