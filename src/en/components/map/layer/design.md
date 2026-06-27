@@ -12,11 +12,11 @@ date: 'git Last Modified'
 - [Layer control anatomy](#layer-control-anatomy)
 - [Design and accessibility for layers](#design-and-accessibility-for-layers)
   - [Design](#design)
+    - [How layers represent map content](#how-layers-represent-map-content)
     - [Remote vs inline layer content](#remote-vs-inline-layer-content)
       - [Remote content](#remote-content)
       - [Inline content](#inline-content)
       - [Combining remote and inline layers](#combining-remote-and-inline-layers)
-    - [How layers represent map content](#how-layers-represent-map-content)
     - [Attribution and licensing](#attribution-and-licensing)
     - [Layers and sub-layers](#layers-and-sublayers)
     - [Alternate layer projections](#alternate-layer-projections)
@@ -71,6 +71,13 @@ date: 'git Last Modified'
 ## Design and accessibility for layers
 
 ### Design
+
+#### How layers represent map content
+
+The <code>&lt;map-layer&gt;</code> element's content is rendered on the map as images, tiles and features 
+and it's metadata is rendered in the layer control as text and controls.  The layer control expands on hover or keyboard activation. The expanded layer control renders the layers of the map as a 
+list of entries, with the keyboard tab order equal to the source 
+<code>&lt;map-layer&gt;</code> elements' document order.  Each layer control entry has a standard anatomy.
 
 #### Remote vs inline layer content
 
@@ -207,13 +214,6 @@ remote thematic overlay are combined with an inline point feature layer.
   </map-layer>
 </gcds-map>
 ```
-
-#### How layers represent map content
-
-The <code>&lt;map-layer&gt;</code> element's content is rendered on the map as images, tiles and features 
-and it's metadata is rendered in the layer control as text and controls.  The layer control expands on hover or keyboard activation. The expanded layer control renders the layers of the map as a 
-list of entries, with the keyboard tab order equal to the source 
-<code>&lt;map-layer&gt;</code> elements' document order.  Each layer control entry has a standard anatomy.
 
 #### Attribution and licensing
 
@@ -707,15 +707,13 @@ The example below loads [canada.json](../assets/canada.json) (a `FeatureCollecti
 
 ##### Vector tiles
 
-The layer component supports Mapbox Vector Tiles (mvt) and the [pmtiles archive format](https://docs.protomaps.com/pmtiles/) 
-via [`protomaps-leaflet`](https://docs.protomaps.com/pmtiles/leaflet), which restricts vector tile layers to 
-`projection="OSMTILE"`. A vector tile `<map-link>` must be paired with a stylesheet module — see 
+The layer component supports Mapbox Vector Tiles (mvt) and the [pmtiles archive format](https://docs.protomaps.com/pmtiles/). 
+A vector tile `<map-link>` must be paired with a stylesheet module — see 
 [creating mvt styles](https://maps4html.org/web-map-doc/docs/user-guide/creating-styles) and 
 [using mvt styles](https://maps4html.org/web-map-doc/docs/user-guide/using-styles) for the authoring reference.
 
-The example below loads a public Protomaps-hosted [OpenStreetMap pmtiles archive](https://data.source.coop/protomaps/openstreetmap/tiles/v3.pmtiles) 
-via a remote MapML document that ships with `gcds-map`. Use the layer settings to switch between the bundled 
-light and dark themes.
+The example below loads a public [OpenStreetMap pmtiles archive](https://data.source.coop/protomaps/openstreetmap/tiles/v3.pmtiles). 
+Use the layer settings to switch between the bundled light and dark themes.
 
 <gcds-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls style="height: 400px;">
   <map-layer src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/light.mapml' | url }}" checked></map-layer>
