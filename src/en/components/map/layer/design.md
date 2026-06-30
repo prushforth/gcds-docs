@@ -171,7 +171,7 @@ This example shows an inline feature with a polygon geometry defined in geograph
 A map can contain a mix of remote and inline layers. Here a hidden basemap and a
 remote thematic overlay are combined with an inline point feature layer.
 
-<gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+<gcds-map lat="45.4215" lon="-75.6972" zoom="4" projection="OSMTILE" controls style="height: 400px;">
   <map-layer src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/cbmt' | url }}" checked hidden></map-layer>
   <map-layer src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/current_conditions' | url }}" checked opacity="0.7"></map-layer>
   <map-layer label="Points of Interest" checked>
@@ -193,7 +193,7 @@ remote thematic overlay are combined with an inline point feature layer.
 </gcds-map>
 
 ```html
-<gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
+<gcds-map lat="45.4215" lon="-75.6972" zoom="4" projection="OSMTILE" controls>
   <map-layer src="basemap.mapml" checked hidden></map-layer>
   <map-layer src="overlay.mapml" checked opacity="0.7"></map-layer>
   <map-layer label="Points of Interest" checked>
@@ -282,7 +282,7 @@ The `<map-layer>` element can include the `<map-extent>` element, which acts as 
 </gcds-map>
 
 ```html
-<gcds-map projection="CBMTILE" zoom="2" lat="48" lon="-91" controls static style="height: 400px;">
+<gcds-map projection="CBMTILE" zoom="2" lat="63" lon="-89" controls static style="height: 400px;">
   <map-layer label="Toporama" checked> 
     <!-- including the hidden attribute here would make the UI simpler -->
     <map-extent units="CBMTILE" checked>
@@ -302,21 +302,22 @@ The `<map-layer>` element can include the `<map-extent>` element, which acts as 
 #### Alternate layer projections
 
 All maps have a fundamental mathematical characteristic that allows the curved, three dimensional surface of
-the Earth to be drawn in the two dimensions of the screen: their "projection".  The map projection is the term used to identify the class of mathematical transformation that enables this rendering, and the projection may 
+the Earth to be drawn in the two dimensions of the screen: their "projection".  Map projection is the term used to 
+identify the class of transformation that enables this rendering, and the projection may 
 vary from map to map, depending on its purpose. For example, maps of the Earth's poles may require a different 
 approach than a map of North or South America.
 
 In MapML, the projection of a map is identified by its `projection` attribute value. Content that is displayed
 on that map **must** conform to that projection otherwise its rendering may be slightly 
-or completely inaccurate.  MapML maps don't perform compute-intensive reprojection of map data "on the fly"; MapML maps use "projection negotiation", in which the layer author may choose to provide and advertise
+or completely inaccurate.  MapML maps don't perform compute-intensive reprojection of map data "on the fly"; 
+MapML maps use "projection negotiation", in which the layer author may choose to provide and advertise
 alternate representations of layer content by projection, and the client map selects the layer representation that best fits.
 
 <details>
 <summary style="margin-block-end: var(--gcds-heading-spacing-200);">Projection negotiation - inline content</summary>
 
-In this example, inline content provides two hidden sub-layers, each with a different projection.  The provided button 
-allows the user to toggle the projection of the map between the initial Lambert Conformal Conic projection (the CBMTILE
-value) and the cylindrical web Mercator projection (the OSMTILE value).  The map selects and displays the sub-layer that matches its projection. 
+In this example, inline content provides two hidden sub-layers, each with a different `projection`.  The provided button 
+toggles the `projection` of the map between `CBMTILE` and `OSMTILE`.  The map selects and displays the sub-layer that matches its projection. 
 
 <div style="position: relative;">
 <gcds-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls style="height: 400px;">
@@ -385,8 +386,8 @@ value) and the cylindrical web Mercator projection (the OSMTILE value).  The map
 
 In this example, the map includes a single layer that links to a MapML resource in the same projection as the initial map.
 That MapML document includes a `<map-link>` element linking to its complementary projection resource.  When the user 
-toggles the map projection from the initial `CBMTILE` value to `OSMTILE`, the map selects and displays the complementary
-MapML document in the cylindrical web Mercator projection, and vice versa.
+toggles the map `projection` between `CBMTILE` and `OSMTILE`, the map selects and displays the complementary compatible
+MapML document.
 
 <div style="position: relative;">
 <gcds-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls style="height: 400px;">
@@ -508,8 +509,10 @@ fetched dynamically as the user pans and zooms the map.
 
 ##### Features
 
-Geographic information is modelled as points, lines or polygons, and this standard geometry model is shared across 
-most subject matter domains by what's called the "Simple Features" (SF) model, from the Open Geospatial Consortium (OGC).
+Geographic information is modelled as points, lines or polygons, and the standard geometry model shared across 
+most subject matter domains is called the "Simple Features" (SF) model, from the Open Geospatial Consortium (OGC).
+The SF model combines feature named text properties with a standardized shape property named "geometry". Many
+formats apply the SF model in the format's own syntax, such as GeoJSON, KML, Shapefiles and many others.
 
 MapML applies the SF model in the `<map-feature>` element, which can be used in remote and inline content.
 
@@ -605,7 +608,7 @@ MapML applies the SF model in the `<map-feature>` element, which can be used in 
 
 ##### Tiles
 
-Tiled geographic data is an optimization created to support the stateless architecture of the web. 
+Tiled geographic data is an optimization created to support the stateless resource architecture of the web. 
 Tiles allow spatial information to be efficiently transmitted, cached and rendered. Tiles can contain 
 different types of geographic content, including images and feature data, and may be encoded in different formats. 
 Tiles are often, but not always created in projected units according to a regular well-known nested grid structure. 
@@ -614,7 +617,7 @@ The identifiers are used in the map's `projection` and related attributes.
 
 Most commonly, tiles are implicitly referenced in bulk, via the MapML URL templating system implemented by the
 `<map-extent>` content model.  Although it is usually not explicitly encoded in markup, it is possible to include 
-individual `<map-tile>` elements in content, and they behave like a "square feature" tied rendered at a single map
+individual `<map-tile>` elements in content, and they behave like a "square feature" rendered at a single map
 zoom level value.
 
 <gcds-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692" controls style="height: 400px;">
@@ -630,8 +633,9 @@ zoom level value.
   <map-layer label="Individual tiles" checked>
     <map-meta name="projection" content="OSMTILE"></map-meta>
     <map-meta name="zoom" content="min=11,max=11"></map-meta>
-    <map-link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" title="By Leijurv - Own work, CC BY-SA 4.0"></map-link>
+    <map-link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" title="By Leijurv, NOESCATS - Own work, CC BY-SA 4.0"></map-link>
     <map-tile zoom="11" row="733" col="593" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Juvenile_Ragdoll.jpg/1280px-Juvenile_Ragdoll.jpg"></map-tile>
+    <map-tile zoom="11" row="733" col="594" src="https://upload.wikimedia.org/wikipedia/commons/4/42/1_dia_de_vida.jpg"></map-tile>
   </map-layer>
 </gcds-map>
 
@@ -649,30 +653,33 @@ zoom level value.
   <map-layer label="Individual tiles" checked>
     <map-meta name="projection" content="OSMTILE"></map-meta>
     <map-meta name="zoom" content="min=11,max=11"></map-meta>
-    <map-link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" title="By Leijurv - Own work, CC BY-SA 4.0"></map-link>
+    <map-link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" title="By Leijurv, NOESCATS - Own work, CC BY-SA 4.0"></map-link>
     <map-tile zoom="11" row="733" col="593" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Juvenile_Ragdoll.jpg/1280px-Juvenile_Ragdoll.jpg"></map-tile>
+    <map-tile zoom="11" row="733" col="594" src="https://upload.wikimedia.org/wikipedia/commons/4/42/1_dia_de_vida.jpg"></map-tile>
   </map-layer>
 </gcds-map>
 ```
 
 ##### GeoJSON
 
-GeoJSON is a useful and widespread format that applies the Simple Features model in JSON.  GeoJSON is limited to CRS:84 coordinates based 
-on the Global Positioning System framework. This quality does constrain the interoperability of GeoJSON to situations where the CRS:84 system is used. 
-Fortunately, the near ubiquitous use of Web Mercator (OSMTILE) is compatible with GeoJSON, and this is supported by the map and layer component API.
+GeoJSON is a useful and widespread format that applies the Simple Features model in JSON.  GeoJSON is limited to CRS:84 (longituded, latitude) 
+coordinates based on the Global Positioning System framework. This constrains the interoperability of GeoJSON mostly to situations where the 
+CRS:84 system is used. Fortunately, the near ubiquitous use of OSMTILE is compatible with GeoJSON, and this is supported by the GCDS map and layer 
+component API.
 
-The GeoJSON API is composed of the layer-provided `mapml2geojson()` and the map-accessible `geojson2mapml()` functions.
+The GeoJSON API is comprised of the `mapml2geojson()` and `geojson2mapml()` functions.
 
-The example below loads [canada.json](../assets/canada.json) (a `FeatureCollection` of Canada's provinces and territories) and converts it to a `<map-layer>` at runtime using the map's `geojson2mapml()` method. The method accepts the parsed GeoJSON and an options object (`label`, `caption`, `projection`, `properties`, `geometryFunction`) and appends the resulting layer to the map for you.
+The example below loads [canada.json](../assets/canada.json) (a `FeatureCollection` of Canada's provinces and territories) and converts it to a 
+`<map-layer>` at runtime using the map's `geojson2mapml()` method. The method accepts the parsed GeoJSON and an options object 
+(`label`, `caption`, `projection`, `properties`, `geometryFunction`) and appends the resulting layer to the map for you.
 
-<gcds-map id="provinces-geojson-map" lat="71" lon="-96" zoom="2" projection="OSMTILE" controls data-static-code style="height: 400px;">
+<gcds-map id="provinces-geojson-map" lat="71" lon="-96" zoom="2" projection="OSMTILE" controls style="height: 400px;">
   <map-caption>Provinces and territories of Canada, loaded from GeoJSON.</map-caption>
   <map-layer src="../assets/osmtile/cbmt.mapml" checked></map-layer>
 </gcds-map>
 
 ```html
-<gcds-map id="provinces-geojson-map" lat="71" lon="-96" zoom="2"
-          projection="OSMTILE" controls style="height: 400px;">
+<gcds-map id="provinces-geojson-map" lat="71" lon="-96" zoom="2" projection="OSMTILE" controls style="height: 400px;">
   <map-caption>Provinces and territories of Canada, loaded from GeoJSON.</map-caption>
   <map-layer src="./cbmt.mapml" checked></map-layer>
 </gcds-map>
@@ -808,17 +815,24 @@ swap automatically.
 #### Ensure visual content has enough contrast
 
 Don't rely on colour alone to disinguish map features.  Use high colour contrast, and different shapes and symbology 
-where possible - your organization may not always own the data your map presents, but providing accessibility 
+where possible. Your organization may not always own the data your map presents, but providing accessibility 
 feedback to map providers is helpful to all users.  
 
 In general, leave the opacity or transparency of layers up to the user.
 
 ##### Alternate layer styles
 
-Web Map Service (WMS) layers may be provided in a variety of named styles, each according to its own legend of different symbology.  Different styles for a given WMS layer are typically accessed by providing the name of the style as a map request URL parameter.  <code>&lt;map-layer&gt;</code>s can help make WMS named styles user-accessible, by linking to different the styles for embedded WMS layers.  These links are presented in the layer control as radio control options
-for the layer, with each option labeled with the accessible name (<code>title</code> attribute) of the corresponding link.  Such links may be to different styles for a given data source (e.g. a WMS layer), but they may point to anything, including different data sources e.g. "Satellite view" (imagery) vs "Map view" (rendered symbols and text for identifiable features).  It's up to the developer to determine what makes sense and is accessible for their users.
+Web Map Service (WMS) layers may be provided in a variety of named styles, each according to its own legend of different symbology. 
+Different styles for a given WMS layer are typically accessed by providing the name of the style as a map request URL parameter. 
+<code>&lt;map-layer&gt;</code>s can help make WMS named styles user-accessible, by linking to different the styles for embedded WMS 
+layers.  These links are presented in the layer control as radio control options for the layer, with each option labeled with the 
+accessible name (<code>title</code> attribute) of the corresponding link.  Such links may be to different styles for a given data 
+source (e.g. a WMS layer), but they may point to anything, including different data sources e.g. "Satellite view" (imagery) vs 
+"Map view" (rendered symbols and text for identifiable features).  It's up to the developer to determine what makes sense and is 
+accessible for their users.
 
-Named style links currently only work with remote MapML layers - that is layers with content accessed by a URL in the <code>&lt;map-layer <strong>src=" "</strong>&gt;</code> attribute.
+Named style links currently only work with remote MapML layers - that is layers with content accessed by a URL in the 
+<code>&lt;map-layer <strong>src=" "</strong>&gt;</code> attribute.
 
 In the following example, the remote document declares two <code>&lt;map-link rel="style"&gt;</code> links, 
 one with <code>rel="self style"</code> indicating the currently active style, and one with <code>rel="style"</code> 
