@@ -633,9 +633,19 @@ zoom level value.
   <map-layer label="Individual tiles" checked>
     <map-meta name="projection" content="OSMTILE"></map-meta>
     <map-meta name="zoom" content="min=11,max=11"></map-meta>
-    <map-link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" title="Kitten tiles by Leijurv, NOESCATS - Own work, CC BY-SA 4.0"></map-link>
+    <map-link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" title="Kitten tiles by Wikipedia - CC BY-SA 4.0"></map-link>
+    <map-tile zoom="11" row="732" col="591" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Gray_and_White_Kitten_%288571437977%29.jpg/250px-Gray_and_White_Kitten_%288571437977%29.jpg"></map-tile>
+    <map-tile zoom="11" row="732" col="592" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Juvenile_Ragdoll.jpg/1280px-Juvenile_Ragdoll.jpg"></map-tile>
+    <map-tile zoom="11" row="732" col="593" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Kitten_%2814297415856%29.jpg/250px-Kitten_%2814297415856%29.jpg"></map-tile>
+    <map-tile zoom="11" row="732" col="594" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Tabby_Kitten_on_Blue_Throw.jpg/250px-Tabby_Kitten_on_Blue_Throw.jpg"></map-tile>
+    <map-tile zoom="11" row="733" col="591" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Gray_and_White_Kitten_%288571437977%29.jpg/250px-Gray_and_White_Kitten_%288571437977%29.jpg"></map-tile>
+    <map-tile zoom="11" row="733" col="592" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Tabby_Kitten_on_Blue_Throw.jpg/250px-Tabby_Kitten_on_Blue_Throw.jpg"></map-tile>
     <map-tile zoom="11" row="733" col="593" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Juvenile_Ragdoll.jpg/1280px-Juvenile_Ragdoll.jpg"></map-tile>
-    <map-tile zoom="11" row="733" col="594" src="https://upload.wikimedia.org/wikipedia/commons/4/42/1_dia_de_vida.jpg"></map-tile>
+    <map-tile zoom="11" row="733" col="594" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Kitten_%2814297415856%29.jpg/250px-Kitten_%2814297415856%29.jpg"></map-tile>
+    <map-tile zoom="11" row="734" col="591" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Gray_and_White_Kitten_%288571437977%29.jpg/250px-Gray_and_White_Kitten_%288571437977%29.jpg"></map-tile>
+    <map-tile zoom="11" row="734" col="592" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Juvenile_Ragdoll.jpg/1280px-Juvenile_Ragdoll.jpg"></map-tile>
+    <map-tile zoom="11" row="734" col="593" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Kitten_%2814297415856%29.jpg/250px-Kitten_%2814297415856%29.jpg"></map-tile>
+    <map-tile zoom="11" row="734" col="594" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Tabby_Kitten_on_Blue_Throw.jpg/250px-Tabby_Kitten_on_Blue_Throw.jpg"></map-tile>
   </map-layer>
 </gcds-map>
 

@@ -100,7 +100,7 @@ enfants de `<map-layer>`. Notez que le contenu intégré **doit** être encodé 
 particulièrement important que les balises HTML
 non [vides](https://developer.mozilla.org/fr/docs/Glossary/Void_element) se terminent par une
 balise de fermeture, et de **ne pas** utiliser la
-[syntaxe de balise auto-fermante](https://developer.mozilla.org/fr/docs/Glossary/Void_element#self-closing_tags)
+[syntaxe de balise auto-fermante](https://developer.mozilla.org/fr/docs/Glossary/Void_element#balises_auto-fermantes)
 XML `<tag />`, qui n'est pas reconnue par l'analyseur HTML et peut causer des problèmes.
 
 Il est particulièrement important d'être conscient des différences entre la syntaxe auto-fermante
@@ -425,8 +425,8 @@ document MapML complémentaire compatible.
 Une légende peut fournir une description de la signification des symboles utilisés par une
 couche. La valeur du premier attribut `<map-link rel="legend" href>` est fournie comme lien à
 partir du nom de la couche dans le contrôle des couches. Sachez que si la légende est fournie
-sous forme d'image, l'image peut être en partie ou totalement inaccessible aux utilisateurs
-ayant un handicap visuel. Une approche plus accessible pourrait être de fournir une page HTML
+sous forme d'image, l'image peut être en partie ou totalement inaccessible aux personnes ayant
+une incapacité visuelle. Une approche plus accessible pourrait être de fournir une page HTML
 avec des descriptions textuelles des symboles associés, mais même cela pourrait ne pas rendre
 une couche de carte complètement accessible.
 
@@ -659,9 +659,19 @@ des éléments `<map-tile>` individuels dans le contenu, et ils se comportent co
   <map-layer label="Tuiles individuelles" checked>
     <map-meta name="projection" content="OSMTILE"></map-meta>
     <map-meta name="zoom" content="min=11,max=11"></map-meta>
-    <map-link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" title="Tuiles de chatons par Leijurv, NOESCATS - Travail personnel, CC BY-SA 4.0"></map-link>
+    <map-link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" title="Tuiles de chatons par Wikipedia, CC BY-SA 4.0"></map-link>
+    <map-tile zoom="11" row="732" col="591" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Gray_and_White_Kitten_%288571437977%29.jpg/250px-Gray_and_White_Kitten_%288571437977%29.jpg"></map-tile>
+    <map-tile zoom="11" row="732" col="592" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Juvenile_Ragdoll.jpg/1280px-Juvenile_Ragdoll.jpg"></map-tile>
+    <map-tile zoom="11" row="732" col="593" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Kitten_%2814297415856%29.jpg/250px-Kitten_%2814297415856%29.jpg"></map-tile>
+    <map-tile zoom="11" row="732" col="594" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Tabby_Kitten_on_Blue_Throw.jpg/250px-Tabby_Kitten_on_Blue_Throw.jpg"></map-tile>
+    <map-tile zoom="11" row="733" col="591" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Gray_and_White_Kitten_%288571437977%29.jpg/250px-Gray_and_White_Kitten_%288571437977%29.jpg"></map-tile>
+    <map-tile zoom="11" row="733" col="592" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Tabby_Kitten_on_Blue_Throw.jpg/250px-Tabby_Kitten_on_Blue_Throw.jpg"></map-tile>
     <map-tile zoom="11" row="733" col="593" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Juvenile_Ragdoll.jpg/1280px-Juvenile_Ragdoll.jpg"></map-tile>
-    <map-tile zoom="11" row="733" col="594" src="https://upload.wikimedia.org/wikipedia/commons/4/42/1_dia_de_vida.jpg"></map-tile>
+    <map-tile zoom="11" row="733" col="594" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Kitten_%2814297415856%29.jpg/250px-Kitten_%2814297415856%29.jpg"></map-tile>
+    <map-tile zoom="11" row="734" col="591" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Gray_and_White_Kitten_%288571437977%29.jpg/250px-Gray_and_White_Kitten_%288571437977%29.jpg"></map-tile>
+    <map-tile zoom="11" row="734" col="592" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Juvenile_Ragdoll.jpg/1280px-Juvenile_Ragdoll.jpg"></map-tile>
+    <map-tile zoom="11" row="734" col="593" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Kitten_%2814297415856%29.jpg/250px-Kitten_%2814297415856%29.jpg"></map-tile>
+    <map-tile zoom="11" row="734" col="594" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Tabby_Kitten_on_Blue_Throw.jpg/250px-Tabby_Kitten_on_Blue_Throw.jpg"></map-tile>
   </map-layer>
 </gcds-map>
 
