@@ -630,19 +630,272 @@ contenu distant et intégré.
 
 ##### Contenu tuilé
 
+Les données géographiques tuilées sont une optimisation créée pour soutenir l'architecture des
+ressources sans état du web. Les tuiles permettent de transmettre, de mettre en cache et de
+rendre l'information spatiale de manière efficace. Les tuiles peuvent contenir différents types
+de contenu géographique, notamment des images et des données d'entités, et peuvent être
+encodées dans différents formats. Les tuiles sont souvent, mais pas toujours, créées en unités
+projetées selon une structure de grille imbriquée régulière et bien connue. MapML intègre ces
+structures de grille bien connues dans ses systèmes de coordonnées et attribue à chaque
+système un identifiant bien connu. Les identifiants sont utilisés dans l'attribut `projection`
+de la carte et dans les attributs qui y sont liés.
+
+Le plus souvent, les tuiles sont référencées implicitement en masse, via le système de
+gabarits d'URL de MapML implémenté par le modèle de contenu de `<map-extent>`. Bien qu'elles
+ne soient généralement pas encodées explicitement dans le balisage, il est possible d'inclure
+des éléments `<map-tile>` individuels dans le contenu, et ils se comportent comme une
+« entité carrée » rendue à une seule valeur de niveau de zoom de la carte.
+
+<gcds-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692" controls style="height: 400px;">
+  <map-layer label="Tuiles gabaritées d'OpenStreetMap" checked>
+    <map-link rel="license" href="https://www.openstreetmap.org/copyright/fr" title="OpenStreetMap &#xa9; les contributeurs CC BY-SA 2.0"></map-link>
+    <map-extent units="OSMTILE" checked>
+      <map-input name="z" type="zoom" min="0" max="18"></map-input>
+      <map-input name="x" type="location" units="tilematrix" axis="column"></map-input>
+      <map-input name="y" type="location" units="tilematrix" axis="row"></map-input>
+      <map-link rel="tile" tref="https://tile.openstreetmap.org/{z}/{x}/{y}.png"></map-link>
+    </map-extent>
+  </map-layer>
+  <map-layer label="Tuiles individuelles" checked>
+    <map-meta name="projection" content="OSMTILE"></map-meta>
+    <map-meta name="zoom" content="min=11,max=11"></map-meta>
+    <map-link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" title="Tuiles de chatons par Leijurv, NOESCATS - Travail personnel, CC BY-SA 4.0"></map-link>
+    <map-tile zoom="11" row="733" col="593" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Juvenile_Ragdoll.jpg/1280px-Juvenile_Ragdoll.jpg"></map-tile>
+    <map-tile zoom="11" row="733" col="594" src="https://upload.wikimedia.org/wikipedia/commons/4/42/1_dia_de_vida.jpg"></map-tile>
+  </map-layer>
+</gcds-map>
+
+```html
+<gcds-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692" controls style="height: 400px;">
+  <map-layer label="Tuiles gabaritées d'OpenStreetMap" checked>
+    <map-link rel="license" href="https://www.openstreetmap.org/copyright/fr" title="&#xa9; les contributeurs d'OpenStreetMap CC BY-SA 2.0"></map-link>
+    <map-extent units="OSMTILE" checked>
+      <map-input name="z" type="zoom" min="0" max="18"></map-input>
+      <map-input name="x" type="location" units="tilematrix" axis="column"></map-input>
+      <map-input name="y" type="location" units="tilematrix" axis="row"></map-input>
+      <map-link rel="tile" tref="https://tile.openstreetmap.org/{z}/{x}/{y}.png"></map-link>
+    </map-extent>
+  </map-layer>
+  <map-layer label="Tuiles individuelles" checked>
+    <map-meta name="projection" content="OSMTILE"></map-meta>
+    <map-meta name="zoom" content="min=11,max=11"></map-meta>
+    <map-link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" title="Par Leijurv, NOESCATS - Travail personnel, CC BY-SA 4.0"></map-link>
+    <map-tile zoom="11" row="733" col="593" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Juvenile_Ragdoll.jpg/1280px-Juvenile_Ragdoll.jpg"></map-tile>
+    <map-tile zoom="11" row="733" col="594" src="https://upload.wikimedia.org/wikipedia/commons/4/42/1_dia_de_vida.jpg"></map-tile>
+  </map-layer>
+</gcds-map>
+```
+
 ##### GeoJSON
 
+GeoJSON est un format utile et répandu qui applique le modèle Simple Features en JSON. GeoJSON
+est limité aux coordonnées CRS:84 (longitude, latitude) basées sur le cadre du système de
+positionnement global (GPS). Cela restreint l'interopérabilité de GeoJSON principalement aux
+situations où le système CRS:84 est utilisé. Heureusement, l'usage quasi universel d'OSMTILE
+est compatible avec GeoJSON, et cela est pris en charge par l'API des composants carte et
+couche du SDGC.
+
+L'API GeoJSON est constituée des fonctions `mapml2geojson()` et `geojson2mapml()`.
+
+L'exemple ci-dessous charge [canada.json]({{ '/components/gcds-map/dist/gcds-map/assets/canada.json' | url }}) (une `FeatureCollection` des
+provinces et territoires du Canada) et la convertit en une `<map-layer>` à l'exécution en
+utilisant la méthode `geojson2mapml()` de la carte. La méthode accepte le GeoJSON analysé et
+un objet d'options (`label`, `caption`, `projection`, `properties`, `geometryFunction`) et
+ajoute la couche résultante à la carte pour vous.
+
+<gcds-map id="provinces-geojson-map" data-static-code lat="71" lon="-96" zoom="2" projection="OSMTILE" controls style="height: 400px;">
+  <map-caption>Provinces et territoires du Canada, chargés à partir de GeoJSON.</map-caption>
+  <map-layer src="../assets/osmtile/cbmt.mapml" checked></map-layer>
+</gcds-map>
+
+```html
+<gcds-map id="provinces-geojson-map" lat="71" lon="-96" zoom="2" projection="OSMTILE" controls style="height: 400px;">
+  <map-caption>Provinces et territoires du Canada, chargés à partir de GeoJSON.</map-caption>
+  <map-layer src="./cbmt.mapml" checked></map-layer>
+</gcds-map>
+<script>
+  customElements.whenDefined('gcds-map').then(async () => {
+    const mapEl = document.getElementById('provinces-geojson-map');
+    await mapEl.whenReady();
+    const response = await fetch('./canada.json');
+    const geojson = await response.json();
+    mapEl.geojson2mapml(geojson, {
+      label: 'Provinces et territoires du Canada',
+      caption: 'PRFNAME',
+    });
+  });
+</script>
+```
+
+<script>
+  (function () {
+    customElements.whenDefined('gcds-map').then(async function () {
+      const mapEl = document.getElementById('provinces-geojson-map');
+      await mapEl.whenReady();
+      const response = await fetch('{{ '/components/gcds-map/dist/gcds-map/assets/canada.json' | url }}');
+      const geojson = await response.json();
+      mapEl.geojson2mapml(geojson, {
+        label: 'Provinces et territoires du Canada',
+        caption: 'PRFNAME',
+      });
+    });
+  })();
+</script>
+
 ##### Tuiles vectorielles
+
+Le composant couche prend en charge les tuiles vectorielles Mapbox (mvt) et le
+[format d'archive pmtiles](https://docs.protomaps.com/pmtiles/). Un `<map-link>` de
+tuiles vectorielles doit être jumelé à un module de feuille de style — consultez
+[la création de styles mvt](https://maps4html.org/web-map-doc/fr/docs/user-guide/creating-styles/)
+et [l'utilisation de styles mvt](https://maps4html.org/web-map-doc/fr/docs/user-guide/using-styles/)
+pour la référence de création.
+
+L'exemple ci-dessous charge une
+[archive pmtiles publique d'OpenStreetMap](https://data.source.coop/protomaps/openstreetmap/tiles/v3.pmtiles).
+Utilisez les paramètres de la couche pour basculer entre les thèmes clair et sombre fournis.
+
+<gcds-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls style="height: 400px;">
+  <map-layer src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/fr/osmtile/light.mapml' | url }}" checked></map-layer>
+</gcds-map>
+
+```html
+<gcds-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls style="height: 400px;">
+  <map-layer src="./light.mapml" checked></map-layer>
+</gcds-map>
+```
 
 ### Accessibilité
 
 #### Fournir un nom accessible aux couches non masquées
 
+L'élément <code>&lt;map-layer&gt;</code> peut sembler être un élément purement visuel qui ne fait
+qu'ajouter à la pile de contenu rendu dans la fenêtre d'affichage de la carte selon l'ordre du
+document, et bien que cela soit vrai, il est également vrai que le contenu de la couche est rendu
+accessible aux utilisateurs grâce à l'inclusion des métadonnées de la couche dans le contrôle des
+couches.
+
+Si une couche est suffisamment importante, elle devrait avoir un nom significatif disponible pour
+tous les utilisateurs. Si une couche contient un élément enfant
+`<map-title>Les noms accessibles sont descriptifs</map-title>`, la valeur textuelle de cet
+élément (« Les noms accessibles sont descriptifs ») est <strong>toujours</strong> utilisée comme
+nom de la couche dans le contrôle des couches, remplaçant tout `label`; si la couche ne comporte
+pas d'élément `<map-title>`, le nom de la couche dans le contrôle des couches se rabat sur la
+valeur de l'attribut
+`<map-layer label="Ceci est utilisé si aucun élément map-title enfant n'existe">` `label`, si
+elle est fournie. Si aucune de ces valeurs n'est fournie, le nom de la couche dans le contrôle
+des couches est défini à « Couche », ce qui n'est pas très utile pour les utilisateurs. Par
+conséquent, il est important de veiller à ce que vos couches aient un
+[nom accessible](https://developer.mozilla.org/fr/docs/Glossary/Accessible_name).
+
+Le nom accessible de l'ensemble de la carte est fourni par l'élément enfant
+<code>&lt;map-caption&gt;</code> de la carte.
+
+<gcds-map zoom="14" lat="43.193477" lon="-80.384773" controls style="height: 400px;">
+  <map-caption>Paris, Ontario</map-caption>
+  <map-layer label="Je suis ton père, Luc" checked>
+    <map-title>OpenStreetMap</map-title>
+    <map-link rel="license" href="https://www.openstreetmap.org/copyright/fr" title="OpenStreetMap &#xa9; les contributeurs CC BY-SA 2.0"></map-link>
+    <map-extent units="OSMTILE" checked hidden>
+      <map-input name="z" type="zoom" min="0" max="18"></map-input>
+      <map-input name="x" type="location" units="tilematrix" axis="column"></map-input>
+      <map-input name="y" type="location" units="tilematrix" axis="row"></map-input>
+      <map-link rel="tile" tref="https://tile.openstreetmap.org/{z}/{x}/{y}.png"></map-link>
+    </map-extent>
+  </map-layer>
+</gcds-map>
+
+```html
+<gcds-map projection="OSMTILE" zoom="14" lat="43.193477" lon="-80.384773" controls style="height: 400px;">
+  <map-caption>Paris, Ontario</map-caption>
+  <map-layer label="Je suis ton père, Luc" checked>
+    <map-title>OpenStreetMap</map-title>
+    <map-link rel="license" href="https://www.openstreetmap.org/copyright/fr" title="OpenStreetMap &#xa9; les contributeurs CC BY-SA 2.0"></map-link>
+    <map-extent units="OSMTILE" checked hidden>
+      <map-input name="z" type="zoom" min="0" max="18"></map-input>
+      <map-input name="x" type="location" units="tilematrix" axis="column"></map-input>
+      <map-input name="y" type="location" units="tilematrix" axis="row"></map-input>
+      <map-link rel="tile" tref="https://tile.openstreetmap.org/{z}/{x}/{y}.png"></map-link>
+    </map-extent>
+  </map-layer>
+</gcds-map>
+```
+
 #### Masquer le contenu de carte non pertinent à l'aide de requêtes de média de carte
+
+Si certain contenu de carte n'est pas pertinent selon des [conditions qui peuvent être
+identifiées par des expressions de média de carte](https://maps4html.org/web-map-doc/fr/docs/api/mapml-viewer-api/#fonctionnalités-de-requête-média-prises-en-charge-pour-la-carte), organisez le contenu en éléments
+`<map-layer>` distincts et utilisez l'attribut `media` pour afficher ou masquer la couche
+en conséquence. Par exemple, les utilisateurs peuvent activer le « mode sombre » sur leur
+système. Une requête de média de carte peut identifier une telle condition et activer ou
+désactiver le contenu qui correspond à l'un ou l'autre mode.
+
+L'exemple ci-dessous jumelle deux couches vectorielles pmtiles complémentaires — la même
+[archive pmtiles d'OpenStreetMap](https://data.source.coop/protomaps/openstreetmap/tiles/v3.pmtiles)
+rendue avec un thème clair et un thème sombre. Chaque `<map-layer>` déclare un attribut
+`media` avec une requête `prefers-color-scheme`, de sorte que seule la couche
+correspondant à la préférence de thème de couleur actuelle du système d'exploitation ou du
+navigateur de l'utilisateur est active. Basculez votre système entre le mode clair et le
+mode sombre pour voir la carte s'échanger automatiquement.
+
+<gcds-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls style="height: 400px;">
+  <map-layer media="(prefers-color-scheme: light)" checked src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/fr/osmtile/light.mapml' | url }}"></map-layer>
+  <map-layer media="(prefers-color-scheme:  dark)" checked src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/fr/osmtile/dark.mapml' | url }}"></map-layer>
+</gcds-map>
+
+```html
+<gcds-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls style="height: 400px;">
+  <map-layer media="(prefers-color-scheme: light)" checked src="./light.mapml"></map-layer>
+  <map-layer media="(prefers-color-scheme:  dark)" checked src="./dark.mapml"></map-layer>
+</gcds-map>
+```
 
 #### Assurer un contraste suffisant pour le contenu visuel
 
+Ne vous fiez pas uniquement à la couleur pour distinguer les entités de carte. Utilisez un
+contraste de couleur élevé et, lorsque cela est possible, des formes et une symbologie
+différentes. Votre organisation ne possède peut-être pas toujours les données présentées par
+votre carte, mais fournir des commentaires d'accessibilité aux fournisseurs de cartes est
+utile pour tous les utilisateurs.
+
+En général, laissez à l'utilisateur le choix de l'opacité ou de la transparence des couches.
+
 ##### Styles alternatifs de couche
+
+Les couches du service Web Map Service (WMS) peuvent être fournies dans une variété de styles
+nommés, chacun accompagné de sa propre légende et d'une symbologie différente. On accède
+généralement aux différents styles d'une couche WMS donnée en fournissant le nom du style
+comme paramètre d'URL de la requête cartographique. Les éléments
+<code>&lt;map-layer&gt;</code> peuvent contribuer à rendre les styles nommés WMS accessibles
+à l'utilisateur, en liant les différents styles des couches WMS intégrées. Ces liens sont
+présentés dans le contrôle des couches sous forme d'options de contrôle radio pour la couche,
+chaque option étant étiquetée avec le nom accessible (attribut <code>title</code>) du lien
+correspondant. De tels liens peuvent pointer vers différents styles pour une source de données
+donnée (p. ex. une couche WMS), mais ils peuvent aussi pointer vers n'importe quoi, y compris
+des sources de données complètement différentes, p. ex. « Vue satellite » (imagerie) et
+« Vue carte » (symboles et texte rendus pour des entités identifiables). Il revient à
+l'auteure ou l'auteur de déterminer ce qui est pertinent et accessible pour ses utilisateurs.
+
+Les liens de style nommé ne fonctionnent actuellement qu'avec des couches MapML distantes —
+c'est-à-dire des couches dont le contenu est accessible via une URL dans l'attribut
+<code>&lt;map-layer <strong>src=" "</strong>&gt;</code>.
+
+Dans l'exemple suivant, le document distant déclare deux liens
+<code>&lt;map-link rel="style"&gt;</code>, l'un avec <code>rel="self style"</code> indiquant
+le style actuellement actif, et l'autre avec <code>rel="style"</code> pour l'alternative.
+Ouvrez le contrôle des couches (survolez-le ou donnez-lui le focus au clavier dans le coin
+supérieur droit) et développez les paramètres de la couche pour voir et basculer entre les
+styles disponibles.
+
+<gcds-map projection="CBMTILE" zoom="3" lat="45.114527" lon="-59.863727" controls style="height: 400px;">
+  <map-layer src="../assets/sea-surface-default.mapml" checked></map-layer>
+</gcds-map>
+
+```html
+<gcds-map projection="CBMTILE" zoom="3" lat="45.114527" lon="-59.863727" controls>
+  <map-layer src="../assets/sea-surface-default.mapml" checked></map-layer>
+</gcds-map>
+```
 
 {% include "partials/map-live-code.njk" %}
 

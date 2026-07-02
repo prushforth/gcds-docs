@@ -622,7 +622,7 @@ zoom level value.
 
 <gcds-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692" controls style="height: 400px;">
   <map-layer label="OpenStreetMap templated tiles" checked>
-    <map-link rel="license" href="https://www.openstreetmap.org/copyright" title="&#xa9; OpenStreetMap contributors CC BY-SA 2.0"></map-link>
+    <map-link rel="license" href="https://www.openstreetmap.org/copyright" title="OpenStreetMap &#xa9; contributors CC BY-SA 2.0"></map-link>
     <map-extent units="OSMTILE" checked>
       <map-input name="z" type="zoom" min="0" max="18"></map-input>
       <map-input name="x" type="location" units="tilematrix" axis="column"></map-input>
@@ -633,7 +633,7 @@ zoom level value.
   <map-layer label="Individual tiles" checked>
     <map-meta name="projection" content="OSMTILE"></map-meta>
     <map-meta name="zoom" content="min=11,max=11"></map-meta>
-    <map-link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" title="By Leijurv, NOESCATS - Own work, CC BY-SA 4.0"></map-link>
+    <map-link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" title="Kitten tiles by Leijurv, NOESCATS - Own work, CC BY-SA 4.0"></map-link>
     <map-tile zoom="11" row="733" col="593" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Juvenile_Ragdoll.jpg/1280px-Juvenile_Ragdoll.jpg"></map-tile>
     <map-tile zoom="11" row="733" col="594" src="https://upload.wikimedia.org/wikipedia/commons/4/42/1_dia_de_vida.jpg"></map-tile>
   </map-layer>
@@ -662,18 +662,18 @@ zoom level value.
 
 ##### GeoJSON
 
-GeoJSON is a useful and widespread format that applies the Simple Features model in JSON.  GeoJSON is limited to CRS:84 (longituded, latitude) 
-coordinates based on the Global Positioning System framework. This constrains the interoperability of GeoJSON mostly to situations where the 
-CRS:84 system is used. Fortunately, the near ubiquitous use of OSMTILE is compatible with GeoJSON, and this is supported by the GCDS map and layer 
-component API.
+GeoJSON is a useful and widespread format that applies the Simple Features model in JSON.  GeoJSON is limited to 
+CRS:84 (longituded, latitude) coordinates based on the Global Positioning System framework. This constrains the 
+interoperability of GeoJSON mostly to situations where the CRS:84 system is used. Fortunately, the near ubiquitous 
+use of OSMTILE is compatible with GeoJSON, and this is supported by the GCDS map and layer component API.
 
 The GeoJSON API is comprised of the `mapml2geojson()` and `geojson2mapml()` functions.
 
-The example below loads [canada.json](../assets/canada.json) (a `FeatureCollection` of Canada's provinces and territories) and converts it to a 
+The example below loads [canada.json]({{ '/components/gcds-map/dist/gcds-map/assets/canada.json' | url }}) (a `FeatureCollection` of Canada's provinces and territories) and converts it to a 
 `<map-layer>` at runtime using the map's `geojson2mapml()` method. The method accepts the parsed GeoJSON and an options object 
 (`label`, `caption`, `projection`, `properties`, `geometryFunction`) and appends the resulting layer to the map for you.
 
-<gcds-map id="provinces-geojson-map" lat="71" lon="-96" zoom="2" projection="OSMTILE" controls style="height: 400px;">
+<gcds-map id="provinces-geojson-map" data-static-code lat="71" lon="-96" zoom="2" projection="OSMTILE" controls style="height: 400px;">
   <map-caption>Provinces and territories of Canada, loaded from GeoJSON.</map-caption>
   <map-layer src="../assets/osmtile/cbmt.mapml" checked></map-layer>
 </gcds-map>
@@ -702,7 +702,7 @@ The example below loads [canada.json](../assets/canada.json) (a `FeatureCollecti
     customElements.whenDefined('gcds-map').then(async function () {
       const mapEl = document.getElementById('provinces-geojson-map');
       await mapEl.whenReady();
-      const response = await fetch('../assets/canada.json');
+      const response = await fetch('{{ '/components/gcds-map/dist/gcds-map/assets/canada.json' | url }}');
       const geojson = await response.json();
       mapEl.geojson2mapml(geojson, {
         label: 'Provinces and Territories of Canada',
@@ -742,19 +742,15 @@ of content rendered in the map viewport in document order, and while true, it is
 is made accessible to users through inclusion of layer metadata in the layer control.
 
 If a layer is important enough, it should have a meaningful name available to all users.  If a layer contains 
-a child `<map-title>foo</map-title>` element, that element's text value ("foo", in this case) is always 
-used for the layer control name; if the layer lacks a `<map-title>` element, the layer control name falls 
-back to the `<map-layer label="bar">` `label` attribute value, if present ("bar" in the latter instance). 
-If neither of those values is available, the layer control name of the layer is set to "Layer", which is not 
+a child `<map-title>Accessible names are descriptive</map-title>` element, that element's text value 
+("Accessible names are descriptive") is <strong>always</strong> used for the layer control name, 
+overriding any `label`; if the layer lacks a `<map-title>` element, the layer control name falls back to the 
+`<map-layer label="This is used if no child map-title element exists">` `label` attribute value, if provided. 
+If neither of those values is provided, the layer control name of the layer is set to "Layer", which is not 
 very helpful to users.  Consequently, it's important to ensure that your layers have an 
 [accessible name](https://developer.mozilla.org/en-US/docs/Glossary/Accessible_name).
 
-The accessible name of the whole map is provided by a map's child <code>&lt;map-caption&gt;</code> element, 
-the accessible name of an individual layer is provided either by its 
-<code>&lt;map-layer <strong>label</strong>="layer accessible name goes here"&gt;</code> attribute, or by a nested or 
-descendant <code>&lt;map-title&gt;</code> element within in the layer content.  If a <code>&lt;map-title&gt;</code> 
-element is present, it takes precedence over, or overrides, any <code>&lt;map-layer <strong>label</strong>=" "&gt;</code> 
-attribute.
+The accessible name of the whole map is provided by a map's child <code>&lt;map-caption&gt;</code> element.
 
 <gcds-map zoom="14" lat="43.193477" lon="-80.384773" controls style="height: 400px;">
   <map-caption>Paris, Ontario</map-caption>
@@ -788,7 +784,7 @@ attribute.
 
 #### Hide map content that is not relevant using map media queries
 
-If certain map content is not relevant depending on conditions that can be identified by map media expressions,
+If certain map content is not relevant depending on [conditions that can be identified by map media expressions](https://maps4html.org/web-map-doc/docs/api/mapml-viewer-api#supported-map-media-query-features),
 organize the content into distinct `<map-layer>` elements, and use the `media` attribute to show or hide
 the layer accordingly.  For example, users may enable "dark mode" on their system.  A map media query can
 identify such a condition and enable or disable content that conforms to one mode or the other accordingly.
@@ -801,7 +797,7 @@ colour-scheme preference is active. Toggle your system between light and dark mo
 swap automatically.
 
 <gcds-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls style="height: 400px;">
-  <map-layer media="(prefers-color-scheme: light)" checked src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/light.mapml' | url }}" media="(prefers-color-scheme: light)"></map-layer>
+  <map-layer media="(prefers-color-scheme: light)" checked src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/light.mapml' | url }}"></map-layer>
   <map-layer media="(prefers-color-scheme:  dark)" checked src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/dark.mapml' | url }}"></map-layer>
 </gcds-map>
 
