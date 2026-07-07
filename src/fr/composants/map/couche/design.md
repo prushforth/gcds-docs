@@ -56,7 +56,7 @@ date: 'git Last Modified'
 
 </ol>
 
-<img src="/images/fr/components/anatomy/gcds-layer-control-anatomy.svg" alt="Une image de l'anatomie." >
+<img id="anatomy" src="/images/fr/components/anatomy/gcds-layer-control-anatomy.svg" alt="Une image de l'anatomie." >
 
 ## Design et accessibilité pour les couches
 

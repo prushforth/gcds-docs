@@ -22,6 +22,7 @@ tags: ['mapFR', 'code']
   style="display: block; border: 0;"
   scrolling="no"
   frameBorder="0"
-  allow="clipboard-write"
+  allow="clipboard-write; fullscreen"
+  allowfullscreen
 ></iframe>
 {% include "partials/storybook-resize.njk" %}

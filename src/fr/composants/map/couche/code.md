@@ -1,6 +1,7 @@
 ---
 title: Couche
 layout: 'layouts/component-documentation.njk'
+loadGcdsMap: true
 translationKey: 'maplayerCode'
 tags: ['maplayerFR', 'code']
 date: 'git Last Modified'
@@ -9,17 +10,15 @@ date: 'git Last Modified'
 ## Sur cette page
 
 - [Codage et accessibilité pour les couches](#codage-et-accessibilite-pour-les-couches)
-  - [Fournir un nom accessible pour les couches non cachées](#fournir-un-nom-accessible-pour-les-couches-non-cachees)
-  - [Masquer le contenu cartographique non pertinent à l'aide de requêtes média de carte](#masquer-le-contenu-cartographique-non-pertinent-a-laide-de-requetes-media-de-carte)
-  - [Assurer un contraste suffisant du contenu visuel](#assurer-un-contraste-suffisant-du-contenu-visuel)
 - [Exemples](#exemples)
-  - [Contenu de couche distant](#contenu-de-couche-distant)
-  - [Contenu de couche intégré](#contenu-de-couche-integre)
-  - [Couche de base cachée](#couche-de-base-cachee)
-  - [Opacité](#opacite)
-  - [Contenu d'image intégré](#contenu-dimage-integre)
-  - [Requêtes média](#requetes-media)
-  - [Combiner des couches distantes et intégrées](#combiner-des-couches-distantes-et-integrees)
+  - [Attribut `src` de la couche](#attribut-src-de-la-couche)
+  - [Attribut `checked` de la couche et de la sous-couche](#attribut-checked-de-la-couche-et-de-la-souscouche)
+  - [Attribut `hidden` de la couche et de la sous-couche](#attribut-hidden-de-la-couche-et-de-la-souscouche)
+  - [Attribut `label` de la couche et de la sous-couche](#attribut-label-de-la-couche-et-de-la-souscouche)
+    - [Couche](#couche)
+    - [Sous-couche](#souscouche)
+  - [`opacity` de la couche et de la sous-couche](#opacity-de-la-couche-et-de-la-souscouche)
+  - [Requêtes `media` de la couche](#requetes-media-de-la-couche)
 - [Générateur de code](#generateur-de-code)
 
 ## Codage et accessibilité pour les couches
@@ -30,141 +29,124 @@ Utilisez l'attribut `src` du composant pour créer un lien vers un contenu dista
 
 Définissez les propriétés initiales de la couche à l'aide des attributs `src`, `checked`, `hidden`, `label`, `opacity` et `media`.
 
-### Fournir un nom accessible pour les couches non cachées
-
-Si une couche est suffisamment importante, elle devrait avoir un nom significatif accessible à tous les utilisateurs.
-Le nom d'une couche est présenté via le contrôle de couche. Si une couche contient un élément enfant
-`<map-title>foo</map-title>`, la valeur textuelle de cet élément (« foo », dans ce cas) est toujours utilisée comme
-nom dans le contrôle de couche ; si la couche ne possède pas d'élément `<map-title>`, le nom du contrôle de couche
-se rabat sur la valeur de l'attribut `<map-layer label="bar">` `label`, si présent (« bar » dans ce dernier cas).
-Si aucune de ces valeurs n'est disponible, le nom de la couche est défini à « Layer », ce qui n'est pas très utile
-pour les utilisateurs. Par conséquent, il est important de s'assurer que vos couches de contenu ont des noms significatifs.
-
-### Masquer le contenu cartographique non pertinent à l'aide de requêtes média de carte
-
-Si certains contenus cartographiques ne sont pas pertinents selon des conditions identifiables par des expressions
-média de carte, organisez le contenu en éléments `<map-layer>` distincts, et utilisez l'attribut `media` pour afficher
-ou masquer la couche en conséquence.
-
-### Assurer un contraste suffisant du contenu visuel
-
-Ne vous fiez pas uniquement à la couleur pour distinguer les entités cartographiques. Utilisez un contraste de couleur
-élevé, ainsi que des formes et symbologies différentes lorsque possible — votre organisation ne possède pas toujours
-les données que votre carte présente, mais fournir des commentaires d'accessibilité aux fournisseurs de cartes
-est utile à tous les utilisateurs.
-
-En général, laissez l'opacité ou la transparence des couches à la discrétion de l'utilisateur.
-
 ## Exemples
 
-### Contenu de couche distant
+### Attribut `src` de la couche
 
-Une couche distante récupère son contenu à partir d'une URL de document MapML, pointée par l'attribut
-`src` de `<map-layer src="...">`. Le document MapML est analysé en tant que XHTML, à l'aide de
-l'analyseur XML intégré dans le navigateur. Les documents MapML distants **doivent** être déclarés dans l'espace de noms XHTML,
-[en utilisant l'attribut `xmlns`](https://maps4html.org/web-map-doc/fr/docs/elements/mapml/#xmlns),
-et ils **doivent** être du [XML bien formé](https://fr.wikipedia.org/wiki/Document_bien_form%C3%A9).
+L'attribut optionnel `src` peut être utilisé pour fournir l'URL d'un document MapML. Lorsque l'attribut `src`
+est fourni, nous appelons cette situation « [contenu distant](../design/#contenu-distant) ». Un document MapML
+distant est encodé en XHTML et analysé avec l'analyseur XML intégré du navigateur. Si aucun attribut `src`
+n'est fourni, le contenu peut être fourni entre les balises de début et de fin `<map-layer>...</map-layer>`.
+C'est ce qu'on appelle le « [contenu intégré](../design/#contenu-integre) ». Le contenu cartographique est
+constitué soit de tuiles, soit d'entités, soit d'une combinaison de tuiles et d'entités. Les tuiles, les
+entités ou une combinaison des deux peuvent être chargées dans la carte via un élément de modèle enveloppant
+appelé `<map-extent>`. Lorsqu'un modèle de contenu est utilisé, il est traité comme une
+« [sous-couche](../design/#couches-et-souscouches) » aux fins de son exposition à l'utilisateur dans [le
+contrôle de couche](../design/#anatomy). Le contenu est rendu sur la carte dans l'ordre du document. Autrement dit, le contenu
+situé au bas du document est rendu par-dessus le contenu apparaissant plus tôt dans le document. Cela importe
+particulièrement lorsque de tels contenus se chevauchent spatialement, car le contenu ultérieur peut masquer
+le contenu précédent, par ex. les tuiles peuvent recouvrir les entités, et vice versa. En général, le contenu
+cartographique qui se chevauche devrait être organisé en couches distinctes, offrant à l'utilisateur les
+moyens de l'activer ou de le désactiver, de modifier l'ordre, de changer l'opacité ou de le supprimer
+entièrement.
 
-Si le contenu MapML distant (ou intégré) contient l'élément `<map-title>`, la valeur textuelle de cet
-élément devient le nom de la couche dans le contrôle de couche. Si aucun élément `<map-title>` n'est trouvé,
-le nom de la couche se rabat sur la valeur de l'attribut `label`, si présent. Si cette valeur n'est pas
-trouvée non plus, le nom de la couche par défaut est « Couche ».
+### Attribut `checked` de la couche et de la sous-couche
 
-<gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
-  <map-layer src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/fr/osmtile/cbmt' | url }}" checked></map-layer>
-</gcds-map>
+L'attribut `checked` et sa propriété correspondante permettent aux scripts d'activer ou de désactiver le
+contenu sans le retirer du DOM. `checked` reflète l'état de la case à cocher du contrôle utilisateur.
+Lorsqu'il est modifié par l'utilisateur, la couche émet l'événement `map-change`.
 
-```html
-<gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
-  <map-layer src="https://exemple.com/chemin/vers/couche.mapml" checked></map-layer>
-</gcds-map>
-```
+### Attribut `hidden` de la couche et de la sous-couche
 
-### Contenu de couche intégré
+Utilisez l'attribut `hidden` pour garder une couche ou une sous-couche visible sur la carte mais masquée du
+contrôle de couche. Ceci est utile pour les couches de base qui doivent toujours être affichées. C'est
+souvent une bonne idée d'ajouter `hidden` aux sous-couches des couches ayant un contenu simple, afin de
+simplifier l'interface utilisateur de la carte — chaque petit détail compte.
 
-Lorsque l'attribut `src` n'est pas défini, le contenu de la couche est fourni par les éléments enfants de `<map-layer>`.
-Notez que le contenu intégré **doit** être encodé en HTML. Il est particulièrement important que les balises
-HTML non [vides](https://developer.mozilla.org/fr/docs/Glossary/Void_element)
-se terminent par une balise de fermeture, et de **ne pas** utiliser la
-[syntaxe de balise auto-fermante](https://developer.mozilla.org/fr/docs/Glossary/Void_element#balises_auto-fermantes)
-XML `<balise />`, qui n'est pas reconnue par l'analyseur HTML et peut causer des problèmes.
-
-Il est particulièrement important d'être conscient des différences entre la syntaxe auto-fermante XML et la syntaxe
-d'éléments vides HTML lors du copier-coller de contenu depuis des documents MapML encodés en XML vers un fichier .html
-encodé en HTML. Une bonne pratique pour créer des documents MapML (XML-XHTML) autonomes est d'éviter la forme
-auto-fermante XML et de toujours inclure une balise de fermeture explicite, par ex. `</map-link>` ou `</map-input>`,
-ce qui reste du XML bien formé. De cette façon, lors du copier-coller de ce contenu d'un document MapML vers un
-document HTML, les pièges causés par la différence apparemment minime entre les syntaxes peuvent être évités.
-
-Cet exemple montre une entité intégrée avec une géométrie de polygone définie en coordonnées géographiques (`cs="gcrs"`).
-
-<gcds-map lat="45.5" lon="-74.5" zoom="3" projection="CBMTILE" controls style="height: 400px;">
-<map-layer src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/fr/cbmtile/cbmtsimple' | url }}" checked hidden></map-layer>
-  <map-layer label="Couche d'entités intégrée" checked>
-    <map-meta name="projection" content="CBMTILE"></map-meta>
-    <map-meta name="zoom" content="min=0,max=5"></map-meta>
-    <map-link rel="license"
-      href="https://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada"
-      title="Licence du gouvernement ouvert - Canada"></map-link>
-    <map-feature zoom="2">
-      <map-featurecaption>Un exemple d'entité</map-featurecaption>
-      <map-properties>
-        <h2>Polygone exemple</h2>
-        <p>Cette entité est définie de manière intégrée dans l'élément map-layer.</p>
-      </map-properties>
-      <map-geometry cs="gcrs">
-        <map-polygon>
-          <map-coordinates>-75 45 -74 45 -74 46 -75 46 -75 45</map-coordinates>
-        </map-polygon>
-      </map-geometry>
-    </map-feature>
-  </map-layer>
-</gcds-map>
-
-```html
-<gcds-map lat="45.5" lon="-74.5" zoom="3" projection="CBMTILE" controls>
-  <!-- le contenu de cette couche est « intégré » -->
-  <map-layer label="Couche d'entités intégrée" checked>
-    <map-meta name="projection" content="CBMTILE"></map-meta>
-    <map-meta name="zoom" content="min=0,max=5"></map-meta>
-    <map-feature zoom="2">
-      <map-featurecaption>Un exemple d'entité</map-featurecaption>
-      <map-properties>
-        <h2>Polygone exemple</h2>
-      </map-properties>
-      <map-geometry cs="gcrs">
-        <map-polygon>
-          <map-coordinates>-75 45 -74 45 -74 46 -75 46 -75 45</map-coordinates>
-        </map-polygon>
-      </map-geometry>
-    </map-feature>
-  </map-layer>
-</gcds-map>
-```
-
-### Couche de base cachée
-
-Utilisez l'attribut `hidden` pour garder une couche visible sur la carte mais cachée du contrôle de couche.
-Ceci est utile pour les couches de base qui doivent toujours être affichées.
-S'il n'y a aucune couche non cachée (`hidden`) dans une carte, le contrôle de couche est est lui-même automatiquement caché .
+Si _toutes_ les couches d'une carte sont `hidden`, le contrôle de couche lui-même est masqué. Voyez par
+vous-même en retirant la superposition de la carte ci-dessous.
 
 <gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
   <map-layer checked hidden src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/fr/osmtile/cbmt' | url }}"></map-layer>
-  <map-layer checked src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/fr/osmtile/current_conditions' | url }}"></map-layer>
+  <map-layer label="Conditions actuelles" checked>
+    <map-extent units="OSMTILE" checked hidden>
+      <map-input name="z" type="zoom" min="0" max="18" ></map-input>
+      <map-input name="xmin" type="location" rel="map" position="top-left" axis="easting"
+          units="pcrs" min="-1.8443827380300004E7" max="-2287187.2902772236" ></map-input>
+      <map-input name="ymin" type="location" rel="map" position="bottom-left" axis="northing"
+          units="pcrs" min="4547345.566611593" max="1.6344676582521891E7" ></map-input>
+      <map-input name="xmax" type="location" rel="map" position="top-right" axis="easting"
+          units="pcrs" min="-1.8443827380300004E7" max="-2287187.2902772236" ></map-input>
+      <map-input name="ymax" type="location" rel="map" position="top-left" axis="northing"
+          units="pcrs" min="4547345.566611593" max="1.6344676582521891E7" ></map-input>
+      <map-input name="w" type="width" min="1" max="4079" ></map-input>
+      <map-input name="h" type="height" min="1" max="4079" ></map-input>
+      <map-link rel="image" tref="https://geo.weather.gc.ca/geomet?request=GetMap&crs=EPSG:3857&service=WMS&bbox={xmin},{ymin},{xmax},{ymax}&layers=CURRENT_CONDITIONS&format=image/png&width={w}&styles=default&language=fr&version=1.3.0&transparent=true&height={h}"></map-link>
+    </map-extent>
+  </map-layer>
 </gcds-map>
 
 ```html
 <gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
   <map-layer checked hidden src="couche_de_base.mapml"></map-layer>
-  <map-layer checked src="conditions_actuelles.mapml"></map-layer>
+  <map-layer label="Conditions actuelles" checked>
+    <map-extent units="OSMTILE" checked hidden>
+      <map-input name="z" type="zoom" min="0" max="18" ></map-input>
+      <map-input name="xmin" type="location" rel="map" position="top-left" axis="easting"
+          units="pcrs" min="-1.8443827380300004E7" max="-2287187.2902772236" ></map-input>
+      <map-input name="ymin" type="location" rel="map" position="bottom-left" axis="northing"
+          units="pcrs" min="4547345.566611593" max="1.6344676582521891E7" ></map-input>
+      <map-input name="xmax" type="location" rel="map" position="top-right" axis="easting"
+          units="pcrs" min="-1.8443827380300004E7" max="-2287187.2902772236" ></map-input>
+      <map-input name="ymax" type="location" rel="map" position="top-left" axis="northing"
+          units="pcrs" min="4547345.566611593" max="1.6344676582521891E7" ></map-input>
+      <map-input name="w" type="width" min="1" max="4079" ></map-input>
+      <map-input name="h" type="height" min="1" max="4079" ></map-input>
+      <map-link rel="image" tref="https://geo.weather.gc.ca/geomet?request=GetMap&crs=EPSG:3857&service=WMS&bbox={xmin},{ymin},{xmax},{ymax}&layers=CURRENT_CONDITIONS&format=image/png&width={w}&styles=default&language=fr&version=1.3.0&transparent=true&height={h}"></map-link>
+    </map-extent>
+  </map-layer>
 </gcds-map>
 ```
 
-### Opacité
+### Attribut `label` de la couche et de la sous-couche
 
-L'attribut `opacity` (0–1) contrôle la transparence de la couche. Les utilisateurs peuvent également
-ajuster l'opacité via le curseur du contrôle de couche. En général, laissez l'opacité ou la transparence
-des couches à la discrétion de l'utilisateur.
+L'attribut `label` fournit un nom accessible pour une couche ou une sous-couche dans le contrôle de couche. Si
+un élément `<map-title>` est présent en tant que descendant de `<map-layer>` (pour les couches uniquement), sa
+valeur textuelle a priorité sur l'attribut `<map-layer label="">`. Si aucun des deux n'est fourni, le contrôle
+de couche se rabat sur un nom par défaut générique (« Couche » ou « Sous-couche »), ce qui n'est pas utile aux
+utilisateurs — donnez donc toujours un nom significatif à votre contenu via `<map-title>` ou `label`.
+
+#### Couche
+
+Pour une couche, le nom affiché dans le contrôle de couche est choisi dans cet ordre :
+
+1. Le contenu textuel d'un élément enfant `<map-title>`, s'il est présent.
+2. La valeur de l'attribut `<map-layer label="...">`, s'il est présent.
+3. Le nom par défaut « Couche ».
+
+Comme un élément `<map-title>` dans du contenu distant est rédigé aux côtés des données de la couche, il est
+généralement la source faisant autorité pour le nom de la couche. L'attribut `label` est un repli utile
+lorsque vous ne contrôlez pas le contenu distant, ou lors de la rédaction de contenu intégré et que vous
+préférez garder le nom dans le HTML de la page hôte.
+
+#### Sous-couche
+
+Les sous-couches suivent les mêmes règles de priorité que les couches : un `<map-title>` à l'intérieur du
+`<map-extent>` a priorité sur l'attribut `<map-extent label="...">`, qui a lui-même priorité sur le nom par
+défaut « Sous-couche ».
+
+Cependant, si une sous-couche n'est pas significativement distincte de sa couche parente, par exemple,
+lorsqu'une couche contient un seul `<map-extent>` qui fournit tout son contenu, il est souvent préférable
+d'appliquer l'attribut `hidden` au `<map-extent>` plutôt que de lui donner un `label`. Cela garde la
+sous-couche hors du contrôle de couche et simplifie l'expérience utilisateur. Réservez les libellés aux
+sous-couches que les utilisateurs ont réellement besoin d'activer, de réordonner, ou dont ils doivent ajuster
+les paramètres indépendamment de leur couche parente.
+
+### `opacity` de la couche et de la sous-couche
+
+L'attribut `opacity` (0–1, incréments de 0,1) contrôle la transparence de la couche et de la sous-couche,
+qui sont cumulatives. Les utilisateurs peuvent également ajuster l'opacité via le curseur du contrôle de
+couche. En général, laissez l'opacité des couches à la discrétion de l'utilisateur.
 
 <gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
   <map-layer opacity="0.5" checked src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/fr/osmtile/cbmt' | url }}"></map-layer>
@@ -176,113 +158,39 @@ des couches à la discrétion de l'utilisateur.
 </gcds-map>
 ```
 
-### Contenu d'image intégré
-
-Une couche intégrée peut également contenir des éléments `<map-extent>` qui définissent des requêtes
-d'images tuilées ou de fenêtre d'affichage complète, récupérées dynamiquement lorsque l'utilisateur
-déplace et zoome la carte.
-
-<gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
-  <map-layer label="CCCT (extent intégré)" checked>
-    <map-meta name="projection" content="OSMTILE"></map-meta>
-    <map-extent units="OSMTILE" checked hidden>
-      <map-input name="z" type="zoom" min="0" max="22"></map-input>
-      <map-input name="xmin" type="location" units="pcrs" position="top-left" axis="easting"></map-input>
-      <map-input name="ymin" type="location" units="pcrs" position="bottom-left" axis="northing"></map-input>
-      <map-input name="xmax" type="location" units="pcrs" position="top-right" axis="easting"></map-input>
-      <map-input name="ymax" type="location" units="pcrs" position="top-left" axis="northing"></map-input>
-      <map-input name="w" type="width"></map-input>
-      <map-input name="h" type="height"></map-input>
-      <map-link rel="image" tref="https://geogratis.gc.ca/cartes/CBCT?SERVICE=WMS&amp;VERSION=1.1.1&amp;SRS=EPSG:3857&amp;LAYERS=CBCT&amp;BBOX={xmin},{ymin},{xmax},{ymax}&amp;REQUEST=GetMap&amp;FORMAT=image/png&amp;TRANSPARENT=TRUE&amp;WIDTH={w}&amp;HEIGHT={h}&amp;STYLES="></map-link>
-    </map-extent>
-  </map-layer>
-</gcds-map>
-
-```html
-<gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
-  <map-layer label="CCCT (extent intégré)" checked>
-    <map-meta name="projection" content="OSMTILE"></map-meta>
-    <!-- les limites d'une requête d'image ou de tuile sont décrites par l'élément formulaire map-extent -->
-    <map-extent units="OSMTILE" checked hidden>
-      <map-input name="z" type="zoom" min="0" max="22"></map-input>
-      <map-input name="xmin" type="location" units="pcrs" position="top-left" axis="easting"></map-input>
-      <map-input name="ymin" type="location" units="pcrs" position="bottom-left" axis="northing"></map-input>
-      <map-input name="xmax" type="location" units="pcrs" position="top-right" axis="easting"></map-input>
-      <map-input name="ymax" type="location" units="pcrs" position="top-left" axis="northing"></map-input>
-      <map-input name="w" type="width"></map-input>
-      <map-input name="h" type="height"></map-input>
-      <map-link rel="image" tref="https://exemple.com/wms?BBOX={xmin},{ymin},{xmax},{ymax}&amp;WIDTH={w}&amp;HEIGHT={h}"></map-link>
-    </map-extent>
-  </map-layer>
-</gcds-map>
-```
-
-### Requêtes média
+### Requêtes `media` de la couche
 
 L'attribut `media` accepte une
 [requête média de carte](https://maps4html.org/web-map-doc/fr/docs/api/mapml-viewer-api/#fonctionnalit%C3%A9s-de-requ%C3%AAte-m%C3%A9dia-prises-en-charge-pour-la-carte).
-Lorsqu'il est spécifié, la couche est active uniquement lorsque la requête correspond à l'état actuel de la carte
-(par ex. le zoom de la carte correspond à une plage spécifiée), et désactivée autrement. Essayez de zoomer au-delà
-du niveau de zoom 6 pour voir la couche superposée (et par conséquent, le contrôle de couche) disparaître.
+Lorsqu'il est spécifié, la couche est active uniquement lorsque la requête correspond à l'état actuel de la
+carte (par ex. le zoom de la carte correspond à une plage spécifiée), et désactivée autrement. Essayez de
+zoomer au-delà du niveau de zoom 6 pour voir la couche superposée (et le contrôle de couche lui-même)
+disparaître.
 
-<gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
-  <map-layer checked hidden src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/fr/osmtile/cbmt' | url }}"></map-layer>
-  <map-layer checked media="(0 <= map-zoom <= 6)" src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/fr/osmtile/current_conditions' | url }}"></map-layer>
-</gcds-map>
+<div style="position: relative;">
+  <gcds-map id="zoom-demo-map" lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+    <map-layer checked hidden src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/fr/osmtile/cbmt' | url }}"></map-layer>
+    <map-layer checked media="(0 <= map-zoom <= 6)" src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/fr/osmtile/current_conditions' | url }}"></map-layer>
+  </gcds-map>
+  <gcds-text id="zoom-demo-text" character-limit="false" margin-bottom="0" style="position: absolute; top: 8px; left: 50%; transform: translateX(-50%); z-index: 1000; background: rgba(255, 255, 255, 0.85); padding: 0.25rem 0.5rem; border-radius: 4px; color: #000; pointer-events: none;">Zoom = 4</gcds-text>
+</div>
+<script>
+  (function () {
+    var map = document.getElementById('zoom-demo-map');
+    var text = document.getElementById('zoom-demo-text');
+    if (!map || !text) return;
+    var update = function () {
+      text.textContent = 'Zoom = ' + map.zoom;
+    };
+    map.addEventListener('zoomend', update);
+    map.addEventListener('map-moveend', update);
+  })();
+</script>
 
 ```html
 <gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
   <map-layer src="couche_de_base.mapml" checked hidden></map-layer>
   <map-layer media="(0 <= map-zoom <= 6)" checked src="superposition.mapml"></map-layer>
-</gcds-map>
-```
-
-### Combiner des couches distantes et intégrées
-
-Une carte peut contenir un mélange de couches distantes et intégrées. Ici, une couche de base cachée et une
-superposition thématique distante sont combinés avec une couche d'entités ponctuelles intégrées.
-
-<gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
-  <map-layer src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/fr/osmtile/cbmt' | url }}" checked hidden></map-layer>
-  <map-layer src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/fr/osmtile/current_conditions' | url }}" checked opacity="0.7"></map-layer>
-  <map-layer label="Points d'intérêt" checked>
-    <map-meta name="projection" content="OSMTILE"></map-meta>
-    <map-meta name="zoom" content="min=0,max=10"></map-meta>
-    <map-feature zoom="8">
-      <map-featurecaption>Ottawa</map-featurecaption>
-      <map-properties>
-        <h2>Ottawa</h2>
-        <p>Capitale du Canada</p>
-      </map-properties>
-      <map-geometry cs="gcrs">
-        <map-point>
-          <map-coordinates>-75.6972 45.4215</map-coordinates>
-        </map-point>
-      </map-geometry>
-    </map-feature>
-  </map-layer>
-</gcds-map>
-
-```html
-<gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
-  <map-layer src="couche_de_base.mapml" checked hidden></map-layer>
-  <map-layer src="superposition.mapml" checked opacity="0.7"></map-layer>
-  <map-layer label="Points d'intérêt" checked>
-    <map-meta name="projection" content="OSMTILE"></map-meta>
-    <map-meta name="zoom" content="min=0,max=10"></map-meta>
-    <map-feature zoom="8">
-      <map-featurecaption>Ottawa</map-featurecaption>
-      <map-properties>
-        <h2>Ottawa</h2>
-        <p>Capitale du Canada</p>
-      </map-properties>
-      <map-geometry cs="gcrs">
-        <map-point>
-          <map-coordinates>-75.6972 45.4215</map-coordinates>
-        </map-point>
-      </map-geometry>
-    </map-feature>
-  </map-layer>
 </gcds-map>
 ```
 
@@ -299,7 +207,8 @@ superposition thématique distante sont combinés avec une couche d'entités pon
   style="display: block; border: 0;"
   scrolling="no"
   frameBorder="0"
-  allow="clipboard-write"></iframe>
+  allow="clipboard-write; fullscreen"
+  allowfullscreen></iframe>
 
 {% include "partials/storybook-resize.njk" %}
 
