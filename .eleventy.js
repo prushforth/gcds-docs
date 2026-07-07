@@ -32,6 +32,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('./src/scripts/code-copy.js');
   eleventyConfig.addPassthroughCopy('./src/scripts/general.js');
   eleventyConfig.addPassthroughCopy('./src/scripts/component-preview.js');
+  eleventyConfig.addPassthroughCopy('./src/scripts/table-preview.js');
   eleventyConfig.addPassthroughCopy('./src/scripts/prism.min.js');
   eleventyConfig.addPassthroughCopy('./src/scripts/geolocator-api-handler.js');
   eleventyConfig.addPassthroughCopy(
@@ -619,7 +620,7 @@ module.exports = function (eleventyConfig) {
           <iframe
             class="preview-iframe"
             title="${iframeTitle}"
-            sandbox="allow-scripts allow-same-origin"
+            sandbox="allow-scripts allow-same-origin allow-forms"
             frameborder="0"
             width="100%"
             height="${height}"
@@ -770,6 +771,28 @@ module.exports = function (eleventyConfig) {
         return match[0] + '-' + match[1].toLowerCase();
       })
       .toLowerCase();
+  });
+
+  /*
+   * Utility filters for generating the validation error tables in the documentation
+   */
+  eleventyConfig.addFilter('keys', obj => Object.keys(obj));
+  eleventyConfig.addFilter('getValue', (obj, key) => obj[key]);
+  eleventyConfig.addFilter(
+    'isObject',
+    val => typeof val === 'object' && val !== null && !Array.isArray(val),
+  );
+  eleventyConfig.addFilter('countRows', (errorKeys, validationErrors) => {
+    let count = 0;
+    for (const key of errorKeys) {
+      const msg = validationErrors[key];
+      if (typeof msg === 'object' && msg !== null && !Array.isArray(msg)) {
+        count += Object.keys(msg).length;
+      } else {
+        count += 1;
+      }
+    }
+    return count;
   });
 
   /*
