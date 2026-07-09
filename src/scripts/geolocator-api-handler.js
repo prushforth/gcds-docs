@@ -11,7 +11,7 @@
  *   - value absent   → clicking navigates to lat/lng/bbox (result mode)
  */
 document.addEventListener('DOMContentLoaded', () => {
-  const viewer = document.querySelector('gcds-map');
+  const viewer = document.querySelector('gcds-ext-map');
   if (!viewer) return;
 
   // --- helpers ---

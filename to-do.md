@@ -1,5 +1,5 @@
 
-- create another map example for gcds-map with controlslist="search"
+- create another map example for gcds-ext-map with controlslist="search"
 - create another layer example for a GeoJSON layer
 - create another layer example for pmtiles layers
 - fix the layer story - remove lat/lon/zoom properties, and any others that don't apply

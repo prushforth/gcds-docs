@@ -154,7 +154,7 @@
   }
 }
 
-.mapmlify-app .layer-viewer-container gcds-map {
+.mapmlify-app .layer-viewer-container gcds-ext-map {
   width: 100%;
   height: 300px;
   border: 1px solid #ddd;
@@ -401,7 +401,7 @@
   color: #2c3e50;
 }
 
-.mapmlify-app gcds-map {
+.mapmlify-app gcds-ext-map {
   display: block;
   width: 100%;
   height: 500px;

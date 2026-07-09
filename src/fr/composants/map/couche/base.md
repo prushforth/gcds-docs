@@ -7,7 +7,7 @@ tags: ['maplayerFR', 'header']
 ---
 <!-- NOTE: couche.json required to make the loadGcdsMap front matter variable accessible to the layout template.  -->
 <style>
-gcds-map {
+gcds-ext-map {
   width: 100%;
   height: 350px;
 }
@@ -16,11 +16,11 @@ gcds-map {
 {% docLinks locale, stage, figma, github %}
 {% enddocLinks %}
 
-Les données ou le contenu d'une carte Web sont organisés en couches et sont ajoutés au composant `<gcds-map>` sous forme d'un ou plusieurs éléments enfants `<map-layer>`. Chaque couche est rendue par-dessus la couche précédente. Souvent, une carte est composée d'une couche de « carte de base » et d'une ou plusieurs couches thématiques.
+Les données ou le contenu d'une carte Web sont organisés en couches et sont ajoutés au composant `<gcds-ext-map>` sous forme d'un ou plusieurs éléments enfants `<map-layer>`. Chaque couche est rendue par-dessus la couche précédente. Souvent, une carte est composée d'une couche de « carte de base » et d'une ou plusieurs couches thématiques.
 
 {% componentPreview "Aperçu du composant `<map-layer>`" %}
-<gcds-map lat="62.1326" lon="-91.0" zoom="2" projection="CBMTILE" controls controlslist="search geolocation">
-  <map-caption>Une carte qui démontre comment les couches sont utilisées par le composant gcds-map</map-caption>
+<gcds-ext-map lat="62.1326" lon="-91.0" zoom="2" projection="CBMTILE" controls controlslist="search geolocation">
+  <map-caption>Une carte qui démontre comment les couches sont utilisées par le composant gcds-ext-map</map-caption>
   <map-layer checked>
     <map-title>La carte de base du Canada - transport</map-title>
     <map-link rel="license" href="https://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada" title="Licence du gouvernement ouvert – Canada"></map-link>
@@ -35,6 +35,6 @@ Les données ou le contenu d'une carte Web sont organisés en couches et sont aj
       <map-link rel="tile" tref="https://geogratis.gc.ca/cartes/CBCT?SERVICE=WMS&VERSION=1.1.1&SRS=EPSG:3978&LAYERS=CBCT&BBOX={txmin},{tymin},{txmax},{tymax}&REQUEST=GetMap&FORMAT=image/png&TRANSPARENT=TRUE&WIDTH=256&HEIGHT=256&STYLES=&m4h=t"></map-link>
     </map-extent>
   </map-layer>
-  <map-layer label="Test Layer"  src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/cbmtile/current_conditions' | url }}"  checked></map-layer>
-</gcds-map>
+  <map-layer label="Test Layer"  src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/cbmtile/current_conditions' | url }}"  checked></map-layer>
+</gcds-ext-map>
 {% endcomponentPreview %}

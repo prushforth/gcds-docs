@@ -7,7 +7,7 @@ tags: ['maplayerEN', 'header']
 ---
 <!-- NOTE: layer.json required to make the loadGcdsMap front matter variable accessible to the layout template.  -->
 <style>
-gcds-map {
+gcds-ext-map {
   width: 100%;
   height: 350px;
 }
@@ -17,11 +17,11 @@ gcds-map {
 {% docLinks locale, stage, figma, github %}
 {% enddocLinks %}
 
-Web map data or content is inherently layered. Add it to the `<gcds-map>` component using one or more child `<map-layer>` elements.  Each layer is rendered on top of the previous one.  Often a map is composed of a single opaque "base map" layer and one or more thematic layers on top.
+Web map data or content is inherently layered. Add it to the `<gcds-ext-map>` component using one or more child `<map-layer>` elements.  Each layer is rendered on top of the previous one.  Often a map is composed of a single opaque "base map" layer and one or more thematic layers on top.
 
 {% componentPreview "`<map-layer>` component preview" %}
-<gcds-map lat="62.1326" lon="-91.0" zoom="2" projection="CBMTILE" controls controlslist="search geolocation">
-  <map-caption>A map that demonstrates how layers are used by the gcds-map compponent</map-caption>
+<gcds-ext-map lat="62.1326" lon="-91.0" zoom="2" projection="CBMTILE" controls controlslist="search geolocation">
+  <map-caption>A map that demonstrates how layers are used by the gcds-ext-map compponent</map-caption>
   <map-layer checked>
     <map-title>Canada Base Map - Transportation (CBMT)</map-title>
     <map-link rel="license" href="https://open.canada.ca/en/open-government-licence-canada" title="Open Government Licence - Canada"></map-link>
@@ -38,6 +38,6 @@ Web map data or content is inherently layered. Add it to the `<gcds-map>` compon
       <map-link rel="image" tref="https://geogratis.gc.ca/maps/CBMT?SERVICE=WMS&VERSION=1.1.1&SRS=EPSG:3978&LAYERS=CBMT&BBOX={xmin},{ymin},{xmax},{ymax}&REQUEST=GetMap&FORMAT=image/png&TRANSPARENT=TRUE&WIDTH={w}&HEIGHT={h}&STYLES=&m4h=t"></map-link>
     </map-extent>
   </map-layer>
-  <map-layer label="Test Layer"  src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/cbmtile/current_conditions' | url }}"  checked></map-layer>
-</gcds-map>
+  <map-layer label="Test Layer"  src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/cbmtile/current_conditions' | url }}"  checked></map-layer>
+</gcds-ext-map>
 {% endcomponentPreview %}

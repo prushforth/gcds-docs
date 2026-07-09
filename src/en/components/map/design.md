@@ -21,7 +21,7 @@ tags: ['mapEN', 'design']
   <li>The <strong>map viewport</strong> is where map layer content is rendered.
 </ol>
 
-<img src="/images/en/components/anatomy/gcds-map-anatomy.svg" alt="An image of the anatomy." />
+<img src="/images/en/components/anatomy/gcds-ext-map-anatomy.svg" alt="An image of the anatomy." />
 
 ## Design and accessibility for map
 

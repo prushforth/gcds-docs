@@ -661,8 +661,8 @@ class MapmlifyLayer extends HTMLElement {
 
     const projection = this.#selectedProjection;
 
-    // Create gcds-map
-    const viewer = document.createElement('gcds-map');
+    // Create gcds-ext-map
+    const viewer = document.createElement('gcds-ext-map');
     viewer.setAttribute('projection', projection);
     viewer.setAttribute('controls', '');
 
@@ -717,7 +717,7 @@ class MapmlifyLayer extends HTMLElement {
     const container = this.#viewerContainer;
     if (!container) return;
 
-    const viewer = container.querySelector('gcds-map');
+    const viewer = container.querySelector('gcds-ext-map');
     if (viewer) {
       if (this.#moveendHandler) {
         viewer.removeEventListener('map-moveend', this.#moveendHandler);
@@ -1614,7 +1614,7 @@ class MapmlifyLayer extends HTMLElement {
     const st = this.#config.serviceType;
     const container = this.#viewerContainer;
     if (!container) return;
-    const viewer = container.querySelector('gcds-map');
+    const viewer = container.querySelector('gcds-ext-map');
     if (!viewer) return;
 
     if (st === 'WMS') this.#updateWMSQuery(viewer);
@@ -1958,7 +1958,7 @@ class MapmlifyLayer extends HTMLElement {
 
   #updateSourceCode() {
     if (!this.#sourceCodeVisible) return;
-    const viewer = this.#viewerContainer?.querySelector('gcds-map');
+    const viewer = this.#viewerContainer?.querySelector('gcds-ext-map');
     if (!viewer || !this.#sourceCodeEl) return;
     const raw = this.#serializeViewer(viewer);
     this.#sourceCodeRaw = raw;
@@ -1981,7 +1981,7 @@ class MapmlifyLayer extends HTMLElement {
     clone.setAttribute('zoom', viewer.getAttribute('zoom'));
     clone.setAttribute('lat', viewer.getAttribute('lat'));
     clone.setAttribute('lon', viewer.getAttribute('lon'));
-    // Remove dynamic style elements injected by gcds-map
+    // Remove dynamic style elements injected by gcds-ext-map
     clone.querySelectorAll('style').forEach((s) => s.remove());
     // Strip Stencil.js runtime artifacts (hydrated class, internal attributes)
     clone.querySelectorAll('.hydrated').forEach((el) => {
@@ -2039,7 +2039,7 @@ class MapmlifyLayer extends HTMLElement {
   // ─── PUBLIC API ────────────────────────────────────────
 
   getMapMLMarkup() {
-    const viewer = this.#viewerContainer?.querySelector('gcds-map');
+    const viewer = this.#viewerContainer?.querySelector('gcds-ext-map');
     if (!viewer) return null;
     return this.#serializeViewer(viewer);
   }

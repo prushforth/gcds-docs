@@ -1,6 +1,6 @@
 <script>
-  // ── Live code showcase: serialize actual gcds-map DOM into code blocks ──
-  // For each <gcds-map> followed by a code block, this script replaces the static
+  // ── Live code showcase: serialize actual gcds-ext-map DOM into code blocks ──
+  // For each <gcds-ext-map> followed by a code block, this script replaces the static
   // example markup with a live serialization of the map's DOM. The code block
   // updates whenever the user pans or zooms.
   (function() {
@@ -34,8 +34,8 @@
       for (var a = 0; a < node.attributes.length; a++) {
         var attr = node.attributes[a];
         if (STRIP_ATTRS.indexOf(attr.name) >= 0) continue;
-        // Skip the page-specific inline style on gcds-map
-        if (tag === 'gcds-map' && attr.name === 'style') continue;
+        // Skip the page-specific inline style on gcds-ext-map
+        if (tag === 'gcds-ext-map' && attr.name === 'style') continue;
         if (attr.value === '') {
           attrs += ' ' + attr.name;
         } else {
@@ -104,8 +104,8 @@
       if (typeof Prism !== 'undefined') Prism.highlightElement(codeEl);
     }
 
-    customElements.whenDefined('gcds-map').then(function() {
-      document.querySelectorAll('gcds-map').forEach(function(mapEl) {
+    customElements.whenDefined('gcds-ext-map').then(function() {
+      document.querySelectorAll('gcds-ext-map').forEach(function(mapEl) {
         var target = findCodeContainer(mapEl);
         if (!target) return;
 
@@ -119,7 +119,7 @@
 
         // Opt-out: examples that build the map at runtime (e.g. by injecting a
         // large generated <map-layer>) can keep the flush styling but suppress
-        // the live serializer by adding data-static-code on <gcds-map>.
+        // the live serializer by adding data-static-code on <gcds-ext-map>.
         if (mapEl.hasAttribute('data-static-code')) return;
 
         // Initial serialize: replace static example code with live DOM
@@ -142,13 +142,13 @@
 
 <style>
   /* Flush map + code block: no gap, shared border */
-  gcds-map[style] + div[id^="code-container"] {
+  gcds-ext-map[style] + div[id^="code-container"] {
     margin-top: 0 !important;
   }
-  gcds-map[style] + div[id^="code-container"] > pre {
+  gcds-ext-map[style] + div[id^="code-container"] > pre {
     margin: 0 !important;
   }
-  gcds-map.map-preview {
+  gcds-ext-map.map-preview {
     display: block;
     margin-bottom: 0 !important;
     border: var(--gcds-border-width-md) solid currentColor;
@@ -157,7 +157,7 @@
     overflow: hidden;
   }
   /* When the map is wrapped in an overlay container, the wrapper takes over the
-     flush-with-code styling and the inner gcds-map drops its own border. */
+     flush-with-code styling and the inner gcds-ext-map drops its own border. */
   .map-preview-wrapper {
     margin-bottom: 0 !important;
     border: var(--gcds-border-width-md) solid currentColor;
@@ -165,7 +165,7 @@
     border-radius: var(--gcds-border-radius-md) var(--gcds-border-radius-md) 0 0;
     overflow: hidden;
   }
-  .map-preview-wrapper > gcds-map.map-preview {
+  .map-preview-wrapper > gcds-ext-map.map-preview {
     border: none;
     border-radius: 0;
   }

@@ -21,7 +21,7 @@ tags: ['mapFR', 'design']
   <li>La <strong>fenêtre d'affichage de la carte</strong> est l'endroit où le contenu de la couche cartographique est rendu.
 </ol>
 
-<img src="/images/fr/components/anatomy/gcds-map-anatomy.svg" alt="Une image de l'anatomie." />
+<img src="/images/fr/components/anatomy/gcds-ext-map-anatomy.svg" alt="Une image de l'anatomie." />
 
 ## Accessibilité et design de map
 

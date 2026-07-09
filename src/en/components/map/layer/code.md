@@ -61,8 +61,8 @@ little bit helps.
 If _all_ layers in a map are `hidden`, the layer control itself is hidden. See for yourself by removing the 
 overlay from the map below. 
 
-<gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
-  <map-layer checked hidden src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/cbmt' | url }}"></map-layer>
+<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+  <map-layer checked hidden src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/osmtile/cbmt' | url }}"></map-layer>
   <map-layer label="Current Conditions" checked>
     <map-extent units="OSMTILE" checked hidden>
       <map-input name="z" type="zoom" min="0" max="18" ></map-input>
@@ -79,10 +79,10 @@ overlay from the map below.
       <map-link rel="image" tref="https://geo.weather.gc.ca/geomet?request=GetMap&crs=EPSG:3857&service=WMS&bbox={xmin},{ymin},{xmax},{ymax}&layers=CURRENT_CONDITIONS&format=image/png&width={w}&styles=default&language=en&version=1.3.0&transparent=true&height={h}"></map-link>
     </map-extent>
   </map-layer>
-</gcds-map>
+</gcds-ext-map>
 
 ```html
-<gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
+<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
   <map-layer checked hidden src="basemap.mapml"></map-layer>
   <map-layer label="Current Conditions" checked>
     <map-extent units="OSMTILE" checked hidden>
@@ -100,7 +100,7 @@ overlay from the map below.
       <map-link rel="image" tref="https://geo.weather.gc.ca/geomet?request=GetMap&crs=EPSG:3857&service=WMS&bbox={xmin},{ymin},{xmax},{ymax}&layers=CURRENT_CONDITIONS&format=image/png&width={w}&styles=default&language=en&version=1.3.0&transparent=true&height={h}"></map-link>
     </map-extent>
   </map-layer>
-</gcds-map>
+</gcds-ext-map>
 ```
 
 ### Layer and sub-layer `label` attribute
@@ -141,14 +141,14 @@ The `opacity` attribute (0–1, 0.1 increments) controls layer and sub-layer tra
 Users can also adjust opacity via the layer control slider.  In general, leave the opacity of layers up to the 
 user's discretion.
 
-<gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
-  <map-layer opacity="0.5" checked src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/cbmt' | url }}"></map-layer>
-</gcds-map>
+<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+  <map-layer opacity="0.5" checked src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/osmtile/cbmt' | url }}"></map-layer>
+</gcds-ext-map>
 
 ```html
-<gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
+<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
   <map-layer opacity="0.5" checked src="layer.mapml"></map-layer>
-</gcds-map>
+</gcds-ext-map>
 ```
 
 ### Layer `media` queries
@@ -160,10 +160,10 @@ a specified range), and disabled otherwise.  Try zooming in past zoom level 6 to
 (and the layer control itself) disappear.
 
 <div style="position: relative;">
-  <gcds-map id="zoom-demo-map" lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
-    <map-layer checked hidden src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/cbmt' | url }}"></map-layer>
-    <map-layer checked media="(0 <= map-zoom <= 6)" src="{{ '/components/gcds-map/dist/gcds-map/assets/mapml/en/osmtile/current_conditions' | url }}"></map-layer>
-  </gcds-map>
+  <gcds-ext-map id="zoom-demo-map" lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+    <map-layer checked hidden src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/osmtile/cbmt' | url }}"></map-layer>
+    <map-layer checked media="(0 <= map-zoom <= 6)" src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/osmtile/current_conditions' | url }}"></map-layer>
+  </gcds-ext-map>
   <gcds-text id="zoom-demo-text" character-limit="false" margin-bottom="0" style="position: absolute; top: 8px; left: 50%; transform: translateX(-50%); z-index: 1000; background: rgba(255, 255, 255, 0.85); padding: 0.25rem 0.5rem; border-radius: 4px; color: #000; pointer-events: none;">Zoom = 4</gcds-text>
 </div>
 <script>
@@ -180,10 +180,10 @@ a specified range), and disabled otherwise.  Try zooming in past zoom level 6 to
 </script>
 
 ```html
-<gcds-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
+<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
   <map-layer src="basemap.mapml" checked hidden></map-layer>
   <map-layer media="(0 <= map-zoom <= 6)" checked src="overlay.mapml"></map-layer>
-</gcds-map>
+</gcds-ext-map>
 ```
 
 ## Code builder

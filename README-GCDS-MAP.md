@@ -1,4 +1,4 @@
-# gcds-map changes to gcds-docs
+# gcds-ext-map changes to gcds-docs
 
 ## PATH_PREFIX
 
@@ -6,7 +6,7 @@ Changes were required to allow this project to be built for serving from a non-r
 i.e. not at https://example.org/, but at e.g. https://example.org/foo. This required changes to the
 following files (compared to main, 2026-02-03):
 
-$ git diff main --name-status (manually excluding additions for gcds-map documentation)
+$ git diff main --name-status (manually excluding additions for gcds-ext-map documentation)
 M       .eleventy.js
 A       scripts/fix-image-paths.js
 A       src/_data/eleventyComputed.js
@@ -54,16 +54,16 @@ To obtain a build for a subdirectory such as `/foo`, build with:
 PATH_PREFIX=/foo npm run build
 ```
 
-## Changes for gcds-map
+## Changes for gcds-ext-map
 
 Apart from the changes above, this project is meant eventually to contain gcds-docs -style
-documentation for the gcds-map AND related components i.e. `<map-layer>`, `<map-extent>` etc.
+documentation for the gcds-ext-map AND related components i.e. `<map-layer>`, `<map-extent>` etc.
 
 It is currently not determined how to add such "subcomponents" in the component tree.  Maybe it's
-not possible and will have to be done and hosted as a separate project i.e. with the gcds-map
+not possible and will have to be done and hosted as a separate project i.e. with the gcds-ext-map
 component source code tbd.
 
-Currently (2026-02-03), the changes in support of the gcds-map documentation are:
+Currently (2026-02-03), the changes in support of the gcds-ext-map documentation are:
 
 git diff main --name-status
 A       src/en/components/map/base.md
@@ -89,13 +89,13 @@ A       src/images/common/components/preview-map.svg
 
 To Do (2026-02-03)
 
-- use gcds components on gcds-map pages
+- use gcds components on gcds-ext-map pages
 
 ## Deployment
 
 ### Automatic deployment 
 
-This branch (gcds-map) of this fork (prushforth/gcds-docs) can be automatically deployed to
+This branch (gcds-ext-map) of this fork (prushforth/gcds-docs) can be automatically deployed to
 https://nrcan.github.io/gcds-map via the `npm run deploy` script in the main branch of the 
 sibling clone of https://github.com/nrcan/gcds-map.git repo. See that project's readme for
 more info.
@@ -107,13 +107,13 @@ By default, `npm run build` produces a `_site/` folder for serving from `/`.
 For local testing, serve `_site/` and navigate to `/en/` or `/fr/` (do not serve `_site/en`
 as the root).
 
-To build for a subdirectory (e.g. GitHub Pages at `https://<org>.github.io/gcds-map/`):
+To build for a subdirectory (e.g. GitHub Pages at `https://<org>.github.io/gcds-ext-map/`):
 
 ```bash
 PATH_PREFIX=/gcds-map npm run build
 ```
 
-This prefixes all internal URLs, asset paths, and image references with `/gcds-map`.
+This prefixes all internal URLs, asset paths, and image references with `/gcds-ext-map`.
 
 ### Manual deployment to GitHub Pages (of the https://github.com/nrcan/gcds-map.git repo)
 
@@ -124,15 +124,15 @@ target repository:
 # 1. Build with prefix
 PATH_PREFIX=/gcds-map npm run build
 
-# 2. In the target repo (e.g. gcds-map), switch to gh-pages branch
-cd /path/to/gcds-map
+# 2. In the target repo (e.g. gcds-ext-map), switch to gh-pages branch
+cd /path/to/gcds-ext-map
 git checkout gh-pages
 
 # 3. Remove old content (preserve .git, .nojekyll, CNAME)
 find . -maxdepth 1 ! -name '.git' ! -name '.nojekyll' ! -name 'CNAME' ! -name '.' -exec rm -rf {} +
 
 # 4. Copy built site
-cd /path/to/gcds-map/docs (now on the gh-pages branch)
+cd /path/to/gcds-ext-map/docs (now on the gh-pages branch)
 cp -r /path/to/gcds-docs/_site/* .
 
 # 5. Commit (amend) and force push to keep gh-pages branch small
@@ -150,7 +150,7 @@ Each `<mapmlify-layer>` (`.layer-item`) contains these direct children in DOM or
 
 1. `.layer-controls` — checkbox, layer name, projection selector, code-showcase
    buttons (Show Code / Copy Code), and raster props if applicable
-2. `.layer-viewer-container` — holds the `<gcds-map>` preview
+2. `.layer-viewer-container` — holds the `<gcds-ext-map>` preview
 3. `.source-code-display` — `<pre><code>` block toggled by Show Code button
 4. `.layer-abstract` — `<gcds-details>` with the layer abstract
 5. `.layer-options` — `<gcds-details>` with bounds, query, style, format, dimension controls
@@ -181,12 +181,12 @@ natural DOM order applies.
 
 ### Key constraints and gotchas
 
-- **`gcds-map` uses `contain: layout size`** in its shadow DOM `:host` styles.
+- **`gcds-ext-map` uses `contain: layout size`** in its shadow DOM `:host` styles.
   This creates a stacking context. Earlier flexbox `flex-wrap` layouts caused the
   map to visually overlay siblings when wrapping — grid avoids this entirely.
-- **`gcds-map` default host size is 300×150px** (via `:host { width: 300px; height: 150px }`).
+- **`gcds-ext-map` default host size is 300×150px** (via `:host { width: 300px; height: 150px }`).
   The layer-viewer-container styles (`width: 100%; height: 300px`) on the nested
-  `gcds-map` override this.
+  `gcds-ext-map` override this.
 - **`.source-code-display`** must have `max-width: 100%; min-width: 0` to prevent
   `<pre>` content from blowing out the container width. The old `width: 0;
   min-width: 100%` flex trick breaks in grid/column layouts.

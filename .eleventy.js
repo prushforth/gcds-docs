@@ -45,7 +45,7 @@ module.exports = function (eleventyConfig) {
     './node_modules/@gcds-core/components/': 'components',
   });
   eleventyConfig.addPassthroughCopy({
-    './node_modules/gcds-map/dist/gcds-map/': 'components/gcds-map/dist/gcds-map',
+    './node_modules/@gcds-extensions/gcds-ext-map/dist/gcds-ext-map/': 'components/gcds-ext-map/dist/gcds-ext-map',
   });
   eleventyConfig.addPassthroughCopy({
     './node_modules/@gcds-core/css-shortcuts/dist/gcds-css-shortcuts.min.css':

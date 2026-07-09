@@ -1,25 +1,25 @@
 ---
 layout: 'layouts/base.njk'
-github: https://github.com/NRCan/gcds-map/tree/main/src/components/gcds-map
+github: https://github.com/NRCan/gcds-map/tree/main/src/components/gcds-ext-map
 loadGcdsMap: true
 permalink: false
 tags: ['mapEN', 'header']
 ---
 <style>
-gcds-map {
+gcds-ext-map {
   width: 100%;
   height: 350px;
 }
 </style>
-# Map <br>`<gcds-map>`
+# Map <br>`<gcds-ext-map>`
 
 {% docLinks locale, stage, figma, github %}
 {% enddocLinks %}
 
 A map is an interactive tool to display and query layered location information at varying scales
 
-{% componentPreview "`<gcds-map>` component preview" %}
-<gcds-map lat="45.4215" lon="-75.6972" zoom="10" projection="CBMTILE" controls controlslist="search geolocation">
+{% componentPreview "`<gcds-ext-map>` component preview" %}
+<gcds-ext-map lat="45.4215" lon="-75.6972" zoom="10" projection="CBMTILE" controls controlslist="search geolocation">
   <map-caption>A topographic map of Ottawa, Canada, showing the city and the region at about 1cm to 5km initial scale</map-caption>
   <map-layer checked>
     <map-title>Canada Base Map - Transportation (CBMT)</map-title>
@@ -37,5 +37,5 @@ A map is an interactive tool to display and query layered location information a
       <map-link rel="image" tref="https://geogratis.gc.ca/maps/CBMT?SERVICE=WMS&VERSION=1.1.1&SRS=EPSG:3978&LAYERS=CBMT&BBOX={xmin},{ymin},{xmax},{ymax}&REQUEST=GetMap&FORMAT=image/png&TRANSPARENT=TRUE&WIDTH={w}&HEIGHT={h}&STYLES=&m4h=t"></map-link>
     </map-extent>
   </map-layer>
-</gcds-map>
+</gcds-ext-map>
 {% endcomponentPreview %}
