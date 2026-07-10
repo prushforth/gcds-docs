@@ -2,7 +2,7 @@
   "loadGcdsMap": true,
   "loadGeolocatorApiHandler": true,
   "linkOverrides": {
-    "githubCompsIssues": "https://github.com/nrcan/gcds-map/issues"
+    "githubCompsIssues": "https://github.com/nrcan/gcds-ext-map/issues"
   },
   "helpus": {
     "en": {

@@ -1,6 +1,6 @@
 ---
 layout: 'layouts/base.njk'
-github: https://github.com/NRCan/gcds-map/tree/main/src/components/gcds-ext-map
+github: https://github.com/NRCan/gcds-ext-map/tree/main/src/components/gcds-ext-map
 loadGcdsMap: true
 permalink: false
 tags: ['mapEN', 'header']

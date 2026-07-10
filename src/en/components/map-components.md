@@ -9,9 +9,9 @@ eleventyNavigation:
 translationKey: 'mapcomponents'
 date: 'git Last Modified'
 nocrawl: true
-github: https://github.com/nrcan/gcds-map
+github: https://github.com/nrcan/gcds-ext-map
 linkOverrides:
-  githubCompsIssues: https://github.com/nrcan/gcds-map/issues
+  githubCompsIssues: https://github.com/nrcan/gcds-ext-map/issues
 helpus:
   en:
     feedbackHref: mailto:geo@nrcan-rncan.gc.ca

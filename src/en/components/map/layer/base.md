@@ -1,6 +1,6 @@
 ---
 layout: 'layouts/base.njk'
-github: https://github.com/NRCan/gcds-map/tree/main/src/components/map-layer
+github: https://github.com/NRCan/gcds-ext-map/tree/main/src/components/map-layer
 loadGcdsMap: true
 permalink: false
 tags: ['maplayerEN', 'header']

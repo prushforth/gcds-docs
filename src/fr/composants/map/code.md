@@ -16,7 +16,7 @@ tags: ['mapFR', 'code']
 <!-- height="100" est un espace réservé ; le partial storybook-resize redimensionne cet iframe automatiquement -->
 <iframe
   title="iframeTitle"
-  src="https://nrcan.github.io/gcds-map/storybook/iframe.html?id=components-map--events-properties&viewMode=docs&demo=true&singleStory=true&lang=fr"
+  src="https://nrcan.github.io/gcds-ext-map/storybook/iframe.html?id=components-map--events-properties&viewMode=docs&demo=true&singleStory=true&lang=fr"
   width="100%"
   height="100"
   style="display: block; border: 0;"
