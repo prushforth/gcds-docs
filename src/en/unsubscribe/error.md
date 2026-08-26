@@ -1,6 +1,7 @@
 ---
 title: Something went wrong
 layout: 'layouts/base.njk'
+nocrawl: true
 eleventyExcludeFromCollections: true
 date: 'git Last Modified'
 ---

@@ -2,6 +2,7 @@
 title: Roadmap
 translationKey: roadmap
 layout: 'layouts/base.njk'
+nocrawl: true
 eleventyNavigation:
   key: roadmapEN
   title: Roadmap

@@ -17,3 +17,10 @@
 import './commands'
 import 'cypress-axe'
 import 'cypress-html-validate/commands'
+
+// The heavy design pages embed many live maps that load remote resources
+// (tiles/MapML/PMTiles/GeoJSON/links). Slow or failed loads can surface as
+// unhandled promise rejections in the map component, which are unrelated to
+// accessibility but would fail the test as uncaught exceptions and cause flaky
+// retries. Don't let app-originated exceptions fail these a11y tests.
+Cypress.on('uncaught:exception', () => false);

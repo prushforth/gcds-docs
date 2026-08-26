@@ -29,13 +29,6 @@
   {% endfor %}
 {%- endmacro %}
 
-{% macro isContactGroupOpen(url) -%}
-  {% set contactPages = [links.contact, links.getInvolved, links.registerDemo] %}
-  {% for link in contactPages %}
-    {% if [link, '/'] | join == page.url %}open{% endif %}
-  {% endfor %}
-{%- endmacro %}
-
 {% macro renderComponentListItem(entry) -%}
 {% if entry.state === 'published' %}
   {# Simple link to component page - tabs are on the page itself #}
@@ -100,44 +93,6 @@
   <gcds-nav-link slot="home" href="{{ links.home }}">{{ nav[locale].home }}</gcds-nav-link>
   <gcds-nav-link href="{{ links.startToUse }}" {{ isCurrent(links.startToUse) }}>{{ nav[locale].starttouse }}</gcds-nav-link>
 
-  {# Page templates #}
-
-  <gcds-nav-group
-    menu-label="{{ nav[locale].pagetemplates }}"
-    open-trigger="{{ nav[locale].pagetemplates }}"
-    {{ isNavGroupOpen(links.pageTemplates) }}
-  >
-    <gcds-nav-link
-      href="{{ links.pageTemplates }}"
-      {% if [links.pageTemplates, '/'] | join == page.url %}current{% endif %}
-    >
-      {{ nav[locale].pagetemplatesoverview }}
-    </gcds-nav-link>
-
-    {%- for entry in templatePages %}
-      {%- if entry.locale == locale %}{{ renderComponentListItem(entry) }}{% endif -%}
-    {%- endfor -%}
-  </gcds-nav-group>
-
-  {# Components #}
-
-  <gcds-nav-group
-    menu-label="{{ nav[locale].components }}"
-    open-trigger="{{ nav[locale].components }}"
-    {{ isNavGroupOpen(links.components) }}
-  >
-    <gcds-nav-link
-      href="{{ links.components }}"
-      {% if [links.components, '/'] | join == page.url %}current{% endif %}
-    >
-      {{ nav[locale].componentsoverview }}
-    </gcds-nav-link>
-
-    {%- for entry in componentPages %}
-      {%- if entry.locale == locale %}{{ renderComponentListItem(entry) }}{% endif -%}
-    {%- endfor -%}
-  </gcds-nav-group>
-
   {# Map Components #}
   
   <gcds-nav-group
@@ -145,60 +100,12 @@
     open-trigger="{{ nav[locale].mapcomponents }}"
     {{ isNavGroupOpen(links.mapComponents) }}
   >
-    <gcds-nav-link
-      href="{{ links.mapComponents }}"
-      {% if [links.mapComponents, '/'] | join == page.url %}current{% endif %}
-    >
-      {{ nav[locale].mapcomponentsoverview }}
-    </gcds-nav-link>
-
     {%- for entry in mapComponentPages %}
       {%- if entry.locale == locale %}{{ renderMapComponentListItem(entry) }}{% endif -%}
     {%- endfor -%}
   </gcds-nav-group>
 
-  {# CSS shortcuts #}
+  {# Contact #}
 
-  <gcds-nav-group
-    menu-label="{{ nav[locale].cssshortcuts }}"
-    open-trigger="{{ nav[locale].cssshortcuts }}"
-    {{ isNavGroupOpen(links.shortcuts) }}
-  >
-    <gcds-nav-link
-      href="{{ links.shortcuts }}"
-      {% if [links.shortcuts, '/'] | join == page.url %}current{% endif %}
-    >
-      {{ nav[locale].cssshortcutsoverview }}
-    </gcds-nav-link>
-
-    {%- for entry in shortcutsPages %}
-      {%- if entry.locale == locale %}{{ renderCSSShortcutItem(entry) }}{% endif -%}
-    {%- endfor -%}
-  </gcds-nav-group>
-
-  {# Styles #}
-
-  <gcds-nav-group
-    menu-label="Styles"
-    open-trigger="Styles"
-    {{ isNavGroupOpen(links.styles) }}
-  >
-    <gcds-nav-link href="{{ links.styles }}"{% if [links.styles, '/'] | join == page.url %}current{% endif %}>{{ nav[locale].stylesoverview }}</gcds-nav-link>
-    <gcds-nav-link href="{{ links.designTokens }}" {{ isCurrent(links.designTokens) }}>{{ nav[locale].designtokens }}</gcds-nav-link>
-    <gcds-nav-link href="{{ links.colour }}" {{ isCurrent(links.colour) }}>{{ nav[locale].colourtokens }}</gcds-nav-link>
-    <gcds-nav-link href="{{ links.spacing }}" {{ isCurrent(links.spacing) }}>{{ nav[locale].spacingtokens }}</gcds-nav-link>
-    <gcds-nav-link href="{{ links.typography }}" {{ isCurrent(links.typography) }}>{{ nav[locale].typographytokens }}</gcds-nav-link>
-  </gcds-nav-group>
-
-  {# Contacts #}
-
-  <gcds-nav-group
-    menu-label="{{ nav[locale].contact }}"
-    open-trigger="{{ nav[locale].contact }}"
-    {{ isContactGroupOpen(page.url) }}
-  >
-    <gcds-nav-link href="{{ links.contact }}" {{ isCurrent(links.contact) }}>{{ nav[locale].contactus }}</gcds-nav-link>
-    <gcds-nav-link href="{{ links.getInvolved }}" {{ isCurrent(links.getInvolved) }}>{{ nav[locale].getinvolved }}</gcds-nav-link>
-    <gcds-nav-link href="{{ links.registerDemo }}" {{ isCurrent(links.registerDemo) }}>{{ nav[locale].finddemo }}</gcds-nav-link>
-  </gcds-nav-group>
+  <gcds-nav-link href="{{ links.contact }}" {{ isCurrent(links.contact) }}>{{ nav[locale].contactus }}</gcds-nav-link>
 </gcds-side-nav>

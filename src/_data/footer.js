@@ -1,17 +1,11 @@
 module.exports = {
   en: {
     contextual: {
-      heading: 'GC Design System',
+      heading: 'GC Design System Map Extension components',
       list: 'Contact us',
       listurl: '/en/contact/',
-      a11y: 'Accessibility statement',
-      a11yurl: '/en/accessibility/',
-      sla: 'Service level agreement',
-      slaurl: '/en/service-level-agreement/',
       issue: 'Report an issue',
       issueurl: 'https://github.com/cds-snc/gcds-components/issues/new/choose',
-      about: 'About us',
-      abouturl: '/en/about-us',
     },
     sub: {
       social: 'Social media',
@@ -26,17 +20,11 @@ module.exports = {
   },
   fr: {
     contextual: {
-      heading: 'Système de design GC',
+      heading: 'Composants de l’extension cartographique du Système de design GC',
       list: 'Contactez-nous',
       listurl: '/fr/contactez/',
-      a11y: "Déclaration d'accessibilité",
-      a11yurl: '/fr/accessibilite/',
-      sla: 'Accord sur les niveaux de service',
-      slaurl: '/fr/entente-sur-les-niveaux-de-service/',
       issue: 'Signaler un problème',
       issueurl: 'https://github.com/cds-snc/gcds-components/issues/new/choose',
-      about: 'À propos',
-      abouturl: '/fr/a-propos',
     },
     sub: {
       social: 'Médias sociaux',

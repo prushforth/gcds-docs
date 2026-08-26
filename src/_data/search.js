@@ -1,12 +1,12 @@
 module.exports = {
   en: {
-    action: '/en/search',
-    placeholder: 'GC Design System',
-    shortPlaceholder: 'GCDS',
+    action: '/en/search/',
+    placeholder: 'Map Extension',
+    shortPlaceholder: 'Map',
   },
   fr: {
-    action: '/fr/recherche',
-    placeholder: 'Système de design GC',
-    shortPlaceholder: 'SDGC',
+    action: '/fr/recherche/',
+    placeholder: 'Extension cartographique',
+    shortPlaceholder: 'Carte',
   },
 };

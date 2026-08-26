@@ -1,6 +1,7 @@
 ---
 title: You’re unsubscribed
 layout: 'layouts/base.njk'
+nocrawl: true
 eleventyExcludeFromCollections: true
 date: 'git Last Modified'
 ---

@@ -397,17 +397,22 @@ module.exports = function (eleventyConfig) {
       } else {
         githubLink = 'https://github.com/cds-snc/gcds-components';
       }
+      if (figma) {
+        figmaLink = `<li class="figma-link">
+<gcds-link external href="${langStrings[locale].figmaLink}">
+${langStrings[locale].figma}
+</gcds-link>
+</li>`;
+      }
+      // Top-level tag MUST start at column 0 so markdown-it treats it as an HTML block; otherwise it wraps the output in <p>...</p>, producing invalid <p><ul>...</ul></p> nesting that breaks pagefind indexing.
       return `
-      <ul class="d-flex flex-wrap gap-300">
-        ${stageChip} <li class="github-link">
-          <gcds-link external href="${githubLink}">${langStrings[locale].github}</gcds-link>
-        </li> ${figmaLink}
-        <li class="figma-link">
-          <gcds-link external href="${langStrings[locale].figmaLink}">
-            ${langStrings[locale].figma}
-          </gcds-link>
-        </li>
-      </ul>`;
+<ul class="d-flex flex-wrap gap-300">
+${stageChip} <li class="github-link">
+<gcds-link external href="${githubLink}">${langStrings[locale].github}</gcds-link>
+</li>
+${figmaLink}
+</ul>
+`;
     },
   );
 
@@ -456,16 +461,17 @@ module.exports = function (eleventyConfig) {
     (children, title, padding = 'px-225 py-300', margin = 'my-600') => {
       const content = children;
 
+      // Top-level tag MUST start at column 0 so markdown-it treats it as an HTML block; otherwise it wraps the output in <p>...</p>, producing invalid <p><div>...</div></p> nesting that breaks pagefind indexing.
       return `
-      <div class="${margin} b-sm b-default component-preview">
-        <p class="container-full font-semibold px-225 py-150 bb-sm b-default bg-light">
-          ${title}
-        </p>
-        <div class="${padding}">
-          ${content}
-        </div>
-      </div>
-    `;
+<div class="${margin} b-sm b-default component-preview">
+<p class="container-full font-semibold px-225 py-150 bb-sm b-default bg-light">
+${title}
+</p>
+<div class="${padding}">
+${content}
+</div>
+</div>
+`;
     },
   );
 
@@ -637,23 +643,24 @@ module.exports = function (eleventyConfig) {
     (children, title, url, queryString = '') => {
       const pathPrefix = process.env.PATH_PREFIX || '';
       const previewUrl = pathPrefix + url.replace('/base', '/preview/');
+      // Top-level tag MUST start at column 0 so markdown-it treats it as an HTML block; otherwise it wraps the output in <p>...</p>, producing invalid <p><div>...</div></p> nesting that breaks pagefind indexing.
       return `
-      <div class="my-600 b-sm b-default component-preview">
-        <h2 class="container-full font-text font-semibold m-0 px-225 py-150 bb-sm b-default bg-light">
-          ${title}
-        </h2>
-        <div>
-          <iframe
-            title="${title}"
-            src="${previewUrl}${queryString}"
-            style="display: block; margin: 0 auto;"
-            frameBorder="0"
-            width="100%"
-            id="component-preview"
-          ></iframe>
-        </div>
-      </div>
-    `;
+<div class="my-600 b-sm b-default component-preview">
+<h2 class="container-full font-text font-semibold m-0 px-225 py-150 bb-sm b-default bg-light">
+${title}
+</h2>
+<div>
+<iframe
+  title="${title}"
+  src="${previewUrl}${queryString}"
+  style="display: block; margin: 0 auto;"
+  frameBorder="0"
+  width="100%"
+  id="component-preview"
+></iframe>
+</div>
+</div>
+`;
     },
   );
 

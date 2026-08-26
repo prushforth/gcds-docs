@@ -2,6 +2,7 @@
 title: Équipes utilisant Système de design GC
 translationKey: testimonials
 layout: 'layouts/base.njk'
+nocrawl: true
 eleventyNavigation:
   key: testimonialsFR
   title: Équipes utilisant Système de design GC

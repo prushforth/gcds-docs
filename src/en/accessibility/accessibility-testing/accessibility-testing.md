@@ -2,11 +2,12 @@
 title: Accessibility testing
 translationKey: accessibilitytest
 layout: 'layouts/base.njk'
+nocrawl: true
 eleventyNavigation:
   key: accessibilityTestingEN
   title: Accessibility testing
-  parent: accessibilityEN
   locale: en
+  hideMain: true
 ---
 
 # Accessibility testing tools
@@ -15,7 +16,7 @@ eleventyNavigation:
 
 Older testing tools and practices may not work properly with modern components. Here’s how to make sure your digital product is accessible:
 
-1. Use our modern web components that [we've tested]({{ links.accessibility }}).
+1. Use our modern web components that we've tested.
 2. Follow the accessibility guidance on our [component pages]({{ links.components }}).
 3. Test your digital product in your context to make sure it’s clear and works for people using assistive technology.
 
@@ -23,7 +24,7 @@ Older testing tools and practices may not work properly with modern components. 
 
 If you want to do your own testing, here are some tools and processes you can use to get better coverage for your website or app.
 
-These tools are not provided or endorsed by the Government of Canada. Reference our [Terms of use]({{ links.termsOfUse }}) when interacting with websites not under the control of Government of Canada.
+These tools are not provided or endorsed by the Government of Canada. Reference our <gcds-link href="{{ links.termsOfUse }}" external>Terms of use</gcds-link> when interacting with websites not under the control of Government of Canada.
 
 ### Automated tools
 

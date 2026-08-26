@@ -1,8 +1,9 @@
 {
+  "nocrawl": false,
   "loadGcdsMap": true,
   "loadGeolocatorApiHandler": true,
   "linkOverrides": {
-    "githubCompsIssues": "https://github.com/nrcan/gcds-ext-map/issues"
+    "githubCompsIssues": "https://github.com/gcds-extensions/map/issues"
   },
   "helpus": {
     "en": {

@@ -1,6 +1,7 @@
 ---
 title: Erreur - Se désabonner
 layout: 'layouts/base.njk'
+nocrawl: true
 eleventyExcludeFromCollections: true
 date: 'git Last Modified'
 ---

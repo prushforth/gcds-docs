@@ -2,6 +2,7 @@
 title: Terms of use
 translationKey: termsofuse
 layout: 'layouts/base.njk'
+nocrawl: true
 eleventyNavigation:
   key: termsofuseEN
   title: Terms of use
@@ -14,7 +15,7 @@ eleventyNavigation:
 
 This document defines the terms and responsibilities that you agree to by using [GC Design System]({{ links.home }}).
 
-GC Design System is a service that is owned and operated by the Canadian Digital Service (CDS) at <gcds-link href="https://www.canada.ca/en/employment-social-development.html" external>Employment and Social Development Canada (ESDC)</gcds-link>. For CDS’s responsibilities, see GC Design System’s [service level agreement]({{ links.sla }}).
+GC Design System is a service that is owned and operated by the Canadian Digital Service (CDS) at <gcds-link href="https://www.canada.ca/en/employment-social-development.html" external>Employment and Social Development Canada (ESDC)</gcds-link>. For CDS’s responsibilities, see GC Design System’s <gcds-link href="https://design-system.canada.ca/en/service-level-agreement/" external>service level agreement</gcds-link>.
 
 GC Design System is for the sole use of Canadian federal departments, agencies, and other portions of the federal public administration.
 
@@ -22,7 +23,7 @@ GC Design System is for the sole use of Canadian federal departments, agencies, 
 
 ### Accepting all conditions and risks
 
-You agree to GC Design System’s [privacy notice]({{ links.privacy }}) and [service level agreement]({{ links.sla }}).
+You agree to GC Design System’s <gcds-link href="{{ links.privacy }}" external>privacy notice</gcds-link> and <gcds-link href="https://design-system.canada.ca/en/service-level-agreement/" external>service level agreement</gcds-link>.
 
 By using GC Design System, you acknowledge that some components contain the <gcds-link href="https://www.canada.ca/en/government/system/government-communications/federal-identity-requirements/legal-protection-official-symbols-government-canada.html" external>Government of Canada’s official symbols</gcds-link>, which are trademarked and may only be used for communications, operations and activities of the Government of Canada.
 

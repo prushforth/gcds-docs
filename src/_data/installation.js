@@ -3,7 +3,7 @@ module.exports = {
     heading: 'Not using any of those?',
     paragraph:
       'If you\'re not using any of the above, choose the "Other" option below.',
-    cardLink: '/en/start-to-use/develop/html/',
+    cardLink: '/en/how-to-install/develop/html/',
     cardTitle: 'Other',
     cardDescription: 'View installation instructions for all other projects.',
     cardEnvExamples:
@@ -15,7 +15,7 @@ module.exports = {
     heading: 'Vous n’utilisez aucun de ces cadres?',
     paragraph:
       'Si vous n’utilisez aucun des cadres mentionnés ci-haut, choisissez l’option « Autre » ci-dessous.',
-    cardLink: '/fr/demarrer/developpement/html/',
+    cardLink: '/fr/comment-installer/developpement/html/',
     cardTitle: 'Autre',
     cardDescription:
       'Consultez les instructions d’installation pour tout autre type de projet. ',

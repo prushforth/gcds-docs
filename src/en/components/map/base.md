@@ -1,6 +1,6 @@
 ---
 layout: 'layouts/base.njk'
-github: https://github.com/NRCan/gcds-ext-map/tree/main/src/components/gcds-ext-map
+github: https://github.com/gcds-extensions/map/tree/main/src/components/gcds-ext-map
 loadGcdsMap: true
 permalink: false
 tags: ['mapEN', 'header']
@@ -18,7 +18,7 @@ gcds-ext-map {
 
 A map is an interactive tool to display and query layered location information at varying scales
 
-{% componentPreview "`<gcds-ext-map>` component preview" %}
+{% componentPreview "<code>&lt;gcds-ext-map&gt;</code> component preview" %}
 <gcds-ext-map lat="45.4215" lon="-75.6972" zoom="10" projection="CBMTILE" controls controlslist="search geolocation">
   <map-caption>A topographic map of Ottawa, Canada, showing the city and the region at about 1cm to 5km initial scale</map-caption>
   <map-layer checked>

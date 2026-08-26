@@ -67,6 +67,7 @@ Si _toutes_ les couches d'une carte sont `hidden`, le contrôle de couche lui-m�
 vous-même en retirant la superposition de la carte ci-dessous.
 
 <gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+  <map-caption>Carte météo illustrant l'attribut hidden sur une couche de base</map-caption>
   <map-layer checked hidden src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/fr/osmtile/cbmt' | url }}"></map-layer>
   <map-layer label="Conditions actuelles" checked>
     <map-extent units="OSMTILE" checked hidden>
@@ -149,6 +150,7 @@ qui sont cumulatives. Les utilisateurs peuvent également ajuster l'opacité via
 couche. En général, laissez l'opacité des couches à la discrétion de l'utilisateur.
 
 <gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+  <map-caption>Carte météo illustrant l'attribut opacity de la couche</map-caption>
   <map-layer opacity="0.5" checked src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/fr/osmtile/cbmt' | url }}"></map-layer>
 </gcds-ext-map>
 
@@ -169,6 +171,7 @@ disparaître.
 
 <div style="position: relative;">
   <gcds-ext-map id="zoom-demo-map" lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+    <map-caption>Carte météo illustrant la requête media de la couche</map-caption>
     <map-layer checked hidden src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/fr/osmtile/cbmt' | url }}"></map-layer>
     <map-layer checked media="(0 <= map-zoom <= 6)" src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/fr/osmtile/current_conditions' | url }}"></map-layer>
   </gcds-ext-map>

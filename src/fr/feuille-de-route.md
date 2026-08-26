@@ -2,6 +2,7 @@
 title: Feuille de route
 translationKey: roadmap
 layout: 'layouts/base.njk'
+nocrawl: true
 eleventyNavigation:
   key: roadmapFR
   title: Feuille de route

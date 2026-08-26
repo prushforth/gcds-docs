@@ -39,7 +39,7 @@ Les Raccourcis CSS sont conçus pour répondre aux besoins du gouvernement du Ca
 
 ### Accessible à la base
 
-Ajoutez du code personnalisé pour répondre à vos besoins spécifiques, tout en sachant qu’il a été conçu pour répondre aux [normes d’accessibilité du GC]({{ links.accessibility }}).
+Ajoutez du code personnalisé pour répondre à vos besoins spécifiques, tout en sachant qu’il a été conçu pour répondre aux normes d’accessibilité du GC.
 
 ## Parcourir les Raccourcis CSS
 

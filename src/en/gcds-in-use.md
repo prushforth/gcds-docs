@@ -2,6 +2,7 @@
 title: Teams using GC Design System
 translationKey: testimonials
 layout: 'layouts/base.njk'
+nocrawl: true
 eleventyNavigation:
   key: testimonialsEN
   title: Teams using GC Design System

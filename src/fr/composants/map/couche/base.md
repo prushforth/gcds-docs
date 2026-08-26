@@ -1,6 +1,6 @@
 ---
 layout: 'layouts/base.njk'
-github: https://github.com/NRCan/gcds-ext-map/tree/main/src/components/map-layer
+github: https://github.com/gcds-extensions/map/tree/main/src/components/map-layer
 loadGcdsMap: true
 permalink: false
 tags: ['maplayerFR', 'header']
@@ -18,7 +18,7 @@ gcds-ext-map {
 
 Les données ou le contenu d'une carte Web sont organisés en couches et sont ajoutés au composant `<gcds-ext-map>` sous forme d'un ou plusieurs éléments enfants `<map-layer>`. Chaque couche est rendue par-dessus la couche précédente. Souvent, une carte est composée d'une couche de « carte de base » et d'une ou plusieurs couches thématiques.
 
-{% componentPreview "Aperçu du composant `<map-layer>`" %}
+{% componentPreview "Aperçu du composant <code>&lt;map-layer&gt;</code>" %}
 <gcds-ext-map lat="62.1326" lon="-91.0" zoom="2" projection="CBMTILE" controls controlslist="search geolocation">
   <map-caption>Une carte qui démontre comment les couches sont utilisées par le composant gcds-ext-map</map-caption>
   <map-layer checked>

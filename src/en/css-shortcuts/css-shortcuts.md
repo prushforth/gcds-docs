@@ -39,7 +39,7 @@ CSS Shortcuts is built to meet the needs of the Government of Canada. Unlike oth
 
 ### Accessibility built in
 
-Add custom code to meet your specific needs, with the reassurance of knowing it’s been built to meet [GC accessibility standards]({{ links.accessibility }}).
+Add custom code to meet your specific needs, with the reassurance of knowing it’s been built to meet GC accessibility standards.
 
 ## Browse CSS Shortcuts
 

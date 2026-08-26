@@ -1,6 +1,10 @@
 const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
+  // Map pages render many heavy Leaflet/MapML DOM trees; limit retained
+  // command snapshots to avoid the Cypress runner OOM-crashing on them.
+  experimentalMemoryManagement: true,
+  numTestsKeptInMemory: 0,
   e2e: {
     setupNodeEvents(on, config) {
       on('task', {
@@ -22,7 +26,7 @@ module.exports = defineConfig({
     screenshotOnRunFailure: false,
     video: false,
     retries: {
-      runMode: 3,
+      runMode: 0,
       openMode: 0,
     },
   },

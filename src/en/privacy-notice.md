@@ -2,6 +2,7 @@
 title: Privacy notice
 translationKey: privacy
 layout: 'layouts/base.njk'
+nocrawl: true
 eleventyNavigation:
   key: privacyEN
   title: Privacy notice

@@ -62,6 +62,7 @@ If _all_ layers in a map are `hidden`, the layer control itself is hidden. See f
 overlay from the map below. 
 
 <gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+  <map-caption>Weather map showing the hidden attribute on a basemap layer</map-caption>
   <map-layer checked hidden src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/osmtile/cbmt' | url }}"></map-layer>
   <map-layer label="Current Conditions" checked>
     <map-extent units="OSMTILE" checked hidden>
@@ -142,6 +143,7 @@ Users can also adjust opacity via the layer control slider.  In general, leave t
 user's discretion.
 
 <gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+  <map-caption>Weather map showing the layer opacity attribute</map-caption>
   <map-layer opacity="0.5" checked src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/osmtile/cbmt' | url }}"></map-layer>
 </gcds-ext-map>
 
@@ -161,6 +163,7 @@ a specified range), and disabled otherwise.  Try zooming in past zoom level 6 to
 
 <div style="position: relative;">
   <gcds-ext-map id="zoom-demo-map" lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+    <map-caption>Weather map showing the layer media query attribute</map-caption>
     <map-layer checked hidden src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/osmtile/cbmt' | url }}"></map-layer>
     <map-layer checked media="(0 <= map-zoom <= 6)" src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/osmtile/current_conditions' | url }}"></map-layer>
   </gcds-ext-map>

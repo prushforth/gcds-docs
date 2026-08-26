@@ -10,7 +10,7 @@ module.exports = {
     gotocomponents: 'Go to Component overview',
     gotocomponentshref: '/en/components/',
     gotogetinvolved: 'Get involved',
-    gotogetinvolvedhref: '/en/get-involved/',
+    gotogetinvolvedhref: '/en/contact/',
   },
   fr: {
     heading: "À la recherche d'un autre composant?",
@@ -23,6 +23,6 @@ module.exports = {
     gotocomponents: 'Passer au survol des composants',
     gotocomponentshref: '/fr/composants/',
     gotogetinvolved: "S'impliquer",
-    gotogetinvolvedhref: '/fr/simpliquer/',
+    gotogetinvolvedhref: '/fr/contactez/',
   },
 };

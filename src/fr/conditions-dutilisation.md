@@ -2,6 +2,7 @@
 title: Conditions d’utilisation
 translationKey: termsofuse
 layout: 'layouts/base.njk'
+nocrawl: true
 eleventyNavigation:
   key: termsofuseFR
   title: Conditions d’utilisation
@@ -14,7 +15,7 @@ eleventyNavigation:
 
 Ce document définit les modalités et les responsabilités auxquelles vous consentez en utilisant [Système de design GC]({{ links.home }}).
 
-Système de design GC est un service détenu et exploité par le Service numérique canadien (SNC) d’<gcds-link href="https://www.canada.ca/fr/emploi-developpement-social.html" external>Emploi et Développement social Canada (EDSC)</gcds-link>. Pour connaître les responsabilités du SNC, veuillez consulter l’[entente de niveau de service]({{ links.sla }}) de Système de design GC.
+Système de design GC est un service détenu et exploité par le Service numérique canadien (SNC) d’<gcds-link href="https://www.canada.ca/fr/emploi-developpement-social.html" external>Emploi et Développement social Canada (EDSC)</gcds-link>. Pour connaître les responsabilités du SNC, veuillez consulter l’<gcds-link href="https://systeme-design.canada.ca/fr/entente-sur-les-niveaux-de-service/" external>entente de niveau de service</gcds-link> de Système de design GC.
 
 Système de design GC est destiné exclusivement à l’usage des ministères et organismes fédéraux canadiens et d’autres secteurs de l’administration publique fédérale.
 
@@ -22,7 +23,7 @@ Système de design GC est destiné exclusivement à l’usage des ministères et
 
 ### Accepter tous les risques et conditions
 
-Vous acceptez l’[avis de confidentialité]({{ links.privacy }}) et l’[entente de niveau de service]({{ links.sla }}) du Système de design GC.
+Vous acceptez l’<gcds-link href="{{ links.privacy }}" external>avis de confidentialité</gcds-link> et l’<gcds-link href="https://systeme-design.canada.ca/fr/entente-sur-les-niveaux-de-service/" external>entente de niveau de service</gcds-link> du Système de design GC.
 
 En utilisant le Système de design GC, vous reconnaissez que certains composants contiennent les <gcds-link href="https://www.canada.ca/fr/secretariat-conseil-tresor/sujets/communications-gouvernementales/exigences-image-marque/protection-juridique-symboles-officiels-gouvernement-canada.html" external>symboles officiels du gouvernement du Canada</gcds-link> qui sont des marques déposées et qui ne peuvent être utilisés que pour les communications, les opérations et les activités du gouvernement du Canada.
 

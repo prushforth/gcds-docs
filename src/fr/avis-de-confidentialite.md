@@ -2,6 +2,7 @@
 title: Avis de confidentialité
 translationKey: privacy
 layout: 'layouts/base.njk'
+nocrawl: true
 eleventyNavigation:
   key: privacyFR
   title: Avis de confidentialité

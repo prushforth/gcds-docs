@@ -1,70 +1,57 @@
 ---
-title: Contactez-nous
+title: Nous contacter
 layout: 'layouts/base.njk'
 eleventyNavigation:
   key: contactusFR
-  title: Contactez-nous
+  title: Nous contacter
   locale: fr
   order: 3
   hideMain: true
 translationKey: 'contactus'
-contactForm: fr
 date: 'git Last Modified'
+templateEngineOverride: njk,md
 ---
 
-# Contacter Système de design GC
+# Nous contacter
 
-<gcds-notice notice-role="info" notice-title-tag="h2" notice-title="Formulaire de soutien sur GitHub">
-  <gcds-text>Avec un <gcds-link external href="{{ links.githubGetStarted }}">compte</gcds-link>, utilisez notre <gcds-link external href="{{ links.githubCompsIssues }}">Formulaire de soutien GitHub</gcds-link> pour signaler des bogues et obtenir un soutien technique. Vous pourrez accéder aux réponses de l’équipe, suivre les progrès réalisés concernant votre problèmes et voir les problèmes signalés par d’autres personnes.></gcds-text>
-</gcds-notice>
+Le composant Carte est une extension de Système de design GC. Il est maintenu par Ressources naturelles Canada et respecte les normes de design, d’accessibilité et de bilinguisme de Système de design GC. Les contributions au composant de carte sont gérées séparément du système principal.
 
-## Participez à une démo ou à un évènement
+## Contribuez à nos prochaines priorités
 
-Vous souhaitez en savoir plus sur Système de design GC avant de vous lancer?
+Vous pouvez contribuer aux travaux à venir sur l’extension de carte de Système de design GC.
 
-Les démos présentent le prototypage et le développement d’expériences Web à l’aide du système de design et sont suivies d’une séance de questions-réponses.
+## Demander une fonctionnalité
 
-Nous aurons bientôt d’autres évènements à proposer à notre communauté grandissante.
+Nous cherchons toujours à améliorer les composants de carte de Système de design GC et évaluons continuellement nos prochaines priorités. 
 
-<gcds-button type="link" button-role="secondary" href="{{ links.registerDemo }}">
-  Trouver une démo à venir
-</gcds-button>
+Envoyez votre demande de fonctionnalité directement dans GitHub, en <gcds-link href="{{ links.githubGetStarted }}" external>créant un compte</gcds-link>.
 
-<hr class="my-600" />
+<gcds-button button-role="secondary" type="link" href="{{ links.githubCompsPriority }}" external>Contribuer sur GitHub</gcds-button>
 
-## Contactez l’équipe du système de design
+<hr class="mt-600" />
 
-Ce formulaire est destiné aux personnes qui bâtissent les sites Web et services numériques gouvernementaux. Vous pouvez nous faire part de vos commentaires, poser une question ou recevoir des communications de la part de l’équipe Système de design GC.
+## Découvrez Système de design GC
 
-Pour obtenir de l’aide avec un service gouvernemental, aller à la page <gcds-link href="https://www.canada.ca/fr/contact.html" external>Coordonnées du Gouvernement du Canada</gcds-link>.
+<gcds-grid columns="1fr" columns-tablet="1fr 1fr" columns-desktop="1fr 1fr">
+  <gcds-card
+    card-title="Recevez nos communications"
+    href="{{ links.contactMailingList }}"
+    target="_blank"
+    rel="noopener noreferrer"
+    description="Abonnez-vous à notre liste d’envoi pour ne manquer aucune communication de Système de design GC concernant les mises à jour, les lancements ou encore les évènements spéciaux."
+  ></gcds-card>
+</gcds-grid>
 
-<form class="my-600 contact-us-form" name="contactFR" method="post" style="min-height: 32rem;" action="/api/submission" novalidate>
-  <gcds-error-summary></gcds-error-summary>
+## Entrez en contact avec notre communauté
 
-  <input type="hidden" name="form-name" value="contactFR" />
-  <input name="honeypot" type="text" aria-label="bot" hidden/>
+<gcds-grid columns="1fr" columns-tablet="1fr 1fr" columns-desktop="1fr 1fr">
+  <gcds-card
+    card-title="Inscrivez-vous au forum de Système de design GC"
+    href="https://events.teams.microsoft.com/event/36f50509-5284-4e92-b188-539b768e2941@9ed55846-8a81-4246-acd8-b1a01abfc0d1"
+    target="_blank"
+    rel="noopener noreferrer"
+    description="Inscrivez-vous aux séances récurrentes du forum de Système de design GC pour connaître les dernières nouvelles sur le produit, nos partenaires et nos clients. "
+  ></gcds-card>
+</gcds-grid>
 
-  <gcds-input type="text" name="name" input-id="name" label="Nom complet" autocomplete="name" required></gcds-input>
-  <gcds-input type="email" name="email" input-id="email" label="Adresse courriel" autocomplete="email" required></gcds-input>
-  <gcds-textarea name="message" label="Fournissez vos commentaires ou posez une question si vous avez besoin d’aide" hint="Incluez jamais de renseignement personnel (Protégé)." textarea-id="message"></gcds-textarea>
-
-  <gcds-fieldset legend="Recevez des communications de la part de Système de design GC" legend-size="h3" hint="Si vous souhaitez que nous vous contactions, choisissez toutes les options qui s’appliquent.">
-    <gcds-checkboxes name="learn-more-mailing-list" options="{{ contactus[locale].mailingcheck | stringify | encode-html }}"></gcds-checkboxes>
-    <gcds-checkboxes name="learn-more-research" options="{{ contactus[locale].researchcheck | stringify | encode-html }}"></gcds-checkboxes>
-    <gcds-checkboxes name="learn-more-gcds-forum" options="{{ contactus[locale].forumcheck | stringify | encode-html }}"></gcds-checkboxes>
-  </gcds-fieldset>
-
-  <gcds-radios legend="Indiquez votre expérience avec Système de design GC" hint="Sélectionnez 1 option." name="familiarityGCDS" required options='{{ contactus[locale].radiooptions | stringify | encode-html}}'>
-  </gcds-radios>
-
-  <div hidden>
-    <gcds-input type="text" name="bot-field" input-id="bot-field" label="bot"></gcds-input>
-  </div>
-
-  <gcds-button button-role="primary" type="submit">
-    Envoyer
-  </gcds-button>
-</form>
-
-<script defer src="/scripts/sanitize-pii.min.js"></script>
-<script defer src="/scripts/sanitize-contact-form.js"></script>
+{% include "partials/helpus.njk" %}

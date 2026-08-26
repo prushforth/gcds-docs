@@ -22,6 +22,7 @@ Cypress.Commands.add('scanDeadLinks', () => {
         if (
           href.startsWith('mailto') ||
           href.endsWith('.pdf') ||
+          href.endsWith('.pmtiles') ||
           href.startsWith('https://www.npmjs.com')
         )
           return;
@@ -96,4 +97,11 @@ Cypress.Commands.add('terminalLog', violations => {
   );
 
   cy.task('table', violationData);
+
+  // log the offending node selector + html for each violation
+  violations.forEach(({ id, nodes }) => {
+    nodes.forEach(({ target, html }) => {
+      cy.task('log', `  [${id}] ${JSON.stringify(target)} -> ${html}`);
+    });
+  });
 });

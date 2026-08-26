@@ -1,6 +1,6 @@
 ---
 layout: 'layouts/base.njk'
-github: https://github.com/NRCan/gcds-ext-map/tree/main/src/components/gcds-ext-map
+github: https://github.com/gcds-extensions/map/tree/main/src/components/gcds-ext-map
 loadGcdsMap: true
 permalink: false
 tags: ['mapFR', 'header']
@@ -18,7 +18,7 @@ gcds-ext-map {
 
 Une carte est un outil interactif permettant d'afficher et d'interroger des informations de localisation en couches à différentes échelles
 
-{% componentPreview "Aperçu du composant `<gcds-ext-map>`" %}
+{% componentPreview "Aperçu du composant <code>&lt;gcds-ext-map&gt;</code>" %}
 
 <gcds-ext-map lat="45.4215" lon="-75.6972" zoom="10" projection="CBMTILE" controls controlslist="search geolocation">
   <map-caption>Une carte topographique d'Ottawa, Canada, montrant la ville et la région à une échelle initiale d'environ 1 cm pour 5 km</map-caption>
