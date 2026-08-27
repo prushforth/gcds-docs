@@ -15,7 +15,7 @@ eleventyNavigation:
 
 # Search results
 
-<gcds-search class="mb-300" action="/en/search/" search-id="ds-search" placeholder="Map Extension" data-placeholder-long="{{ search[locale].placeholder }}" data-placeholder-short="{{ search[locale].shortPlaceholder }}" id="searchbar">
+<gcds-search class="mb-300" action="{{ '/en/search/' | url }}" search-id="ds-search" placeholder="Map Extension" data-placeholder-long="{{ search[locale].placeholder }}" data-placeholder-short="{{ search[locale].shortPlaceholder }}" id="searchbar">
 </gcds-search>
 
 <gcds-text size="small">
