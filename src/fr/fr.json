@@ -185,7 +185,7 @@
     "github": "https://github.com/cds-snc/gcds-components",
     "githubGetStarted": "https://docs.github.com/fr/get-started/start-your-journey/creating-an-account-on-github",
     "githubCompsBug": "https://github.com/gcds-extensions/map/issues/new",
-    "githubCompsIssues": "https://github.com/gcds-extensions/map/issues/new/choose",
+    "githubCompsIssues": "https://github.com/gcds-extensions/map/issues/new",
     "githubCompsPriority": "https://github.com/gcds-extensions/map/issues/new",
     "githubDocsIssues": "https://github.com/cds-snc/gcds-docs/issues",
     "githubFigmaReleases": "https://github.com/cds-snc/gcds-figma-library/releases",
