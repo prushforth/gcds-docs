@@ -20,7 +20,7 @@ gcds-ext-map {
 Web map data or content is inherently layered. Add it to the `<gcds-ext-map>` component using one or more child `<map-layer>` elements.  Each layer is rendered on top of the previous one.  Often a map is composed of a single opaque "base map" layer and one or more thematic layers on top.
 
 {% componentPreview "<code>&lt;map-layer&gt;</code> component preview" %}
-<gcds-ext-map lat="62.1326" lon="-91.0" zoom="2" projection="CBMTILE" controls controlslist="search geolocation">
+<gcds-ext-map lat="62.1326" lon="-91.0" zoom="2" projection="CBMTILE" controls controlslist="search geolocation static" static>
   <map-caption>A map that demonstrates how layers are used by the gcds-ext-map compponent</map-caption>
   <map-layer checked>
     <map-title>Canada Base Map - Transportation (CBMT)</map-title>

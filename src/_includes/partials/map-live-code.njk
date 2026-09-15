@@ -31,9 +31,12 @@
 
       var tag = node.tagName.toLowerCase();
       var attrs = '';
+      // <map-caption> generates the map's aria-label; authors don't write it themselves.
+      var skipAriaLabel = tag === 'gcds-ext-map' && !!node.querySelector('map-caption');
       for (var a = 0; a < node.attributes.length; a++) {
         var attr = node.attributes[a];
         if (STRIP_ATTRS.indexOf(attr.name) >= 0) continue;
+        if (skipAriaLabel && attr.name === 'aria-label') continue;
         // Skip the page-specific inline style on gcds-ext-map
         if (tag === 'gcds-ext-map' && attr.name === 'style') continue;
         if (attr.value === '') {

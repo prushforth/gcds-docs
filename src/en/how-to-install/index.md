@@ -32,6 +32,22 @@ npx http-server node_modules/@gcds-extensions/map -p 8080 -c-1
 
 Open <gcds-link href="http://localhost:8080/demo/" external>http://localhost:8080/demo/</gcds-link> &mdash; you should see an interactive map.
 
+## Optional: install the markup skills
+
+The package bundles a set of <gcds-link href="https://agentskills.io/" external>Agent Skills</gcds-link> that teach an AI coding assistant (such as GitHub Copilot in VS Code) how to write correct markup for `<gcds-ext-map>` and each of its child elements — `<map-layer>`, `<map-extent>`, `<map-input>`, `<map-link>`, `<map-feature>`, and so on. Installing the package does **not** add the skills to your project. To copy them in, run this command from the root of your project:
+
+```bash
+npx gcds-ext-map-skills
+```
+
+The command creates `.github/skills/` if needed, copies one folder per element into it (overwriting files of the same name, and leaving the rest of your project untouched), and prints the destination path. Restart your editor afterwards so your assistant discovers the new skills &mdash; in VS Code, press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> (<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> on macOS) and run **Developer: Reload Window**.
+
+Because `.github/skills/` is shared with the skills of other packages and with your own, each bundled skill is tagged with the name of the package it came from. To remove only the skills installed by this package, run:
+
+```bash
+npx gcds-ext-map-skills --remove
+```
+
 <hr class="my-600" />
 
 ## Usage
@@ -54,7 +70,7 @@ Optionally, to use the full GC Design System component system, also include:
 Then use the component in your markup (use CSS to define the width and height, since the default size is quite small):
 
 ```html
-<gcds-ext-map projection="CBMTILE" lat="45.4215" lon="-75.6972" zoom="10" style="width: 60%; height: 400px">
+<gcds-ext-map projection="CBMTILE" lat="45.4215" lon="-75.6972" zoom="10"  controlslist="static" static controls style="width: 60%; height: 400px">
   <map-layer checked>
     <map-title>Canada Base Map - Transportation (CBMT)</map-title>
     <map-link rel="license" href="https://open.canada.ca/en/open-government-licence-canada" title="Open Government Licence - Canada"></map-link>

@@ -19,6 +19,7 @@ tags: ['mapEN', 'design']
   <li>The <strong>Geolocation</strong> control is a 3-state control. It is either off, tracking the device location, or showing the last known device location.
   <li>The <strong>Attribution</strong> control is required, and shows the license link for map layer content.
   <li>The <strong>map viewport</strong> is where map layer content is rendered.
+  <li>The <strong>Static control></strong> (lock icon) allows the user to control the "slippy" map nature of the map. This is useful to prevent unintended map movement.
 </ol>
 
 <img src="/images/en/components/anatomy/gcds-ext-map-anatomy.svg" alt="An image of the anatomy." />

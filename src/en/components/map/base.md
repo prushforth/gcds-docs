@@ -19,7 +19,7 @@ gcds-ext-map {
 A map is an interactive tool to display and query layered location information at varying scales
 
 {% componentPreview "<code>&lt;gcds-ext-map&gt;</code> component preview" %}
-<gcds-ext-map lat="45.4215" lon="-75.6972" zoom="10" projection="CBMTILE" controls controlslist="search geolocation">
+<gcds-ext-map lat="45.4215" lon="-75.6972" zoom="10" projection="CBMTILE" controls controlslist="search geolocation static" static>
   <map-caption>A topographic map of Ottawa, Canada, showing the city and the region at about 1cm to 5km initial scale</map-caption>
   <map-layer checked>
     <map-title>Canada Base Map - Transportation (CBMT)</map-title>

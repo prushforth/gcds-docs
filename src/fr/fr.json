@@ -78,7 +78,7 @@
     "comingSoon": "/fr/developpement-en-cours",
     "demo": "/fr/demo",
     "gcdsInUse": "/fr/sdgc-en-usage",
-    "releaseNotes": "https://github.com/cds-snc/gcds-components/blob/main/CHANGELOG.md#journal-des-modifications",
+    "releaseNotes": "https://github.com/gcds-extensions/map/blob/main/CHANGELOG.md",
     "privacy": "https://systeme-design.canada.ca/fr/avis-de-confidentialite/",
     "termsOfUse": "https://systeme-design.canada.ca/fr/conditions-dutilisation/",
     "sla": "/fr/entente-sur-les-niveaux-de-service",

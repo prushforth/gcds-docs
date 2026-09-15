@@ -32,6 +32,22 @@ npx http-server node_modules/@gcds-extensions/map -p 8080 -c-1
 
 Ouvrez <gcds-link href="http://localhost:8080/demo/" external>http://localhost:8080/demo/</gcds-link> &mdash; vous devriez voir une carte interactive.
 
+## Facultatif : installer les compétences de balisage
+
+Le paquet inclut un ensemble de <gcds-link href="https://agentskills.io/" external>compétences d'agent (Agent Skills)</gcds-link> qui apprennent à un assistant de codage IA (comme GitHub Copilot dans VS Code) à produire un balisage correct pour `<gcds-ext-map>` et pour chacun de ses éléments enfants &mdash; `<map-layer>`, `<map-extent>`, `<map-input>`, `<map-link>`, `<map-feature>`, et ainsi de suite. L'installation du paquet n'ajoute **pas** ces compétences à votre projet. Pour les y copier, exécutez la commande suivante à la racine de votre projet :
+
+```bash
+npx gcds-ext-map-skills
+```
+
+La commande crée le dossier `.github/skills/` au besoin, y copie un dossier par élément (en écrasant les fichiers du même nom, sans toucher au reste de votre projet) et affiche le chemin de destination. Redémarrez ensuite votre éditeur afin que votre assistant découvre les nouvelles compétences &mdash; dans VS Code, appuyez sur <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>P</kbd> (<kbd>Cmd</kbd> + <kbd>Maj</kbd> + <kbd>P</kbd> sur macOS) et exécutez **Developer: Reload Window**.
+
+Comme le dossier `.github/skills/` est partagé avec les compétences d'autres paquets et les vôtres, chaque compétence fournie est étiquetée avec le nom du paquet dont elle provient. Pour retirer uniquement les compétences installées par ce paquet, exécutez :
+
+```bash
+npx gcds-ext-map-skills --remove
+```
+
 <hr class="my-600" />
 
 ## Utilisation
@@ -54,7 +70,7 @@ Facultativement, pour utiliser l'ensemble des composants de Système de design G
 Utilisez ensuite le composant dans votre balisage (utilisez CSS pour définir sa largeur et sa hauteur, car la taille par défaut est plutôt petite) :
 
 ```html
-<gcds-ext-map projection="CBMTILE" lat="45.4215" lon="-75.6972" zoom="10" style="width: 60%; height: 400px">
+<gcds-ext-map projection="CBMTILE" lat="45.4215" lon="-75.6972" zoom="10"  controlslist="static" static controls style="width: 60%; height: 400px">
   <map-layer checked>
     <map-title>Canada Base Map - Transportation (CBMT)</map-title>
     <map-link rel="license" href="https://open.canada.ca/en/open-government-licence-canada" title="Open Government Licence - Canada"></map-link>

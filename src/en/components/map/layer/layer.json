@@ -3,13 +3,5 @@
   "loadGeolocatorApiHandler": true,
   "linkOverrides": {
     "githubCompsIssues": "https://github.com/gcds-extensions/map/issues"
-  },
-  "helpus": {
-    "en": {
-      "feedbackHref": "mailto:geo@nrcan-rncan.gc.ca"
-    },
-    "fr": {
-      "feedbackHref": "mailto:geo@rncan-nrcan.gc.ca"
-    }
   }
 }

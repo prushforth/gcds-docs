@@ -19,7 +19,7 @@ gcds-ext-map {
 Les données ou le contenu d'une carte Web sont organisés en couches et sont ajoutés au composant `<gcds-ext-map>` sous forme d'un ou plusieurs éléments enfants `<map-layer>`. Chaque couche est rendue par-dessus la couche précédente. Souvent, une carte est composée d'une couche de « carte de base » et d'une ou plusieurs couches thématiques.
 
 {% componentPreview "Aperçu du composant <code>&lt;map-layer&gt;</code>" %}
-<gcds-ext-map lat="62.1326" lon="-91.0" zoom="2" projection="CBMTILE" controls controlslist="search geolocation">
+<gcds-ext-map lat="62.1326" lon="-91.0" zoom="2" projection="CBMTILE" controls controlslist="search geolocation static" static>
   <map-caption>Une carte qui démontre comment les couches sont utilisées par le composant gcds-ext-map</map-caption>
   <map-layer checked>
     <map-title>La carte de base du Canada - transport</map-title>

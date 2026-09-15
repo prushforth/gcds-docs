@@ -19,6 +19,7 @@ tags: ['mapFR', 'design']
   <li>Le <strong>contrôle de géolocalisation</strong> est un contrôle à 3 états. Il est soit désactivé, en train de suivre l'emplacement de l'appareil, ou affichant le dernier emplacement connu de l'appareil.
   <li>Le <strong>contrôle d'attribution</strong> est obligatoire et affiche le lien de licence pour le contenu de la couche cartographique.
   <li>La <strong>fenêtre d'affichage de la carte</strong> est l'endroit où le contenu de la couche cartographique est rendu.
+  <li>Le <strong>contrôle statique</strong> (icône de cadenas) permet à l'utilisateur de contrôler le caractère « glissant » de la carte. Cela est utile pour éviter les déplacements involontaires de la carte.
 </ol>
 
 <img src="/images/fr/components/anatomy/gcds-ext-map-anatomy.svg" alt="Une image de l'anatomie." />

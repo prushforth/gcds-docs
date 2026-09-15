@@ -83,13 +83,13 @@ cet élément devient le nom de la couche dans le contrôle des couches. Si aucu
 `label`, si celui-ci est présent. Si cette valeur n'est pas non plus disponible, le nom de la
 couche prend la valeur par défaut « Couche ».
 
-<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE"  controlslist="static" static controls style="height: 400px;">
   <map-caption>Carte illustrant la façon dont une couche est nommée par map-title ou l'attribut label</map-caption>
   <map-layer src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/fr/osmtile/cbmt' | url }}" checked></map-layer>
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
+<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE"  controlslist="static" static controls>
   <map-layer src="https://example.com/chemin/vers/couche.mapml" checked></map-layer>
 </gcds-ext-map>
 ```
@@ -116,7 +116,7 @@ syntaxes peuvent être évités.
 Cet exemple illustre une entité intégrée dont la géométrie est un polygone défini en coordonnées
 géographiques (`cs="gcrs"`).
 
-<gcds-ext-map lat="45.5" lon="-74.5" zoom="3" projection="CBMTILE" controls style="height: 400px;">
+<gcds-ext-map lat="45.5" lon="-74.5" zoom="3" projection="CBMTILE" controls  controlslist="static" static style="height: 400px;">
 <map-caption>Le contenu de cet exemple de carte est intégré</map-caption>
 <map-layer src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/fr/cbmtile/cbmtsimple' | url }}" checked hidden></map-layer>
   <map-layer label="Couche d'entités intégrée" checked>
@@ -141,7 +141,7 @@ géographiques (`cs="gcrs"`).
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map lat="45.5" lon="-74.5" zoom="3" projection="CBMTILE" controls>
+<gcds-ext-map lat="45.5" lon="-74.5" zoom="3" projection="CBMTILE" controls controlslist="static" static >
   <!-- le contenu de cette couche est « intégré » -->
   <map-caption>Le contenu de cet exemple de carte est intégré</map-caption>
   <map-layer label="Couche d'entités intégrée" checked>
@@ -168,7 +168,7 @@ Une carte peut contenir un mélange de couches distantes et intégrées. Ici, un
 masquée et une couche thématique distante sont combinées avec une couche d'entités ponctuelles
 intégrée.
 
-<gcds-ext-map lat="45.4215" lon="-75.6972" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+<gcds-ext-map lat="45.4215" lon="-75.6972" zoom="4" projection="OSMTILE"  controlslist="static" static controls style="height: 400px;">
   <map-caption>Le contenu de cet exemple de carte est à la fois intégré et distant</map-caption>
   <map-layer src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/fr/osmtile/cbmt' | url }}" checked hidden></map-layer>
   <map-layer src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/fr/osmtile/current_conditions' | url }}" checked opacity="0.7"></map-layer>
@@ -191,7 +191,7 @@ intégrée.
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map lat="45.4215" lon="-75.6972" zoom="4" projection="OSMTILE" controls>
+<gcds-ext-map lat="45.4215" lon="-75.6972" zoom="4" projection="OSMTILE"  controlslist="static" static controls>
   <map-caption>Le contenu de cet exemple de carte est à la fois intégré et distant</map-caption>
   <map-layer src="basemap.mapml" checked hidden></map-layer>
   <map-layer src="overlay.mapml" checked opacity="0.7"></map-layer>
@@ -229,7 +229,7 @@ Les liens de licence ou d'attribution sont facultatifs, mais leur inclusion est 
 recommandée, en particulier si votre carte utilise du contenu tiers dont l'attribution est requise
 de manière indépendante, comme dans l'exemple ci-dessous.
 
-<gcds-ext-map projection="OSMTILE" zoom="0" lat="0" lon="0" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="0" lat="0" lon="0" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Cette carte illustre comment définir l'attribution des couches</map-caption>
   <map-layer label="OpenStreetMap" checked>
     <map-link rel="license" href="https://www.openstreetmap.org/copyright/fr" title="&#xa9; les contributeurs d'OpenStreetMap CC BY-SA 2.0"></map-link>
@@ -243,7 +243,7 @@ de manière indépendante, comme dans l'exemple ci-dessous.
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="OSMTILE" zoom="0" lat="0" lon="0" controls>
+<gcds-ext-map projection="OSMTILE" zoom="0" lat="0" lon="0" controls controlslist="static" static >
   <map-caption>Cette carte illustre comment définir l'attribution des couches</map-caption>
   <map-layer label="OpenStreetMap" checked>
     <map-link rel="license" href="https://www.openstreetmap.org/copyright/fr" title="&#xa9; les contributeurs d'OpenStreetMap CC BY-SA 2.0"></map-link>
@@ -273,7 +273,7 @@ de l'utilisateur, car il doit comprendre à quoi sert la sous-couche et pourquoi
 « Sous-couche ». Cela aurait pu être évité en incluant simplement l'attribut
 `<map-extent hidden>`.
 
-<gcds-ext-map projection="CBMTILE" zoom="2" lat="63" lon="-89" controls static style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="2" lat="63" lon="-89" controls  controlslist="static" static style="height: 400px;">
   <map-caption>La seule couche de cette carte expose une « sous-couche ». C'est un peu compliqué pour l'utilisateur, alors n'exposez les sous-couches que lorsque c'est nécessaire.</map-caption>
   <map-layer label="Toporama" checked>
       <map-link rel="license"
@@ -294,7 +294,7 @@ de l'utilisateur, car il doit comprendre à quoi sert la sous-couche et pourquoi
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="CBMTILE" zoom="2" lat="63" lon="-89" controls static style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="2" lat="63" lon="-89" controls  controlslist="static" static style="height: 400px;">
   <map-caption>La seule couche de cette carte expose une « sous-couche ». C'est un peu compliqué pour l'utilisateur, alors n'exposez les sous-couches que lorsque c'est nécessaire.</map-caption>
   <map-layer label="Toporama" checked>
     <!-- ajouter l'attribut hidden ici rendrait l'interface plus simple -->
@@ -338,7 +338,7 @@ Dans cet exemple, du contenu intégré fournit deux sous-couches masquées, chac
 et `OSMTILE`. La carte sélectionne et affiche la sous-couche qui correspond à sa projection.
 
 <div style="position: relative;">
-<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Cette carte a du contenu intégré avec deux sous-couches masquées dans des projections différentes. Une seule des sous-couches est active à la fois, selon la projection définie par la carte.</map-caption>
   <map-layer label="Toporama" checked>
     <map-link rel="license"
@@ -370,7 +370,7 @@ et `OSMTILE`. La carte sélectionne et affiche la sous-couche qui correspond à 
 </div>
 
 ```html
-<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Cette carte a du contenu intégré avec deux sous-couches masquées dans des projections différentes. Une seule des sous-couches est active à la fois, selon la projection définie par la carte.</map-caption>
   <map-layer label="Toporama" checked>
     <map-link rel="license"
@@ -416,7 +416,7 @@ pointe vers sa ressource de projection complémentaire. Lorsque l'utilisateur ba
 document MapML complémentaire compatible.
 
 <div style="position: relative;">
-<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Cette carte contient une couche distante qui prend en charge les deux projections que l'utilisateur peut définir avec le bouton fourni.</map-caption>
   <map-layer label="Toporama" checked src="../assets/cbmtile/toporama.mapml"></map-layer>
 </gcds-ext-map>
@@ -424,7 +424,7 @@ document MapML complémentaire compatible.
 </div>
 
 ```html
-<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Cette carte contient une couche distante qui prend en charge les deux projections que l'utilisateur peut définir avec le bouton fourni.</map-caption>
    <map-layer label="Toporama" checked src="../assets/cbmtile/toporama.mapml"></map-layer>
 </gcds-ext-map>
@@ -443,7 +443,7 @@ une incapacité visuelle. Une approche plus accessible pourrait être de fournir
 avec des descriptions textuelles des symboles associés, mais même cela pourrait ne pas rendre
 une couche de carte complètement accessible.
 
-<gcds-ext-map projection="CBMTILE" zoom="2" lat="63.0" lon="-98.8" controls style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="2" lat="63.0" lon="-98.8" controls  controlslist="static" static style="height: 400px;">
   <map-caption>La couche de carte de base contient un lien de légende. Rendez vos légendes accessibles également.</map-caption>
   <map-layer hidden label="Carte de base" checked src="../assets/cbmtile/toporama.mapml"></map-layer>
   <map-layer label="Indice d'accumulation 2026-06-26" checked>
@@ -470,7 +470,7 @@ une couche de carte complètement accessible.
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls  controlslist="static" static style="height: 400px;">
   <map-caption>La couche de carte de base contient un lien de légende. Rendez vos légendes accessibles également.</map-caption>
   <map-layer hidden label="Carte de base" checked src="../assets/cbmtile/toporama.mapml"></map-layer>
   <map-layer label="Indice d'accumulation 2026-06-26" checked>
@@ -506,7 +506,7 @@ gabaritées pour des images (ou des entités, ou des tuiles) couvrant toute la z
 d'affichage de la carte, récupérées dynamiquement à mesure que l'utilisateur déplace
 et zoome la carte.
 
-<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE"  controlslist="static" static controls style="height: 400px;">
   <map-caption>Carte illustrant une couche d'image définie par un map-extent intégré</map-caption>
   <map-layer label="CBMT (étendue intégrée)" checked>
     <map-meta name="projection" content="OSMTILE"></map-meta>
@@ -524,7 +524,7 @@ et zoome la carte.
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
+<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE"  controlslist="static" static controls>
   <map-caption>Carte illustrant une couche d'image définie par un map-extent intégré</map-caption>
   <map-layer label="CBMT (étendue intégrée)" checked>
     <map-meta name="projection" content="OSMTILE"></map-meta>
@@ -555,7 +555,7 @@ GeoJSON, KML, Shapefiles et bien d'autres.
 MapML applique le modèle SF dans l'élément `<map-feature>`, qui peut être utilisé dans du
 contenu distant et intégré.
 
-<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692"  controlslist="static" static controls style="height: 400px;">
   <map-caption>Les entités fournissent des informations accessibles spécifiques à un emplacement</map-caption>
   <map-layer checked hidden>
     <map-link rel="license" href="https://www.openstreetmap.org/copyright/fr" title="&#xa9; les contributeurs d'OpenStreetMap CC BY-SA 2.0"></map-link>
@@ -612,7 +612,7 @@ contenu distant et intégré.
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692" controls>
+<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692"  controlslist="static" static controls>
   <map-caption>Les entités fournissent des informations accessibles spécifiques à un emplacement</map-caption>
   <map-layer label="Entités" checked>
     <map-meta name="projection" content="OSMTILE"></map-meta>
@@ -665,7 +665,7 @@ ne soient généralement pas encodées explicitement dans le balisage, il est po
 des éléments `<map-tile>` individuels dans le contenu, et ils se comportent comme une
 « entité carrée » rendue à une seule valeur de niveau de zoom de la carte.
 
-<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692"  controlslist="static" static controls style="height: 400px;">
   <map-caption>Cette carte est composée de données d'image tuilées provenant d'OpenStreetMap</map-caption>
   <map-layer label="Tuiles gabaritées d'OpenStreetMap" checked>
     <map-link rel="license" href="https://www.openstreetmap.org/copyright/fr" title="OpenStreetMap &#xa9; les contributeurs CC BY-SA 2.0"></map-link>
@@ -696,7 +696,7 @@ des éléments `<map-tile>` individuels dans le contenu, et ils se comportent co
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692"  controlslist="static" static controls style="height: 400px;">
   <map-caption>Cette carte est composée de données d'image tuilées provenant d'OpenStreetMap</map-caption>
   <map-layer label="Tuiles gabaritées d'OpenStreetMap" checked>
     <map-link rel="license" href="https://www.openstreetmap.org/copyright/fr" title="&#xa9; les contributeurs d'OpenStreetMap CC BY-SA 2.0"></map-link>
@@ -734,13 +734,13 @@ utilisant la méthode `geojson2mapml()` de la carte. La méthode accepte le GeoJ
 un objet d'options (`label`, `caption`, `projection`, `properties`, `geometryFunction`) et
 ajoute la couche résultante à la carte pour vous.
 
-<gcds-ext-map id="provinces-geojson-map" data-static-code lat="71" lon="-96" zoom="2" projection="OSMTILE" controls style="height: 400px;">
+<gcds-ext-map id="provinces-geojson-map" data-static-code lat="71" lon="-96" zoom="2" projection="OSMTILE" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Provinces et territoires du Canada, chargés à partir de GeoJSON.</map-caption>
   <map-layer src="../assets/osmtile/cbmt.mapml" checked></map-layer>
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map id="provinces-geojson-map" lat="71" lon="-96" zoom="2" projection="OSMTILE" controls style="height: 400px;">
+<gcds-ext-map id="provinces-geojson-map" lat="71" lon="-96" zoom="2" projection="OSMTILE" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Provinces et territoires du Canada, chargés à partir de GeoJSON.</map-caption>
   <map-layer src="./cbmt.mapml" checked></map-layer>
 </gcds-ext-map>
@@ -786,13 +786,13 @@ L'exemple ci-dessous charge une
 [archive pmtiles publique d'OpenStreetMap](https://data.source.coop/protomaps/openstreetmap/tiles/v3.pmtiles).
 Utilisez les paramètres de la couche pour basculer entre les thèmes clair et sombre fournis.
 
-<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Cette carte affiche des tuiles vectorielles Mapbox à l'aide du format d'archive de tuiles pmtiles</map-caption>
   <map-layer src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/fr/osmtile/light.mapml' | url }}" checked></map-layer>
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Cette carte affiche des tuiles vectorielles Mapbox à l'aide du format d'archive de tuiles pmtiles</map-caption>
   <map-layer src="./light.mapml" checked></map-layer>
 </gcds-ext-map>
@@ -824,7 +824,7 @@ conséquent, il est important de veiller à ce que vos couches aient un
 Le nom accessible de l'ensemble de la carte est fourni par l'élément enfant
 <code>&lt;map-caption&gt;</code> de la carte.
 
-<gcds-ext-map zoom="14" lat="43.193477" lon="-80.384773" controls style="height: 400px;">
+<gcds-ext-map zoom="14" lat="43.193477" lon="-80.384773" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Paris, Ontario</map-caption>
   <map-layer label="Je suis ton père, Luc" checked>
     <map-title>OpenStreetMap</map-title>
@@ -839,7 +839,7 @@ Le nom accessible de l'ensemble de la carte est fourni par l'élément enfant
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="OSMTILE" zoom="14" lat="43.193477" lon="-80.384773" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="14" lat="43.193477" lon="-80.384773"  controlslist="static" static controls style="height: 400px;">
   <map-caption>Paris, Ontario</map-caption>
   <map-layer label="Je suis ton père, Luc" checked>
     <map-title>OpenStreetMap</map-title>
@@ -871,14 +871,14 @@ correspondant à la préférence de thème de couleur actuelle du système d'exp
 navigateur de l'utilisateur est active. Basculez votre système entre le mode clair et le
 mode sombre pour voir la carte s'échanger automatiquement.
 
-<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Cette carte utilise des requêtes de média de carte pour afficher un contenu clair ou sombre selon les paramètres</map-caption>
   <map-layer media="(prefers-color-scheme: light)" checked src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/fr/osmtile/light.mapml' | url }}"></map-layer>
   <map-layer media="(prefers-color-scheme:  dark)" checked src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/fr/osmtile/dark.mapml' | url }}"></map-layer>
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Cette carte utilise des requêtes de média de carte pour afficher un contenu clair ou sombre selon les paramètres</map-caption>
   <map-layer media="(prefers-color-scheme: light)" checked src="./light.mapml"></map-layer>
   <map-layer media="(prefers-color-scheme:  dark)" checked src="./dark.mapml"></map-layer>
@@ -922,13 +922,13 @@ Ouvrez le contrôle des couches (survolez-le ou donnez-lui le focus au clavier d
 supérieur droit) et développez les paramètres de la couche pour voir et basculer entre les
 styles disponibles.
 
-<gcds-ext-map projection="CBMTILE" zoom="3" lat="45.114527" lon="-59.863727" controls style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="3" lat="45.114527" lon="-59.863727" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Cette carte permet à l'utilisateur de sélectionner un style cartographique qui répond à ses besoins</map-caption>
   <map-layer src="../assets/sea-surface-default.mapml" checked></map-layer>
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="CBMTILE" zoom="3" lat="45.114527" lon="-59.863727" controls>
+<gcds-ext-map projection="CBMTILE" zoom="3" lat="45.114527" lon="-59.863727" controls controlslist="static" static >
   <map-caption>Cette carte permet à l'utilisateur de sélectionner un style cartographique qui répond à ses besoins</map-caption>
   <map-layer src="../assets/sea-surface-default.mapml" checked></map-layer>
 </gcds-ext-map>

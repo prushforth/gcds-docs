@@ -2,9 +2,7 @@ module.exports = {
   en: {
     heading: 'Help us improve',
     paragraph:
-      "Have questions or a request? Give feedback on our contact form.",
-    feedback: 'Give feedback',
-    feedbackHref: '/en/contact/#contact-us',
+      "Have questions or a request? Get involved on GitHub.",
     report: 'Report an issue on GitHub',
     opens: ' (Opens destination in a new tab.)',
     github: 'Get involved on GitHub',
@@ -12,9 +10,7 @@ module.exports = {
   fr: {
     heading: 'Aidez-nous à nous améliorer',
     paragraph:
-      'Vous avez des questions ou des demandes? Faites-nous part de vos commentaires à l\'aide de notre formulaire de contact.',
-    feedback: 'Fournir des commentaires',
-    feedbackHref: '/fr/contactez/#contactez-nous',
+      'Vous avez des questions ou des demandes?  S\'impliquer sur GitHub.',
     report: 'Signaler un problème sur GitHub',
     opens: ' (Ouvre l\'emplacement dans un nouvel onglet.)',
     github: "S'impliquer sur GitHub",

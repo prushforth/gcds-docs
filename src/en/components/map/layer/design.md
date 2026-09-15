@@ -94,13 +94,13 @@ value becomes the layer name in the layer control. If no `<map-title>` element i
 name falls back to the value of the `label` attribute, if present. If that value is not
 found either, the layer name defaults to "Layer".
 
-<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls controlslist="static" static style="height: 400px;">
   <map-caption>Map showing how a layer is named by map-title or the label attribute</map-caption>
   <map-layer src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/osmtile/cbmt' | url }}" checked></map-layer>
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
+<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls controlslist="static" static >
   <map-layer src="https://example.com/path/to/layer.mapml" checked></map-layer>
 </gcds-ext-map>
 ```
@@ -123,7 +123,7 @@ by the seemingly small difference between the syntaxes may be avoided.
 
 This example shows an inline feature with a polygon geometry defined in geographic coordinates (`cs="gcrs"`). 
 
-<gcds-ext-map lat="45.5" lon="-74.5" zoom="3" projection="CBMTILE" controls style="height: 400px;">
+<gcds-ext-map lat="45.5" lon="-74.5" zoom="3" projection="CBMTILE" controls  controlslist="static" static style="height: 400px;">
 <map-caption>The content of this example map is inline</map-caption>
 <map-layer src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/cbmtile/cbmtsimple' | url }}" checked hidden></map-layer>
   <map-layer label="Inline Feature Layer" checked>
@@ -148,7 +148,7 @@ This example shows an inline feature with a polygon geometry defined in geograph
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map lat="45.5" lon="-74.5" zoom="3" projection="CBMTILE" controls>
+<gcds-ext-map lat="45.5" lon="-74.5" zoom="3" projection="CBMTILE" controls controlslist="static" static >
   <!-- the content of this layer is "inline" -->
   <map-caption>The content of this example map is inline</map-caption>
   <map-layer label="Inline Feature Layer" checked>
@@ -174,7 +174,7 @@ This example shows an inline feature with a polygon geometry defined in geograph
 A map can contain a mix of remote and inline layers. Here a hidden basemap and a
 remote thematic overlay are combined with an inline point feature layer.
 
-<gcds-ext-map lat="45.4215" lon="-75.6972" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+<gcds-ext-map lat="45.4215" lon="-75.6972" zoom="4" projection="OSMTILE"  controlslist="static" static controls style="height: 400px;">
   <map-caption>The content of this example map is both inline and remote</map-caption>
   <map-layer src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/osmtile/cbmt' | url }}" checked hidden></map-layer>
   <map-layer src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/osmtile/current_conditions' | url }}" checked opacity="0.7"></map-layer>
@@ -197,7 +197,7 @@ remote thematic overlay are combined with an inline point feature layer.
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map lat="45.4215" lon="-75.6972" zoom="4" projection="OSMTILE" controls>
+<gcds-ext-map lat="45.4215" lon="-75.6972" zoom="4" projection="OSMTILE" controls controlslist="static" static >
   <map-caption>The content of this example map is both inline and remote</map-caption>
   <map-layer src="basemap.mapml" checked hidden></map-layer>
   <map-layer src="overlay.mapml" checked opacity="0.7"></map-layer>
@@ -233,7 +233,7 @@ attribution control.  Licensing or attribution links are optional, however inclu
 highly recommended, especially if your map uses 3rd party content for which attribution is
 independently required, such as in the example below.
 
-<gcds-ext-map projection="OSMTILE" zoom="0" lat="0" lon="0" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="0" lat="0" lon="0" controls  controlslist="static" static style="height: 400px;">
   <map-caption>This map illustrates how to set the attribution for layers</map-caption>
   <map-layer label="OpenStreetMap" checked>
     <map-link rel="license" href="https://www.openstreetmap.org/copyright" title="&#xa9; OpenStreetMap contributors CC BY-SA 2.0"></map-link>
@@ -247,7 +247,7 @@ independently required, such as in the example below.
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="OSMTILE" zoom="0" lat="0" lon="0" controls>
+<gcds-ext-map projection="OSMTILE" zoom="0" lat="0" lon="0" controls controlslist="static" static >
   <map-caption>This map illustrates how to set the attribution for layers</map-caption>
     <map-layer label="OpenStreetMap" checked>
     <map-link rel="license" href="https://www.openstreetmap.org/copyright" title="&#xa9; OpenStreetMap contributors CC BY-SA 2.0"></map-link>
@@ -269,7 +269,7 @@ The `<map-layer>` element can include the `<map-extent>` element, which acts as 
  elements may affect the usability of the content, depending on its nature. In the example below,
  including the sub-layer in the map UI (by not adding a `hidden` attribute) decreases usability by increasing the cognitive load on the user, because they have to understand what the sub-layer is for and why it's called "Sub-layer".  That could have been avoided by simply including the `<map-extent hidden>` attribute.
 
-<gcds-ext-map projection="CBMTILE" zoom="2" lat="63" lon="-89" controls static style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="2" lat="63" lon="-89" controls  controlslist="static" static style="height: 400px;">
   <map-caption>The only layer on this map exposes a "sub-layer". This is sligly complicated for the user, so only expose sub-layers when necessary.</map-caption>
   <map-layer label="Toporama" checked>
       <map-link rel="license"
@@ -290,7 +290,7 @@ The `<map-layer>` element can include the `<map-extent>` element, which acts as 
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="CBMTILE" zoom="2" lat="63" lon="-89" controls static style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="2" lat="63" lon="-89" controls  controlslist="static" static style="height: 400px;">
   <map-caption>The only layer on this map exposes a "sub-layer". This is sligly complicated for the user, so only expose sub-layers when necessary.</map-caption>
     <map-layer label="Toporama" checked> 
     <!-- including the hidden attribute here would make the UI simpler -->
@@ -329,7 +329,7 @@ In this example, inline content provides two hidden sub-layers, each with a diff
 toggles the `projection` of the map between `CBMTILE` and `OSMTILE`.  The map selects and displays the sub-layer that matches its projection. 
 
 <div style="position: relative;">
-<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls  controlslist="static" static style="height: 400px;">
   <map-caption>This map has inline content with two hidden sub-layers in different projections.  Only one of the sub-layers is ever active, depending on the projection set by the map.</map-caption>
   <map-layer label="Toporama" checked>
     <map-link rel="license"
@@ -361,7 +361,7 @@ toggles the `projection` of the map between `CBMTILE` and `OSMTILE`.  The map se
 </div>
 
 ```html
-<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls  controlslist="static" static style="height: 400px;">
   <map-caption>This map has inline content with two hidden sub-layers in different projections.  Only one of the sub-layers is ever active, depending on the projection set by the map.</map-caption>
     <map-layer label="Toporama" checked>
     <map-link rel="license"
@@ -401,7 +401,7 @@ toggles the map `projection` between `CBMTILE` and `OSMTILE`, the map selects an
 MapML document.
 
 <div style="position: relative;">
-<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls  controlslist="static" static style="height: 400px;">
   <map-caption>This map contains a remote layer that supports both projections that can be set by the user with the button provided.</map-caption>
   <map-layer label="Toporama" checked src="../assets/cbmtile/toporama.mapml"></map-layer>
 </gcds-ext-map>
@@ -409,7 +409,7 @@ MapML document.
 </div>
 
 ```html
-<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls  controlslist="static" static style="height: 400px;">
   <map-caption>This map contains a remote layer that supports both projections that can be set by the user with the button provided.</map-caption>
   <map-layer label="Toporama" checked src="../assets/cbmtile/toporama.mapml"></map-layer>
 </gcds-ext-map>
@@ -426,7 +426,7 @@ the image may be somewhat or completely inaccessible to users with visual disabi
 approach might be to provide an HTML page with text desriptions of associated symbols, but even this might not make a map layer 
 completely accessible.
 
-<gcds-ext-map projection="CBMTILE" zoom="2" lat="63.0" lon="-98.8" controls style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="2" lat="63.0" lon="-98.8" controls  controlslist="static" static style="height: 400px;">
   <map-caption>The base map layer contains a legend link. Make your legends accessible too.</map-caption>
   <map-layer hidden label="Basemap" checked src="../assets/cbmtile/toporama.mapml"></map-layer>
   <map-layer label="Buildup Index 2026-06-26" checked>
@@ -453,7 +453,7 @@ completely accessible.
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="3" lat="57" lon="-95" controls  controlslist="static" static style="height: 400px;">
   <map-caption>The base map layer contains a legend link. Make your legends accessible too.</map-caption>
   <map-layer hidden label="Basemap" checked src="../assets/cbmtile/toporama.mapml"></map-layer>
   <map-layer label="Buildup Index 2026-06-26" checked>
@@ -487,7 +487,7 @@ completely accessible.
 A layer can contain `<map-extent>` elements that define templated whole-viewport requests for images (or features, or tiles), 
 fetched dynamically as the user pans and zooms the map.
 
-<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls style="height: 400px;">
+<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Map showing an image layer defined by an inline map-extent</map-caption>
   <map-layer label="CBMT (inline extent)" checked>
     <map-meta name="projection" content="OSMTILE"></map-meta>
@@ -505,7 +505,7 @@ fetched dynamically as the user pans and zooms the map.
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE" controls>
+<gcds-ext-map lat="53.087426" lon="-91.27533" zoom="4" projection="OSMTILE"  controlslist="static" static controls>
   <map-caption>Map showing an image layer defined by an inline map-extent</map-caption>
     <map-layer label="CBMT (inline extent)" checked>
     <map-meta name="projection" content="OSMTILE"></map-meta>
@@ -533,7 +533,7 @@ formats apply the SF model in the format's own syntax, such as GeoJSON, KML, Sha
 
 MapML applies the SF model in the `<map-feature>` element, which can be used in remote and inline content.
 
-<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692"  controlslist="static" static controls style="height: 400px;">
   <map-caption>Features provide location-specific accessible information</map-caption>
   <map-layer checked hidden>
     <map-link rel="license" href="https://www.openstreetmap.org/copyright" title="&#xa9; OpenStreetMap contributors CC BY-SA 2.0"></map-link>
@@ -590,7 +590,7 @@ MapML applies the SF model in the `<map-feature>` element, which can be used in 
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692" controls>
+<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692"  controlslist="static" static controls>
   <map-caption>Features provide location-specific accessible information</map-caption>
   <map-layer label="Features" checked>
     <map-meta name="projection" content="OSMTILE"></map-meta>
@@ -639,7 +639,7 @@ Most commonly, tiles are implicitly referenced in bulk, via the MapML URL templa
 individual `<map-tile>` elements in content, and they behave like a "square feature" rendered at a single map
 zoom level value.
 
-<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692" controls controlslist="static" static style="height: 400px;">
   <map-caption>This map is made up of tiled image data from OpenStreetMap</map-caption>
   <map-layer label="OpenStreetMap templated tiles" checked>
     <map-link rel="license" href="https://www.openstreetmap.org/copyright" title="OpenStreetMap &#xa9; contributors CC BY-SA 2.0"></map-link>
@@ -670,7 +670,7 @@ zoom level value.
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="11" lat="45.4187" lon="-75.692" controls controlslist="static" static style="height: 400px;">
   <map-caption>This map is made up of tiled image data from OpenStreetMap</map-caption>
   <map-layer label="OpenStreetMap templated tiles" checked>
     <map-link rel="license" href="https://www.openstreetmap.org/copyright" title="&#xa9; OpenStreetMap contributors CC BY-SA 2.0"></map-link>
@@ -704,13 +704,13 @@ The example below loads [canada.json]({{ '/components/gcds-ext-map/dist/gcds-ext
 `<map-layer>` at runtime using the map's `geojson2mapml()` method. The method accepts the parsed GeoJSON and an options object 
 (`label`, `caption`, `projection`, `properties`, `geometryFunction`) and appends the resulting layer to the map for you.
 
-<gcds-ext-map id="provinces-geojson-map" data-static-code lat="71" lon="-96" zoom="2" projection="OSMTILE" controls style="height: 400px;">
+<gcds-ext-map id="provinces-geojson-map" data-static-code lat="71" lon="-96" zoom="2" projection="OSMTILE" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Provinces and territories of Canada, loaded from GeoJSON.</map-caption>
   <map-layer src="../assets/osmtile/cbmt.mapml" checked></map-layer>
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map id="provinces-geojson-map" lat="71" lon="-96" zoom="2" projection="OSMTILE" controls style="height: 400px;">
+<gcds-ext-map id="provinces-geojson-map" lat="71" lon="-96" zoom="2" projection="OSMTILE" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Provinces and territories of Canada, loaded from GeoJSON.</map-caption>
   <map-layer src="./cbmt.mapml" checked></map-layer>
 </gcds-ext-map>
@@ -753,13 +753,13 @@ A vector tile `<map-link>` must be paired with a stylesheet module — see
 The example below loads a public [OpenStreetMap pmtiles archive](https://data.source.coop/protomaps/openstreetmap/tiles/v3.pmtiles). 
 Use the layer settings to switch between the bundled light and dark themes.
 
-<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls  controlslist="static" static style="height: 400px;">
   <map-caption>This map renders Mapbox vector tiles using the pmtiles tile archive format</map-caption>
   <map-layer src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/osmtile/light.mapml' | url }}" checked></map-layer>
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls  controlslist="static" static style="height: 400px;">
   <map-caption>This map renders Mapbox vector tiles using the pmtiles tile archive format</map-caption>
   <map-layer src="./light.mapml" checked></map-layer>
 </gcds-ext-map>
@@ -785,7 +785,7 @@ very helpful to users.  Consequently, it's important to ensure that your layers 
 
 The accessible name of the whole map is provided by a map's child <code>&lt;map-caption&gt;</code> element.
 
-<gcds-ext-map zoom="14" lat="43.193477" lon="-80.384773" controls style="height: 400px;">
+<gcds-ext-map zoom="14" lat="43.193477" lon="-80.384773" controls  controlslist="static" static style="height: 400px;">
   <map-caption>Paris, Ontario</map-caption>
   <map-layer label="I am your father, Luke" checked>
     <map-title>OpenStreetMap</map-title>
@@ -800,7 +800,7 @@ The accessible name of the whole map is provided by a map's child <code>&lt;map-
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="OSMTILE" zoom="14" lat="43.193477" lon="-80.384773" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="14" lat="43.193477" lon="-80.384773"  controlslist="static" static controls style="height: 400px;">
   <map-caption>Paris, Ontario</map-caption>
   <map-layer label="I am your father, Luke" checked>
     <map-title>OpenStreetMap</map-title>
@@ -829,14 +829,14 @@ with a `prefers-color-scheme` query, so only the layer matching the user's curre
 colour-scheme preference is active. Toggle your system between light and dark mode to see the map 
 swap automatically.
 
-<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls  controlslist="static" static style="height: 400px;">
   <map-caption>This map uses map media queries to render light or dark content depending on settings</map-caption>
   <map-layer media="(prefers-color-scheme: light)" checked src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/osmtile/light.mapml' | url }}"></map-layer>
   <map-layer media="(prefers-color-scheme:  dark)" checked src="{{ '/components/gcds-ext-map/dist/gcds-ext-map/assets/mapml/en/osmtile/dark.mapml' | url }}"></map-layer>
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls style="height: 400px;">
+<gcds-ext-map projection="OSMTILE" zoom="1" lat="35.5" lon="-5.24" controls  controlslist="static" static style="height: 400px;">
   <map-caption>This map uses map media queries to render light or dark content depending on settings</map-caption>
   <map-layer media="(prefers-color-scheme: light)" checked src="./light.mapml"></map-layer>
   <map-layer media="(prefers-color-scheme:  dark)" checked src="./dark.mapml"></map-layer>
@@ -870,13 +870,13 @@ one with <code>rel="self style"</code> indicating the currently active style, an
 for the alternate.  Open the layer control (hover or keyboard-focus the control in the top right) and expand the layer 
 settings to see and switch between the available styles.
 
-<gcds-ext-map projection="CBMTILE" zoom="3" lat="45.114527" lon="-59.863727" controls style="height: 400px;">
+<gcds-ext-map projection="CBMTILE" zoom="3" lat="45.114527" lon="-59.863727"  controlslist="static" static controls style="height: 400px;">
   <map-caption>This map allows the user to select a cartographic style that suits their needs</map-caption>
   <map-layer src="../assets/sea-surface-default.mapml" checked></map-layer>
 </gcds-ext-map>
 
 ```html
-<gcds-ext-map projection="CBMTILE" zoom="3" lat="45.114527" lon="-59.863727" controls>
+<gcds-ext-map projection="CBMTILE" zoom="3" lat="45.114527" lon="-59.863727"  controlslist="static" static controls>
   <map-caption>This map allows the user to select a cartographic style that suits their needs</map-caption>
   <map-layer src="../assets/sea-surface-default.mapml" checked></map-layer>
 </gcds-ext-map>

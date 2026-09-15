@@ -20,7 +20,7 @@ Une carte est un outil interactif permettant d'afficher et d'interroger des info
 
 {% componentPreview "Aperçu du composant <code>&lt;gcds-ext-map&gt;</code>" %}
 
-<gcds-ext-map lat="45.4215" lon="-75.6972" zoom="10" projection="CBMTILE" controls controlslist="search geolocation">
+<gcds-ext-map lat="45.4215" lon="-75.6972" zoom="10" projection="CBMTILE" controls controlslist="search geolocation static" static>
   <map-caption>Une carte topographique d'Ottawa, Canada, montrant la ville et la région à une échelle initiale d'environ 1 cm pour 5 km</map-caption>
   <map-layer checked>
     <map-title>La carte de base du Canada - transport</map-title>
