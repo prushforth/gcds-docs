@@ -27,10 +27,10 @@ npm install @gcds-extensions/map
 Run:
 
 ```bash
-npx http-server node_modules/@gcds-extensions/map -p 8080 -c-1
+npx http-server node_modules -p 8080
 ```
 
-Open <gcds-link href="http://localhost:8080/demo/" external>http://localhost:8080/demo/</gcds-link> &mdash; you should see an interactive map.
+Open <gcds-link href="http://localhost:8080/@gcds-extensions/map/demo/" external>http://localhost:8080/@gcds-extensions/map/demo/</gcds-link> &mdash; you should see an interactive map with operational GCDS components.
 
 ## Optional: install the markup skills
 

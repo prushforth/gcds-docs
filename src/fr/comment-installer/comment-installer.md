@@ -27,10 +27,10 @@ npm install @gcds-extensions/map
 Exécutez :
 
 ```bash
-npx http-server node_modules/@gcds-extensions/map -p 8080 -c-1
+npx http-server node_modules -p 8080
 ```
 
-Ouvrez <gcds-link href="http://localhost:8080/demo/" external>http://localhost:8080/demo/</gcds-link> &mdash; vous devriez voir une carte interactive.
+Ouvrez <gcds-link href="http://localhost:8080/@gcds-extensions/map/demo/" external>http://localhost:8080/@gcds-extensions/map/demo/</gcds-link> &mdash; vous devriez voir une carte interactive avec des composants de Système de design GC opérationnels.
 
 ## Facultatif : installer les compétences de balisage
 
