@@ -3,7 +3,6 @@ module.exports = {
     contextual: {
       heading: 'GC Design System Map Extension components',
       list: 'Contact us',
-      listurl: '/en/contact/',
       issue: 'Report an issue',
       issueurl: 'https://github.com/cds-snc/gcds-components/issues/new/choose',
     },
@@ -22,7 +21,6 @@ module.exports = {
     contextual: {
       heading: 'Composants de l’extension cartographique du Système de design GC',
       list: 'Contactez-nous',
-      listurl: '/fr/contactez/',
       issue: 'Signaler un problème',
       issueurl: 'https://github.com/cds-snc/gcds-components/issues/new/choose',
     },
